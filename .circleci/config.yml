@@ -22,11 +22,17 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}
       - run:
-          name: Assemble builds
+          name: API Wrapper Sample Assemble builds
           command: |
             ./gradlew api-wrapper-sample:assembleRelease
+      - run:
+          name: OCR Sample Assemble builds
+          command: |
+            ./gradlew ocr-sample:assembleRelease
       - store_artifacts:
           path: api-wrapper-sample/build/outputs/apk/release
+      - store_artifacts:
+          path: ocr-sample/build/outputs/apk/release
 workflows:
   build-test:
     jobs:

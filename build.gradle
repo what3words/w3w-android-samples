@@ -14,9 +14,9 @@ buildscript {
     }
 
     ext {
-        kotlin_version = "1.8.20"
-        compose_version = "1.4.3"
+        compose_version = "1.2.1"
         compose_activity_version = "1.7.2"
+        kotlin_version = "1.8.20"
         material_version= "1.9.0"
         mlkit_core_version = "19.0.0"
         mlkit_languages_version = "16.0.0"
@@ -31,6 +31,7 @@ buildscript {
         dependency_analysis_version = "1.20.0"
 
         what3words_android_wrapper_version = "3.+"
+        what3words_android_ocr_components_version = "1.0.5"
     }
 }
 
