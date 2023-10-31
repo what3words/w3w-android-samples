@@ -29,10 +29,22 @@ jobs:
           name: OCR Sample Assemble builds
           command: |
             ./gradlew ocr-sample:assembleRelease
+      - run:
+          name: GoogleMap Sample Assemble builds
+          command: |
+            ./gradlew maps-googlemaps-sample:assembleRelease
+      - run:
+          name: MapBox Sample Assemble builds
+          command: |
+            ./gradlew mapbox-sample:assembleRelease
       - store_artifacts:
           path: api-wrapper-sample/build/outputs/apk/release
       - store_artifacts:
           path: ocr-sample/build/outputs/apk/release
+      - store_artifacts:
+          path: maps-googlemaps-sample/build/outputs/apk/release
+      - store_artifacts:
+          path: mapbox-sample/build/outputs/apk/release
 workflows:
   build-test:
     jobs:
