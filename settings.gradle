@@ -8,4 +8,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "w3w-android-samples"
 include ':api-wrapper-sample'
+include ':ocr-sample'
 
