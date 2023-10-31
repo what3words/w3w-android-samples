@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextLight.L.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:text="Text samples:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- convert-to-3wa -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldConvertTo3wa"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:hint="convert-to-3wa, i.e: 51.202,-0.1256"
+            app:layout_constraintEnd_toStartOf="@id/buttonConvertTo3wa"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputConvertTo3wa"
+                style="@style/TextLight.XS"
+                android:inputType="textNoSuggestions"
+                android:imeOptions="actionDone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonConvertTo3wa"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/main_xs"
+            app:icon="@drawable/ic_check"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/textFieldConvertTo3wa"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textFieldConvertTo3wa"
+            app:layout_constraintTop_toTopOf="@id/textFieldConvertTo3wa" />
+
+        <TextView
+            android:id="@+id/resultConvertTo3wa"
+            style="@style/TextLight.S"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:text="3 word address: "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textFieldConvertTo3wa" />
+
+        <View
+            android:id="@+id/separated1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/main_xs"
+            android:background="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/resultConvertTo3wa" />
+
+        <!-- convert-to-coordinates -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldConvertToCoordinates"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:hint="convert-to-coordinates, i.e: index.home.raft"
+            app:layout_constraintEnd_toStartOf="@id/buttonConvertToCoordinates"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separated1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputConvertToCoordinates"
+                style="@style/TextLight.XS"
+                android:layout_width="match_parent"
+                android:imeOptions="actionDone"
+                android:inputType="textNoSuggestions"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonConvertToCoordinates"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/main_xs"
+            app:icon="@drawable/ic_check"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/textFieldConvertToCoordinates"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textFieldConvertToCoordinates"
+            app:layout_constraintTop_toTopOf="@id/textFieldConvertToCoordinates" />
+
+        <TextView
+            android:id="@+id/resultConvertToCoordinates"
+            style="@style/TextLight.S"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:text="Coordinates: "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textFieldConvertToCoordinates" />
+
+        <View
+            android:id="@+id/separated2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/main_xs"
+            android:background="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/resultConvertToCoordinates" />
+
+        <!-- autosuggest -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldAutoSuggest"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:hint="autosuggest, i.e: index.home.r"
+            app:layout_constraintEnd_toStartOf="@id/buttonAutoSuggest"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separated2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputAutoSuggest"
+                style="@style/TextLight.XS"
+                android:imeOptions="actionDone"
+                android:inputType="textNoSuggestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonAutoSuggest"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/main_xs"
+            app:icon="@drawable/ic_check"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/textFieldAutoSuggest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textFieldAutoSuggest"
+            app:layout_constraintTop_toTopOf="@id/textFieldAutoSuggest" />
+
+        <TextView
+            android:id="@+id/resultAutoSuggest"
+            style="@style/TextLight.S"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:text="Suggestions: "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textFieldAutoSuggest" />
+
+        <View
+            android:id="@+id/separated3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/main_xs"
+            android:background="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/resultAutoSuggest" />
+
+        <TextView
+            android:id="@+id/titleVoice"
+            style="@style/TextLight.L.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_xs"
+            android:layout_marginTop="@dimen/main_l"
+            android:text="Voice samples:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separated3" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonAutoSuggestVoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:text="autosuggest"
+            app:icon="@drawable/ic_record"
+            app:iconGravity="end"
+            app:iconPadding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleVoice" />
+
+        <TextView
+            android:id="@+id/volumeAutoSuggestVoice"
+            style="@style/TextLight.S"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:text="Volume: "
+            app:layout_constraintStart_toEndOf="@id/buttonAutoSuggestVoice"
+            app:layout_constraintTop_toTopOf="@id/buttonAutoSuggestVoice" />
+
+        <TextView
+            android:focusable="true"
+            android:id="@+id/resultAutoSuggestVoice"
+            style="@style/TextLight.S"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:text="Suggestions: "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonAutoSuggestVoice" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,0 +1,84 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Light -->
+    <style name="TextLight">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/text_light</item>
+    </style>
+
+    <style name="TextLight.XXL">
+        <item name="android:textSize">@dimen/text_size_xxl</item>
+    </style>
+
+    <style name="TextLight.XXL.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextLight.XL">
+        <item name="android:textSize">@dimen/text_size_xl</item>
+        <item name="android:lineSpacingExtra">@dimen/text_line_spacing_extra_xl</item>
+    </style>
+
+    <style name="TextLight.XL.Light">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextLight.XL.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextLight.XL.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextLight.L">
+        <item name="android:textSize">@dimen/text_size_l</item>
+        <item name="android:lineSpacingExtra">@dimen/text_line_spacing_extra_l</item>
+    </style>
+
+    <style name="TextLight.L.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextLight.L.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+
+    <style name="TextLight.M">
+        <item name="android:textSize">@dimen/text_size_m</item>
+        <item name="android:lineSpacingExtra">@dimen/text_line_spacing_extra_m</item>
+    </style>
+
+    <style name="TextLight.M.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextLight.M.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextLight.M.Italic">
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="TextLight.S">
+        <item name="android:textSize">@dimen/text_size_s</item>
+    </style>
+
+    <style name="TextLight.S.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextLight.XS">
+        <item name="android:textSize">@dimen/text_size_xs</item>
+    </style>
+
+</resources>

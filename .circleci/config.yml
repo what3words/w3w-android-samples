@@ -1,0 +1,35 @@
+version: 2.1
+orbs:
+  gradle: circleci/gradle@2.2.0
+  android: circleci/android@2.1.2
+
+jobs:
+  build-assemble:
+    executor:
+      name: android/android-machine
+      tag: 2022.12.1
+      resource-class: large
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}
+      - run:
+          name: Set Up
+          command: | 
+            ./gradlew wrapper
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}
+      - run:
+          name: Assemble builds
+          command: |
+            ./gradlew api-wrapper-sample:assembleRelease
+      - store_artifacts:
+          path: api-wrapper-sample/build/outputs/apk/release
+workflows:
+  build-test:
+    jobs:
+      - build-assemble:
+          context:
+            - mobile

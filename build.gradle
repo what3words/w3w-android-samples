@@ -1,0 +1,46 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.jacoco:org.jacoco.core:0.8.7"
+        classpath 'com.android.tools.build:gradle:7.4.2'
+    }
+
+    ext {
+        kotlin_version = "1.8.20"
+        compose_version = "1.4.3"
+        compose_activity_version = "1.7.2"
+        material_version= "1.9.0"
+        mlkit_core_version = "19.0.0"
+        mlkit_languages_version = "16.0.0"
+        kotlinx_coroutines_version = "1.6.4"
+        rxjava3_android_version = "3.0.2"
+        rxjava3_version = "3.1.6"
+        androidx_core_version = "1.10.1"
+        androidx_appcompat_version = "1.6.1"
+        constraint_layout_version = "2.1.4"
+        google_material_version = "1.9.0"
+        klint_version = "10.1.0"
+        dependency_analysis_version = "1.20.0"
+
+        what3words_android_wrapper_version = "3.+"
+    }
+}
+
+plugins {
+    id "org.jetbrains.kotlin.android" version "$kotlin_version" apply false
+    id "org.jlleitschuh.gradle.ktlint" version "$klint_version" apply true
+    id "com.autonomousapps.dependency-analysis" version "$dependency_analysis_version" apply true
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
