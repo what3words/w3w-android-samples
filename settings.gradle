@@ -26,3 +26,4 @@ include ':maps-googlemaps-sample'
 include ':mapbox-sample'
 include ':auto-suggestion-sample'
 include ":auto-suggestion-sample-voice"
+include ':multi-component-sample'

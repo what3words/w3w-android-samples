@@ -41,12 +41,12 @@ buildscript {
         fragment_version = "1.5.5"
         map_box_version = "10.4.0"
         map_compose_version = "2.7.2"
+        compose_constraint_layout_version = "1.0.1"
 
         what3words_android_wrapper_version = "3.+"
         what3words_android_ocr_components_version = "1.0.5"
         what3words_android_map_components_version = "1.0.2"
         what3words_android_components_version = "3.+"
-
     }
 }
 

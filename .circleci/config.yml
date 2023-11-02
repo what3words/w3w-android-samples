@@ -37,6 +37,10 @@ jobs:
           name: Auto Suggestion Sample Voice builds
           command: |
             ./gradlew auto-suggestion-sample-voice:assembleRelease
+      - run:
+          name: Multi Component Sample Assemble builds
+          command: |
+            ./gradlew multi-component-sample:assembleRelease
       - store_artifacts:
           path: api-wrapper-sample/build/outputs/apk/release
       - store_artifacts:
@@ -45,6 +49,8 @@ jobs:
           path: auto-suggestion-sample/build/outputs/apk/release
       - store_artifacts:
           path: auto-suggestion-sample-voice/build/outputs/apk/release
+      - store_artifacts:
+          path: multi-component-sample/build/outputs/apk/release
 workflows:
   build-test:
     jobs:
