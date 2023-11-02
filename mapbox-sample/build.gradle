@@ -4,17 +4,16 @@ plugins {
 }
 
 android {
-    namespace 'com.what3words.ocr.components.sample'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.what3words.ocr.components.sample"
+        applicationId "com.what3words.map.components.mapboxsample"
         minSdk 24
         targetSdk 33
         versionCode 1
         versionName "1.0"
         buildConfigField 'String', 'W3W_API_KEY', findProperty('PROD_API_KEY') ? "\"${findProperty('PROD_API_KEY')}\"" : "\"YOUR_API_KEY_HERE\""
-
+        resValue "string", "mapbox_access_token", findProperty('MAPBOX_ACCESS_TOKEN') ? "\"${findProperty('MAPBOX_ACCESS_TOKEN')}\"" : "\"YOUR_ACCESS_TOKEN_HERE\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -22,8 +21,8 @@ android {
     }
 
     buildFeatures {
-        viewBinding true
         compose true
+        viewBinding true
     }
 
     signingConfigs {
@@ -51,32 +50,41 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion compose_compiler_version
     }
+
     packagingOptions {
         resources {
-            excludes += '/META-INF/*'
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
 }
 
 dependencies {
-    // compose
-    implementation "androidx.activity:activity-compose:$compose_activity_version"
+    // W3W API Map Lib
+    implementation "com.what3words:w3w-android-map-components:$what3words_android_map_components_version"
+
+    implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     implementation "androidx.compose.material:material:$compose_version"
-    implementation "com.google.android.material:material:$material_version"
+    implementation "com.google.android.material:material:$google_material_version"
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-viewbinding:$compose_version"
+    implementation "androidx.activity:activity-compose:$compose_activity_version"
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation "androidx.fragment:fragment:$fragment_version"
 
-    // W3W API OCR Lib
-    implementation "com.what3words:w3w-android-ocr-components:$what3words_android_ocr_components_version"
-
-    // mlkit
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition:$mlkit_core_version"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-chinese:$mlkit_languages_version"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-devanagari:$mlkit_languages_version"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-japanese:$mlkit_languages_version"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-korean:$mlkit_languages_version"
+    // kotlin
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
+    implementation "com.mapbox.maps:android:$map_box_version"
 }
