@@ -27,6 +27,7 @@ buildscript {
         androidx_core_version = "1.10.1"
         androidx_appcompat_version = "1.6.1"
         constraint_layout_version = "2.1.4"
+        google_player_services_version = "18.0.0"
         google_material_version = "1.9.0"
         klint_version = "10.1.0"
         dependency_analysis_version = "1.20.0"
