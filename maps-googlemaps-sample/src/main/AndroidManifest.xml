@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.what3words.maps.google_maps_sample">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.W3WComposeGoogleMap">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${mapsApiKey}" />
+
+<!--    //Start Google Maps Compose Sample Launcher -->
+
+        <!-- Sample for enable  what3words features in an existing Google Maps app using W3WGoogleMapsWrapper-->
+        <activity
+            android:name=".compose.GoogleMapsWrapperComposeActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.W3WComposeGoogleMap">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Sample for enable what3words features in an new Google Maps app using W3WGoogleMapFragment -->
+        <!-- Change the launcher for testing -->
+        <activity
+            android:name=".compose.GoogleMapFragmentActivity"
+            android:exported="true" >
+        </activity>
+
+        <!-- Sample for Use library with Jetpack Compose -->
+        <!-- Change the launcher for testing -->
+        <activity
+            android:name=".compose.GoogleMapComposeLibraryActivity"
+            android:exported="true" >
+        </activity>
+
+        <!--  End Compose section// -->
+
+
+<!--    //Start Google Maps XML Sample Launcher -->
+
+        <!-- Sample for enable what3words features in an existing Google Maps app using W3WGoogleMapsWrapper-->
+        <activity
+            android:name=".xml.GoogleMapsWrapperXmlActivity"
+            android:theme="@style/Theme.W3WGoogleMap"
+            android:exported="true">
+            <!-- Change the launcher for testing -->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+
+        <!-- Sample for enable  what3words features in an new Google Maps app using W3WGoogleMapFragment -->
+        <!-- Change the launcher for testing -->
+        <activity
+            android:name=".xml.GoogleMapXmlFragmentActivity"
+            android:exported="true">
+        </activity>
+
+        <!--  End XML section// -->
+
+    </application>
+
+</manifest>
