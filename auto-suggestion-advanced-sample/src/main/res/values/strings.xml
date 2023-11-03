@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">w3w advanced sample</string>
-    <string name="title_activity_maps">Sample w3w ride-hailing app</string>
-    <string name="pick_up_hint">pick-up, i.e index.home.raft</string>
-    <string name="drop_off_hint">drop-off, i.e filled.count.soap</string>
-    <string name="action_restart">restart</string>
-</resources>
