@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginTop="@dimen/main_l"
+            android:text="@string/welcome_to_autosuggest"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.what3words.components.voice.W3WAutoSuggestVoice
+            android:id="@+id/w3wVoice"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textHeader" />
+
+        <com.what3words.components.picker.W3WAutoSuggestPicker
+            android:id="@+id/w3wPicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:elevation="1dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/w3wVoice" />
+
+        <TextView
+            android:id="@+id/selectedInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/large_margin"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/w3wVoice" />
+
+        <TextView
+            android:id="@+id/textCustomHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginTop="@dimen/main_xxl"
+            android:text="@string/customise_the_autosuggest_component"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/selectedInfo" />
+
+        <CheckBox
+            android:id="@+id/checkboxCoordinates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginTop="@dimen/main_s"
+            android:layout_marginEnd="@dimen/main_s"
+            android:checked="false"
+            android:text="@string/return_coordinates"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textCustomHeader" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/holderVoiceLanguage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginTop="@dimen/main_m"
+            android:layout_marginEnd="@dimen/main_s"
+            android:hint="@string/voice_language"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/checkboxCoordinates">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textVoiceLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textVoiceLanguageInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:text="@string/voice_language_info"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/holderVoiceLanguage" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/holderFocus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginTop="@dimen/main_m"
+            android:layout_marginEnd="@dimen/main_s"
+            android:hint="@string/focus_hint"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/textVoiceLanguageInfo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textFocus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:visibility="visible" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textFocusInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginEnd="@dimen/main_s"
+            android:text="@string/focus_info"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/holderFocus" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/holderClipToCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/main_m"
+            android:layout_marginEnd="@dimen/main_s"
+            android:hint="@string/clip_to_country_hint"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/textFocusInfo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textClipToCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textClipToCountryInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginEnd="@dimen/main_s"
+            android:text="@string/clip_to_country_info"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/holderClipToCountry" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/holderClipToCircle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginTop="@dimen/main_m"
+            android:layout_marginEnd="@dimen/main_s"
+            android:hint="@string/clip_to_circle_hint"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/textClipToCountryInfo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textClipToCircle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textClipToCircleInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginEnd="@dimen/main_s"
+            android:text="@string/clip_to_circle_info"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/holderClipToCircle" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/holderClipToBoundingBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginTop="@dimen/main_m"
+            android:layout_marginEnd="@dimen/main_s"
+            android:hint="@string/clip_to_box_hint"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/textClipToCircleInfo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textClipToBoundingBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textClipToBoundingBoxInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginEnd="@dimen/main_s"
+            android:text="@string/clip_to_box_info"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/holderClipToBoundingBox" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/holderClipToPolygon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginTop="@dimen/main_m"
+            android:layout_marginEnd="@dimen/main_s"
+            android:hint="@string/clip_to_polygon_hint"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/textClipToBoundingBoxInfo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textClipToPolygon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_s"
+            android:layout_marginEnd="@dimen/main_s"
+            android:text="@string/clip_to_polygon_info"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/holderClipToPolygon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

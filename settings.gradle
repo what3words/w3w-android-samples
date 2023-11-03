@@ -27,3 +27,4 @@ include ':mapbox-sample'
 include ':auto-suggestion-simple-sample'
 include ':auto-suggestion-advanced-sample'
 include ":auto-suggestion-compose-sample"
+include ":auto-suggestion-sample-voice"

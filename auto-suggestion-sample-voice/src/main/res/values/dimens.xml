@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MAIN -->
+    <dimen name="main_xxl">42dp</dimen>
+    <dimen name="main_xl">28dp</dimen>
+    <dimen name="main_l">24dp</dimen>
+    <dimen name="main_m">16dp</dimen>
+    <dimen name="main_s">12dp</dimen>
+    <dimen name="main_xs">8dp</dimen>
+    <dimen name="main_xxs">4dp</dimen>
+</resources>
