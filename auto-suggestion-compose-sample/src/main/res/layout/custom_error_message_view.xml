@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/errorView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/small_100"
+    android:layout_marginTop="@dimen/normal_100"
+    android:layout_marginEnd="@dimen/small_100"
+    android:elevation="1dp"/>
