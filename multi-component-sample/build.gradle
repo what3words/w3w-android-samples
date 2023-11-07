@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
 }
 
 android {
@@ -15,7 +16,8 @@ android {
         manifestPlaceholders = [mapsApiKey: findProperty('MAPS_API_KEY') ? findProperty('MAPS_API_KEY') : "YOUR_GOOGLE_MAPS_API_KEY_HERE"]
         buildConfigField 'String', 'W3W_API_KEY', findProperty('PROD_API_KEY') ? "\"${findProperty('PROD_API_KEY')}\"" : "\"YOUR_API_KEY_HERE\""
         resValue "string", "mapbox_access_token", findProperty('MAPBOX_ACCESS_TOKEN') ? "\"${findProperty('MAPBOX_ACCESS_TOKEN')}\"" : "\"YOUR_ACCESS_TOKEN_HERE\""
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testApplicationId "com.what3words.samples.multiple.test"
+        testInstrumentationRunner "io.cucumber.android.runner.CucumberAndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
@@ -40,6 +42,9 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    testOptions {
+        unitTests.includeAndroidResources = true
     }
     packagingOptions {
         resources {
@@ -71,14 +76,6 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.constraintlayout:constraintlayout-compose:$compose_constraint_layout_version"
 
-    // Testing
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
-
     // Google Map
     implementation "com.google.android.gms:play-services-location:$google_play_location_services_version"
     implementation "com.google.maps.android:android-maps-utils:$google_map_utils_version"
@@ -94,4 +91,23 @@ dependencies {
     implementation "com.google.android.gms:play-services-mlkit-text-recognition-devanagari:$mlkit_languages_version"
     implementation "com.google.android.gms:play-services-mlkit-text-recognition-japanese:$mlkit_languages_version"
     implementation "com.google.android.gms:play-services-mlkit-text-recognition-korean:$mlkit_languages_version"
+
+    //Cucumber
+    androidTestImplementation "io.cucumber:cucumber-android:$cucumber_android_version"
+    androidTestImplementation "io.cucumber:cucumber-picocontainer:$cucumber_picocontainer_version"
+
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation "androidx.test:rules:$test_rule_version"
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:$uiautomator_version"
+    androidTestImplementation "androidx.test:core:$test_core_version"
+    androidTestImplementation "com.android.support:support-annotations:28.0.0"
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$ui_test_junit4_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$ui_tooling_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$ui_test_manifest_version"
+
+
 }
