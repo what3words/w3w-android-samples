@@ -29,10 +29,22 @@ jobs:
           name: OCR Sample Assemble builds
           command: |
             ./gradlew ocr-sample:assembleRelease
+      - run:
+          name: Auto Suggestion Sample builds
+          command: |
+            ./gradlew auto-suggestion-sample:assembleRelease
+      - run:
+          name: Auto Suggestion Sample Voice builds
+          command: |
+            ./gradlew auto-suggestion-sample-voice:assembleRelease
       - store_artifacts:
           path: api-wrapper-sample/build/outputs/apk/release
       - store_artifacts:
           path: ocr-sample/build/outputs/apk/release
+      - store_artifacts:
+          path: auto-suggestion-sample/build/outputs/apk/release
+      - store_artifacts:
+          path: auto-suggestion-sample-voice/build/outputs/apk/release
 workflows:
   build-test:
     jobs:
