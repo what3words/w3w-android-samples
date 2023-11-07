@@ -1,14 +1,14 @@
 version: 2.1
 orbs:
-  gradle: circleci/gradle@2.2.0
-  android: circleci/android@2.1.2
+  gradle: circleci/gradle@3.0.0
+  android: circleci/android@2.3.0
 
 jobs:
   build-assemble:
     executor:
       name: android/android-machine
-      tag: 2023.05.1
-      resource-class: large
+      tag: 2023.11.1
+      resource-class: xlarge
     steps:
       - checkout
       - restore_cache:
@@ -51,9 +51,46 @@ jobs:
           path: auto-suggestion-sample-voice/build/outputs/apk/release
       - store_artifacts:
           path: multi-component-sample/build/outputs/apk/release
+  build-ui-test:
+    executor:
+      name: android/android-machine
+      tag: 2023.11.1
+      resource-class: xlarge
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}
+      - android/create-avd:
+          avd-name: testDevice
+          system-image: system-images;android-34;google_apis_playstore;x86_64
+          install: true
+      - android/start-emulator:
+          avd-name: testDevice
+          no-window: true
+          camera-back: virtualscene
+          restore-gradle-cache-prefix: v1a
+          post-emulator-launch-assemble-command: echo "Emulator Started"
+      - run:
+          name: Set Up
+          command: |
+            ./gradlew wrapper
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}
+      - android/run-tests:
+          test-command: ./gradlew multi-component-sample:jacocoTestReport
+          max-tries: 5
+      - store_test_results:
+          path: multi-component-sample/build/outputs/androidTest-results
+      - android/save-gradle-cache:
+          cache-prefix: v1a
 workflows:
   build-test:
     jobs:
       - build-assemble:
+          context:
+            - mobile
+      - build-ui-test:
           context:
             - mobile
