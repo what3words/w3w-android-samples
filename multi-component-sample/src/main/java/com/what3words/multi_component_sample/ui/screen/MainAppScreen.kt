@@ -1,5 +1,6 @@
 package com.what3words.multi_component_sample.ui.screen
 
+import android.location.Location
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -10,7 +11,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -37,10 +37,12 @@ fun MainAppScreen(
     selectedSuggestion: SuggestionWithCoordinates?,
     onSuggestionChanged: (SuggestionWithCoordinates?) -> (Unit)
 ) {
-    var scanScreenVisible by remember { mutableStateOf(false) }
+    var scanScreenVisible by rememberSaveable { mutableStateOf(false) }
     var isGGMap by rememberSaveable {
         mutableStateOf(true)
     }
+
+    var addMarker: Location? by rememberSaveable { mutableStateOf(null) }
 
     W3WMultiComponentTheme {
         // A surface container using the 'background' color from the theme
@@ -55,7 +57,7 @@ fun MainAppScreen(
                     .statusBarsPadding()
                     .fillMaxSize()
             ) {
-                val (w3wTextFieldRef, mapRef, ocrRef, locationRef) = createRefs()
+                val (w3wTextFieldRef, mapRef, ocrRef, mapTypeRef, addMarkerRef) = createRefs()
 
                 OcrView(
                     ocrWrapper,
@@ -73,7 +75,11 @@ fun MainAppScreen(
                         bottom.linkTo(anchor = parent.bottom)
                         width = Dimension.fillToConstraints
                         height = Dimension.fillToConstraints
-                    }, isGGMap = isGGMap, selectedSuggestion, onMapClick =
+                    },
+                    isGGMap = isGGMap,
+                    addMarker = addMarker,
+                    suggestion = selectedSuggestion,
+                    onMapClick =
                     onSuggestionChanged
                 )
 
@@ -88,7 +94,31 @@ fun MainAppScreen(
 
                 FloatingActionButton(
                     modifier = Modifier
-                        .constrainAs(ref = locationRef) {
+                        .constrainAs(ref = addMarkerRef) {
+                            start.linkTo(parent.start)
+                            bottom.linkTo(anchor = mapTypeRef.top)
+                            width = Dimension.wrapContent
+                            height = Dimension.wrapContent
+                        }
+                        .padding(bottom = 12.dp, start = 24.dp),
+                    onClick = {
+                        selectedSuggestion?.let {
+                            val location = Location("")
+                            location.latitude = it.coordinates.lat
+                            location.longitude = it.coordinates.lng
+                            addMarker = location
+
+                        }
+                    },
+                    backgroundColor = W3WTheme.colors.background,
+                    contentColor = W3WTheme.colors.primary
+                ) {
+                    Icon(painterResource(R.drawable.icon_add_location), "Add Marker")
+                }
+
+                FloatingActionButton(
+                    modifier = Modifier
+                        .constrainAs(ref = mapTypeRef) {
                             start.linkTo(parent.start)
                             bottom.linkTo(anchor = ocrRef.top)
                             width = Dimension.wrapContent
@@ -101,7 +131,7 @@ fun MainAppScreen(
                     backgroundColor = W3WTheme.colors.background,
                     contentColor = W3WTheme.colors.primary
                 ) {
-                    Icon(painterResource(R.drawable.icon_map), "My Location")
+                    Icon(painterResource(R.drawable.icon_map), "Map Type")
                 }
 
                 FloatingActionButton(

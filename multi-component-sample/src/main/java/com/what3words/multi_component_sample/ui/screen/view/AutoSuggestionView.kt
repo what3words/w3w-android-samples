@@ -32,6 +32,7 @@ fun AutoTextField(
             rememberW3WAutoSuggestTextFieldState().apply {
                 nResults(n = 4)
                 voiceLanguage("en")
+                returnCoordinates(true)
                 voiceEnabled(enabled = true, type = VoiceScreenType.AnimatedPopup)
                 suggestion?.let { display(it) }
             }

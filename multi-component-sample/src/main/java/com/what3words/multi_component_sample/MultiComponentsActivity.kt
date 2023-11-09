@@ -36,7 +36,9 @@ class MultiComponentsActivity : ComponentActivity() {
                 ocrWrapper,
                 dataProvider,
                 selectedSuggestion = selectedSuggestion,
-                onSuggestionChanged = { viewModel.selectedSuggestion.value = it }
+                onSuggestionChanged = {
+                    viewModel.selectedSuggestion.value = it
+                }
             )
         }
     }
