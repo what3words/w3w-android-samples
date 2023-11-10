@@ -1,4 +1,4 @@
-package com.what3words.multi_component_sample.ui.screen.view
+package com.what3words.multicomponentsample.ui.screen.view
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -26,7 +26,7 @@ fun OcrView(
     ocrWrapper: W3WOcrWrapper,
     dataProvider: What3WordsAndroidWrapper,
     scanScreenVisible: Boolean, onScanScreenVisibleChange: (Boolean) -> Unit,
-    onScannedSuggestion: (SuggestionWithCoordinates) -> (Unit)
+    onSuggestionScanned: (SuggestionWithCoordinates) -> (Unit)
 ) {
     val options = remember {
         AutosuggestOptions().apply {
@@ -80,7 +80,7 @@ fun OcrView(
                 onScanScreenVisibleChange(false)
             },
             onSuggestionSelected = {
-                onScannedSuggestion(it)
+                onSuggestionScanned(it)
                 onScanScreenVisibleChange(false)
             })
     }

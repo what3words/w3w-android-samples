@@ -1,4 +1,4 @@
-package com.what3words.multi_component_sample.ui.screen
+package com.what3words.multicomponentsample.ui.screen
 
 import android.location.Location
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,11 +22,11 @@ import com.what3words.androidwrapper.What3WordsAndroidWrapper
 import com.what3words.androidwrapper.What3WordsV3
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
-import com.what3words.multi_component_sample.R
-import com.what3words.multi_component_sample.ui.screen.view.AutoTextField
-import com.what3words.multi_component_sample.ui.screen.view.MapWrapperView
-import com.what3words.multi_component_sample.ui.screen.view.OcrView
-import com.what3words.multi_component_sample.ui.theme.W3WMultiComponentTheme
+import com.what3words.multicomponentsample.R
+import com.what3words.multicomponentsample.ui.screen.view.AutoTextField
+import com.what3words.multicomponentsample.ui.screen.view.MapWrapperView
+import com.what3words.multicomponentsample.ui.screen.view.OcrView
+import com.what3words.multicomponentsample.ui.theme.W3WMultiComponentTheme
 import com.what3words.ocr.components.models.W3WOcrWrapper
 
 @Composable
@@ -64,7 +64,7 @@ fun MainAppScreen(
                     dataProvider,
                     scanScreenVisible = scanScreenVisible,
                     onScanScreenVisibleChange = { scanScreenVisible = it },
-                    onScannedSuggestion = onSuggestionChanged
+                    onSuggestionScanned = onSuggestionChanged
                 )
 
                 MapWrapperView(
@@ -79,8 +79,9 @@ fun MainAppScreen(
                     isGGMap = isGGMap,
                     addMarker = addMarker,
                     suggestion = selectedSuggestion,
-                    onMapClick =
-                    onSuggestionChanged
+                    onMapClicked =
+                    onSuggestionChanged,
+                    onAddMarkerSucceeded = {addMarker = null}
                 )
 
                 AutoTextField(modifier = Modifier
@@ -89,8 +90,7 @@ fun MainAppScreen(
                         top.linkTo(anchor = parent.top)
                         width = Dimension.fillToConstraints
                         height = Dimension.wrapContent
-                    }
-                    .padding(12.dp), selectedSuggestion, onSelectedItem = onSuggestionChanged)
+                    }, selectedSuggestion, onItemSelected = onSuggestionChanged)
 
                 FloatingActionButton(
                     modifier = Modifier
@@ -113,7 +113,7 @@ fun MainAppScreen(
                     backgroundColor = W3WTheme.colors.background,
                     contentColor = W3WTheme.colors.primary
                 ) {
-                    Icon(painterResource(R.drawable.icon_add_location), "Add Marker")
+                    Icon(painterResource(R.drawable.icon_pin_drop), "Add Marker")
                 }
 
                 FloatingActionButton(

@@ -1,4 +1,4 @@
-package com.what3words.multi_component_sample
+package com.what3words.multicomponentsample
 
 import androidx.lifecycle.ViewModel
 import com.what3words.javawrapper.response.SuggestionWithCoordinates

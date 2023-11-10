@@ -7,7 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.what3words.multi_component_sample"
+        applicationId "com.what3words.multicomponentsample"
         minSdk 24
         targetSdk 33
         versionCode 1

@@ -1,4 +1,4 @@
-package com.what3words.multi_component_sample.ui.theme
+package com.what3words.multicomponentsample.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
