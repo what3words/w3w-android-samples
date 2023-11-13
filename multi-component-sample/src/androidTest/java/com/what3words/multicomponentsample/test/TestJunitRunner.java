@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.what3words.multicomponentsample.MyApplication;
+import com.what3words.multicomponentsample.MultiComponentsApp;
 
 import java.io.File;
 
@@ -12,7 +12,7 @@ import io.cucumber.android.runner.CucumberAndroidJUnitRunner;
 import io.cucumber.junit.CucumberOptions;
 
 @CucumberOptions(features = "features",
-glue = "com.what3words.multicomponentsample")
+        glue = "com.what3words.multicomponentsample")
 public class TestJunitRunner extends CucumberAndroidJUnitRunner {
 
     @Override
@@ -58,6 +58,6 @@ public class TestJunitRunner extends CucumberAndroidJUnitRunner {
 
     @Override
     public Application newApplication(ClassLoader cl, String className, Context context) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        return super.newApplication(cl, MyApplication.class.getName(), context);
+        return super.newApplication(cl, MultiComponentsApp.class.getName(), context);
     }
 }
