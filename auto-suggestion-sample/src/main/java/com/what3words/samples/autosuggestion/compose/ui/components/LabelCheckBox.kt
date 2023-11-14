@@ -1,4 +1,4 @@
-package com.what3words.samples.compose.ui.components
+package com.what3words.samples.autosuggestion.compose.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -12,7 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import com.what3words.samples.R
+import com.what3words.samples.autosuggestion.R
 
 @Composable
 fun LabelCheckBox(

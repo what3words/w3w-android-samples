@@ -1,4 +1,4 @@
-package com.what3words.samples.compose.ui.components
+package com.what3words.samples.autosuggestion.compose.ui.components
 
 
 import androidx.compose.foundation.clickable
@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextOverflow
-import com.what3words.samples.R
+import com.what3words.samples.autosuggestion.R
 
 class RadioGroupState<T>(val items: List<T>, selectedItemIndex: Int, val label: (T) -> String) {
     var selected: T? by mutableStateOf(if (items.isNotEmpty()) items[selectedItemIndex] else null)

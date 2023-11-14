@@ -1,4 +1,4 @@
-package com.what3words.sample_voice
+package com.what3words.samples.voice
 
 import android.annotation.SuppressLint
 import android.media.AudioFormat
@@ -8,12 +8,11 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.google.android.material.snackbar.Snackbar
-import autosuggestsample.util.addOnTextChangedListener
 import com.what3words.javawrapper.request.BoundingBox
 import com.what3words.javawrapper.request.Coordinates
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
-import com.what3words.sample_voice.databinding.ActivityVoiceBinding
-import com.what3words.sample_voice.databinding.ActivityVoiceBinding.inflate
+import com.what3words.samples.voice.databinding.ActivityVoiceBinding
+import com.what3words.samples.voice.databinding.ActivityVoiceBinding.inflate
 
 class VoiceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVoiceBinding

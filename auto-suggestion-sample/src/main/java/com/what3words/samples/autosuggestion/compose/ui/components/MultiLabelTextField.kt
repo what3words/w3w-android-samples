@@ -1,4 +1,4 @@
-package com.what3words.samples.compose.ui.components
+package com.what3words.samples.autosuggestion.compose.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

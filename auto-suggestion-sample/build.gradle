@@ -7,7 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.what3words.sample"
+        applicationId "com.what3words.samples.autosuggestion"
         minSdk 23
         targetSdk 33
         versionCode 1

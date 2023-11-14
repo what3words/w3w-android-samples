@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">sample</string>
+    <string name="app_name">Sample Auto Suggestion</string>
 
     <string name="txt_label_language">language</string>
     <string name="txt_label_language_info">AutoSuggest will search in all languages. However, you can additionally specify a fallback language, to help the API in situations where the input is particularly messy.</string>

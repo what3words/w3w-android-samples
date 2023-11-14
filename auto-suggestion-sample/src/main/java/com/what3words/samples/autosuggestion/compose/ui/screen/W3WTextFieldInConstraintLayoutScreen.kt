@@ -1,4 +1,4 @@
-package com.what3words.samples.compose.ui.screen
+package com.what3words.samples.autosuggestion.compose.ui.screen
 
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.layout.defaultMinSize
@@ -32,10 +32,11 @@ import com.what3words.components.compose.wrapper.rememberW3WAutoSuggestTextField
 import com.what3words.components.picker.W3WAutoSuggestCorrectionPicker
 import com.what3words.components.picker.W3WAutoSuggestPicker
 import com.what3words.components.text.W3WAutoSuggestEditText
-import com.what3words.samples.BuildConfig
-import com.what3words.samples.R
-import com.what3words.samples.databinding.CustomCorrectionPickerBinding
-import com.what3words.samples.databinding.CustomSuggestionPickerBinding
+import com.what3words.samples.autosuggestion.BuildConfig
+import com.what3words.samples.autosuggestion.R
+import com.what3words.samples.autosuggestion.databinding.CustomCorrectionPickerBinding
+import com.what3words.samples.autosuggestion.databinding.CustomSuggestionPickerBinding
+
 
 /**
  * A jetpack compose screen that's intends to be replica of the W3WAutoSuggestComponent Sample(view-specific) app.

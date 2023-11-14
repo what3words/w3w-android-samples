@@ -15,8 +15,8 @@ import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.models.W3WZoomOption
 import com.what3words.components.maps.views.W3WGoogleMapFragment
 import com.what3words.components.maps.views.W3WMap
-import com.what3words.maps.google_maps_sample.BuildConfig
-import com.what3words.maps.google_maps_sample.databinding.ActivityComposeMapFragmentBinding
+import com.what3words.samples.googlemaps.BuildConfig
+import com.what3words.samples.googlemaps.databinding.ActivityComposeMapFragmentBinding
 import com.what3words.samples.googlemaps.ui.theme.W3wandroidcomponentsmapsTheme
 
 class GoogleMapFragmentActivity : FragmentActivity(), W3WGoogleMapFragment.OnMapReadyCallback {

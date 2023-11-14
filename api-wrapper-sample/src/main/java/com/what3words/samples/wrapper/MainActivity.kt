@@ -1,4 +1,4 @@
-package com.what3words.androidwrappersample
+package com.what3words.samples.wrapper
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -12,13 +12,13 @@ import androidx.core.content.PermissionChecker
 import com.what3words.androidwrapper.What3WordsV3
 import com.what3words.androidwrapper.voice.Microphone
 import com.what3words.androidwrapper.voice.VoiceBuilder
-import com.what3words.androidwrappersample.databinding.ActivityMainBinding
-import com.what3words.androidwrappersample.databinding.ActivityMainBinding.inflate
 import com.what3words.javawrapper.request.Coordinates
-import kotlin.math.roundToInt
+import com.what3words.samples.wrapper.databinding.ActivityMainBinding
+import com.what3words.samples.wrapper.databinding.ActivityMainBinding.inflate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
 
