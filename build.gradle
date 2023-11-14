@@ -39,9 +39,16 @@ buildscript {
         androidx_lifecycle_runtime_ktx_version = "2.5.1"
         androidx_core_ktx_version = "1.8.0"
         fragment_version = "1.5.5"
-        map_box_version = "10.4.0"
-        map_compose_version = "2.7.2"
         compose_constraint_layout_version = "1.0.1"
+
+        //Google Map
+        map_compose_version = "2.7.2"
+        google_play_location_services_version = "21.0.1"
+        google_map_utils_version = "2.4.0"
+        google_play_maps_services_version = "18.2.0"
+
+        //Map Box
+        map_box_version = "10.4.0"
 
         what3words_android_wrapper_version = "3.+"
         what3words_android_ocr_components_version = "1.0.5"
