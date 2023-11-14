@@ -1,4 +1,4 @@
-package com.what3words.ocr.components.sample
+package com.what3words.samples.ocr
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf

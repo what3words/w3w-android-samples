@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Ocrcomponentssample"
         tools:targetApi="31">
         <activity
-            android:name=".ComposeOcrScanPopupSampleActivity"
+            android:name="com.what3words.samples.ocr.ComposeOcrScanPopupSampleActivity"
             android:exported="true"
             android:label="@string/title_activity_main2" >
             <intent-filter>

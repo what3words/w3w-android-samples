@@ -1,4 +1,4 @@
-package com.what3words.ocr.components.sample
+package com.what3words.samples.ocr
 
 import android.annotation.SuppressLint
 import android.app.Activity
