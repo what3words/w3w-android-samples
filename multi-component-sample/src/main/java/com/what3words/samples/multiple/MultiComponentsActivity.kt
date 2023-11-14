@@ -8,9 +8,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.what3words.androidwrapper.What3WordsAndroidWrapper
 import com.what3words.androidwrapper.What3WordsV3
-import com.what3words.samples.multiple.ui.screen.MainAppScreen
 import com.what3words.ocr.components.models.W3WOcrMLKitWrapper
 import com.what3words.ocr.components.models.W3WOcrWrapper
+import com.what3words.samples.multiple.ui.screen.MainAppScreen
 
 class MultiComponentsActivity : ComponentActivity() {
     private val viewModel: MultiComponentsViewModel by viewModels()
@@ -33,6 +33,7 @@ class MultiComponentsActivity : ComponentActivity() {
             MainAppScreen(
                 wrapper,
                 ocrWrapper,
+                true,
                 dataProvider,
                 selectedSuggestion = selectedSuggestion,
                 onSuggestionChanged = {

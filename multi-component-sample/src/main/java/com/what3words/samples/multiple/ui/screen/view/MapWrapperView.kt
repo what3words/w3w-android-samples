@@ -1,6 +1,5 @@
 package com.what3words.samples.multiple.ui.screen.view
 
-import android.location.Location
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,9 +23,9 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.what3words.androidwrapper.What3WordsV3
-import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WGoogleMapsWrapper
 import com.what3words.components.maps.wrappers.W3WMapBoxWrapper
+import com.what3words.components.maps.wrappers.W3WMapWrapper
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
 
 @Composable
@@ -34,10 +33,9 @@ fun MapWrapperView(
     wrapper: What3WordsV3,
     modifier: Modifier,
     isGGMap: Boolean,
-    addMarker: Location?,
-    onAddMarkerSucceeded: () -> (Unit),
     suggestion: SuggestionWithCoordinates?,
-    onMapClicked: (SuggestionWithCoordinates) -> (Unit)
+    onMapClicked: () -> (Unit),
+    onWrapperInitialized: (W3WMapWrapper) -> (Unit)
 ) {
     if (isGGMap) {
         GoogleMapView(
@@ -45,17 +43,15 @@ fun MapWrapperView(
             modifier = modifier,
             suggestion = suggestion,
             onMapClicked = onMapClicked,
-            addMarker,
-            onAddMarkerSucceeded = onAddMarkerSucceeded
+            onWrapperInitialized
         )
     } else {
         MapBoxView(
             wrapper,
             modifier = modifier,
             suggestion = suggestion,
-            onMapClick = onMapClicked,
-            addMarker,
-            onAddMarkerSucceeded = onAddMarkerSucceeded
+            onMapClicked = onMapClicked,
+            onWrapperInitialized
         )
     }
 }
@@ -65,9 +61,8 @@ private fun GoogleMapView(
     wrapper: What3WordsV3,
     modifier: Modifier,
     suggestion: SuggestionWithCoordinates?,
-    onMapClicked: (SuggestionWithCoordinates) -> (Unit),
-    addMarker: Location?,
-    onAddMarkerSucceeded: () -> (Unit)
+    onMapClicked: () -> (Unit),
+    onWrapperInitialized: (W3WMapWrapper) -> (Unit),
 ) {
     val TAG = "GoogleMapView"
     val context = LocalContext.current
@@ -79,7 +74,7 @@ private fun GoogleMapView(
         mutableStateOf(null)
     }
 
-    var GMap: GoogleMap? by remember {
+    var googleMap: GoogleMap? by remember {
         mutableStateOf(null)
     }
 
@@ -89,7 +84,7 @@ private fun GoogleMapView(
     ) {
         //EXPERIMENTAL access to raw GoogleMap, check: https://github.com/googlemaps/android-maps-compose#obtaining-access-to-the-raw-googlemap-experimental
         MapEffect { map ->
-            GMap = map
+            googleMap = map
             w3wMapsWrapper = W3WGoogleMapsWrapper(
                 context,
                 map,
@@ -97,6 +92,8 @@ private fun GoogleMapView(
             )
 
             w3wMapsWrapper?.let {
+                onWrapperInitialized(it)
+
                 //click even on existing w3w added markers on the map.
                 it.onMarkerClicked {
                     Log.d(TAG, "clicked: ${it.words}")
@@ -130,7 +127,7 @@ private fun GoogleMapView(
                                 .zoom(19f)
                                 .build()
                             map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-                            onMapClicked.invoke(it)
+                            onMapClicked.invoke()
                         }
                     )
                 }
@@ -153,23 +150,8 @@ private fun GoogleMapView(
                             .target(LatLng(it.coordinates.lat, it.coordinates.lng))
                             .zoom(19f)
                             .build()
-                        GMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
                     })
-                }
-            }
-
-            addMarker?.let { location ->
-                w3wMapsWrapper.findMarkerByCoordinates(location.latitude, location.longitude)?.let {
-                    w3wMapsWrapper.removeMarkerAtCoordinates(it.coordinates.lat, it.coordinates.lng)
-                    onAddMarkerSucceeded()
-                } ?: run {
-                    w3wMapsWrapper.addMarkerAtCoordinates(
-                        location.latitude,
-                        location.longitude,
-                        W3WMarkerColor.RED, onSuccess = {
-                            onAddMarkerSucceeded()
-                        }
-                    )
                 }
             }
         }
@@ -181,9 +163,8 @@ fun MapBoxView(
     wrapper: What3WordsV3,
     modifier: Modifier,
     suggestion: SuggestionWithCoordinates?,
-    onMapClick: (SuggestionWithCoordinates) -> (Unit),
-    addMarker: Location?,
-    onAddMarkerSucceeded: () -> (Unit)
+    onMapClicked: () -> (Unit),
+    onWrapperInitialized: (W3WMapWrapper) -> (Unit),
 ) {
     val TAG = "MapBoxView"
     var w3wMapsWrapper: W3WMapBoxWrapper? by remember {
@@ -200,9 +181,11 @@ fun MapBoxView(
             context,
             mapView!!.getMapboxMap(),
             wrapper,
-        ).setLanguage("en")
+        )
 
         w3wMapsWrapper?.let { w3wMapsWrapper ->
+            onWrapperInitialized(w3wMapsWrapper)
+
             //click even on existing w3w added markers on the map.
             w3wMapsWrapper.onMarkerClicked {
                 Log.i(TAG, "clicked: ${it.words}")
@@ -231,7 +214,7 @@ fun MapBoxView(
                 w3wMapsWrapper.selectAtCoordinates(
                     latLng.latitude(),
                     latLng.longitude(), onSuccess = {
-                        onMapClick.invoke(it)
+                        onMapClicked.invoke()
                         mapBoxMoveCamera(
                             mapView!!,
                             Point.fromLngLat(it.coordinates.lng, it.coordinates.lat)
@@ -259,20 +242,6 @@ fun MapBoxView(
                         )
                     }
                 })
-            }
-        }
-
-        addMarker?.let { location ->
-            wrapper.findMarkerByCoordinates(location.latitude, location.longitude)?.let {
-                wrapper.removeMarkerAtCoordinates(location.latitude, location.longitude)
-                onAddMarkerSucceeded()
-            } ?: run {
-                wrapper.addMarkerAtCoordinates(
-                    location.latitude,
-                    location.longitude,
-                    W3WMarkerColor.RED, onSuccess = { onAddMarkerSucceeded() }
-                )
-                onAddMarkerSucceeded()
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.what3words.samples.multiple.ui.screen
 
-import android.location.Location
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -11,6 +10,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -20,29 +20,33 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.what3words.androidwrapper.What3WordsAndroidWrapper
 import com.what3words.androidwrapper.What3WordsV3
+import com.what3words.components.maps.models.W3WMarkerColor
+import com.what3words.components.maps.wrappers.W3WMapWrapper
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
+import com.what3words.ocr.components.models.W3WOcrWrapper
+import com.what3words.samples.multiple.R
 import com.what3words.samples.multiple.ui.screen.view.AutoTextField
 import com.what3words.samples.multiple.ui.screen.view.MapWrapperView
 import com.what3words.samples.multiple.ui.screen.view.OcrView
 import com.what3words.samples.multiple.ui.theme.W3WMultiComponentTheme
-import com.what3words.ocr.components.models.W3WOcrWrapper
-import com.what3words.samples.multiple.R
 
 @Composable
 fun MainAppScreen(
     wrapper: What3WordsV3,
     ocrWrapper: W3WOcrWrapper,
+    isGoogleMapType: Boolean,
     dataProvider: What3WordsAndroidWrapper,
     selectedSuggestion: SuggestionWithCoordinates?,
     onSuggestionChanged: (SuggestionWithCoordinates?) -> (Unit)
 ) {
     var scanScreenVisible by rememberSaveable { mutableStateOf(false) }
     var isGGMap by rememberSaveable {
-        mutableStateOf(true)
+        mutableStateOf(isGoogleMapType)
     }
-
-    var addMarker: Location? by rememberSaveable { mutableStateOf(null) }
+    var w3wMapsWrapper: W3WMapWrapper? by rememberSaveable {
+        mutableStateOf(null)
+    }
 
     W3WMultiComponentTheme {
         // A surface container using the 'background' color from the theme
@@ -77,11 +81,9 @@ fun MainAppScreen(
                         height = Dimension.fillToConstraints
                     },
                     isGGMap = isGGMap,
-                    addMarker = addMarker,
                     suggestion = selectedSuggestion,
-                    onMapClicked =
-                    onSuggestionChanged,
-                    onAddMarkerSucceeded = {addMarker = null}
+                    onMapClicked = { onSuggestionChanged(w3wMapsWrapper?.getSelectedMarker()) },
+                    onWrapperInitialized = { w3wMapsWrapper = it }
                 )
 
                 AutoTextField(modifier = Modifier
@@ -90,7 +92,8 @@ fun MainAppScreen(
                         top.linkTo(anchor = parent.top)
                         width = Dimension.fillToConstraints
                         height = Dimension.wrapContent
-                    }, selectedSuggestion, onItemSelected = onSuggestionChanged)
+                    }, selectedSuggestion, onItemSelected = onSuggestionChanged
+                )
 
                 FloatingActionButton(
                     modifier = Modifier
@@ -102,12 +105,22 @@ fun MainAppScreen(
                         }
                         .padding(bottom = 12.dp, start = 24.dp),
                     onClick = {
-                        selectedSuggestion?.let {
-                            val location = Location("")
-                            location.latitude = it.coordinates.lat
-                            location.longitude = it.coordinates.lng
-                            addMarker = location
-
+                        w3wMapsWrapper?.getSelectedMarker()?.let { location ->
+                            w3wMapsWrapper?.findMarkerByCoordinates(
+                                location.coordinates.lat,
+                                location.coordinates.lng,
+                            )?.let {
+                                w3wMapsWrapper?.removeMarkerAtCoordinates(
+                                    location.coordinates.lat,
+                                    location.coordinates.lng
+                                )
+                            } ?: run {
+                                w3wMapsWrapper?.addMarkerAtCoordinates(
+                                    location.coordinates.lat,
+                                    location.coordinates.lng,
+                                    W3WMarkerColor.RED
+                                )
+                            }
                         }
                     },
                     backgroundColor = W3WTheme.colors.background,
