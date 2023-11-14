@@ -1,5 +1,3 @@
 <resources>
-    <string name="app_name">Multiple Component Sample</string>
-    <string name="txt_label_welcome_to_autosuggest_sample">Welcome to Autosuggest sample in Jetpack Compose</string>
-    <string name="suggestion_info_placeholder">words: %1$s\ncountry: %2$s\nnear: %3$s\ndistance: %4$s\nlatitude: %5$s\nlongitude: %6$s</string>
+    <string name="app_name">Sample Multiple</string>
 </resources>

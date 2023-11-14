@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.what3words.sample">
+    package="com.what3words.samples">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.What3wordscomponents">
         <activity
-            android:name="com.what3words.sample.compose.MainActivity"
+            android:name="com.what3words.samples.compose.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.What3wordscomponents">
             <!-- Uncomment here to run Jetpack Compose activity sample. Do not forget to comment the block from line 31 to 34 -->
@@ -24,7 +24,7 @@
             <!--            </intent-filter>-->
         </activity>
         <activity
-            android:name="com.what3words.sample.xml.MainActivity"
+            android:name="com.what3words.samples.xml.MainActivity"
             android:exported="true"
             android:theme="@style/AppTheme">
             <!-- Uncomment here to run XML layout activity sample. Do not forget to comment the block from line 20 to 24 -->
