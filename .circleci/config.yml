@@ -7,7 +7,7 @@ jobs:
   build-assemble:
     executor:
       name: android/android-machine
-      tag: 2022.12.1
+      tag: 2023.05.1
       resource-class: large
     steps:
       - checkout
