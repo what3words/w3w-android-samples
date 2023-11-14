@@ -13,9 +13,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.what3words.androidwrapper.What3WordsV3
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WGoogleMapsWrapper
-import com.what3words.maps.google_maps_sample.BuildConfig
-import com.what3words.maps.google_maps_sample.R
-import com.what3words.maps.google_maps_sample.databinding.ActivityMapWrapperBinding
+import com.what3words.samples.googlemaps.BuildConfig
+import com.what3words.samples.googlemaps.R
+import com.what3words.samples.googlemaps.databinding.ActivityMapWrapperBinding
 
 
 class GoogleMapsWrapperXmlActivity : AppCompatActivity(), OnMapReadyCallback {

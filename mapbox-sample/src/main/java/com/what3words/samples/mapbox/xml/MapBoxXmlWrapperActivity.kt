@@ -11,8 +11,8 @@ import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.what3words.androidwrapper.What3WordsV3
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WMapBoxWrapper
-import com.what3words.map.components.mapboxsample.BuildConfig
-import com.what3words.map.components.mapboxsample.databinding.ActivityMapWrapperBinding
+import com.what3words.samples.mapbox.BuildConfig
+import com.what3words.samples.mapbox.databinding.ActivityMapWrapperBinding
 
 class MapBoxXmlWrapperActivity : AppCompatActivity() {
     private lateinit var w3wMapsWrapper: W3WMapBoxWrapper

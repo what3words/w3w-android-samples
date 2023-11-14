@@ -10,7 +10,6 @@ import com.google.mlkit.vision.text.TextRecognizerOptionsInterface.LATIN_AND_CHI
 import com.google.mlkit.vision.text.TextRecognizerOptionsInterface.LATIN_AND_DEVANAGARI
 import com.google.mlkit.vision.text.TextRecognizerOptionsInterface.LATIN_AND_JAPANESE
 import com.google.mlkit.vision.text.TextRecognizerOptionsInterface.LATIN_AND_KOREAN
-import com.what3words.ocr.components.models.W3WOcrWrapper
 
 class ComposeOcrScanSamplePopupViewModel : ViewModel() {
 

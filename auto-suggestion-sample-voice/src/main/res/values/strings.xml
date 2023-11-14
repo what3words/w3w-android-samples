@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">autosuggest voice only</string>
+    <string name="app_name">Sample Voice</string>
     <string name="welcome_to_autosuggest">Welcome to Autosuggest voice sample</string>
     <string name="selected_info">Selected info</string>
     <string name="customise_the_autosuggest_component">Customise the AutoSuggest Component</string>

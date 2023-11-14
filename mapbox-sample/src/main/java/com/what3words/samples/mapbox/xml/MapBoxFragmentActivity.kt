@@ -9,9 +9,9 @@ import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.models.W3WZoomOption
 import com.what3words.components.maps.views.W3WMap
 import com.what3words.components.maps.views.W3WMapboxMapFragment
-import com.what3words.map.components.mapboxsample.BuildConfig
-import com.what3words.map.components.mapboxsample.R
-import com.what3words.map.components.mapboxsample.databinding.ActivityMapFragmentBinding
+import com.what3words.samples.mapbox.BuildConfig
+import com.what3words.samples.mapbox.R
+import com.what3words.samples.mapbox.databinding.ActivityMapFragmentBinding
 
 class MapBoxFragmentActivity : AppCompatActivity() , W3WMapboxMapFragment.OnMapReadyCallback {
     private lateinit var binding: ActivityMapFragmentBinding

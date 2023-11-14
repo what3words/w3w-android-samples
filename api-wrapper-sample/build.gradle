@@ -9,7 +9,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.what3words.androidwrapper"
+        applicationId "com.what3words.samples.wrapper"
         minSdkVersion 19
         targetSdkVersion 33
         versionCode 1
@@ -45,7 +45,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    namespace 'com.what3words.androidwrappersample'
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    namespace "com.what3words.samples.wrapper"
 }
 
 dependencies {

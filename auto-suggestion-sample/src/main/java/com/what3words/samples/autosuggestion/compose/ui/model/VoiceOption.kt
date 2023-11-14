@@ -1,4 +1,4 @@
-package com.what3words.samples.compose.ui.model
+package com.what3words.samples.autosuggestion.compose.ui.model
 
 import com.what3words.components.models.VoiceScreenType
 

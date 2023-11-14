@@ -1,4 +1,4 @@
-package com.what3words.samples.xml
+package com.what3words.samples.autosuggestion.xml
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -13,11 +13,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.what3words.components.models.VoiceScreenType
 import com.what3words.javawrapper.request.BoundingBox
 import com.what3words.javawrapper.request.Coordinates
-import com.what3words.samples.BuildConfig
-import com.what3words.samples.R
-import com.what3words.samples.databinding.ActivityMainBinding
-import com.what3words.samples.databinding.ActivityMainBinding.inflate
-import com.what3words.samples.xml.util.addOnTextChangedListener
+import com.what3words.samples.autosuggestion.BuildConfig
+import com.what3words.samples.autosuggestion.R
+import com.what3words.samples.autosuggestion.databinding.ActivityMainBinding
+import com.what3words.samples.autosuggestion.databinding.ActivityMainBinding.inflate
+import com.what3words.samples.autosuggestion.xml.util.addOnTextChangedListener
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

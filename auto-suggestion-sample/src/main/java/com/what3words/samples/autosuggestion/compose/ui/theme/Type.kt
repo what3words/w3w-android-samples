@@ -1,4 +1,4 @@
-package com.what3words.samples.compose.ui.theme
+package com.what3words.samples.autosuggestion.compose.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

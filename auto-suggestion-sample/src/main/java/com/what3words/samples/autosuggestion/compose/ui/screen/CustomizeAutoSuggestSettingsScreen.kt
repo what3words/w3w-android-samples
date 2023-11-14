@@ -1,4 +1,4 @@
-package com.what3words.samples.compose.ui.screen
+package com.what3words.samples.autosuggestion.compose.ui.screen
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
@@ -17,14 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import com.what3words.components.compose.wrapper.W3WAutoSuggestTextFieldState
-import com.what3words.samples.compose.ui.components.LabelCheckBox
-import com.what3words.samples.compose.ui.components.MultiLabelTextField
-import com.what3words.samples.compose.ui.components.RadioGroup
-import com.what3words.samples.compose.ui.components.RadioGroupState
-import com.what3words.samples.compose.ui.model.VoiceOption
 import com.what3words.javawrapper.request.BoundingBox
 import com.what3words.javawrapper.request.Coordinates
-import com.what3words.samples.R
+import com.what3words.samples.autosuggestion.R
+import com.what3words.samples.autosuggestion.compose.ui.components.LabelCheckBox
+import com.what3words.samples.autosuggestion.compose.ui.components.MultiLabelTextField
+import com.what3words.samples.autosuggestion.compose.ui.components.RadioGroup
+import com.what3words.samples.autosuggestion.compose.ui.components.RadioGroupState
+import com.what3words.samples.autosuggestion.compose.ui.model.VoiceOption
 
 
 class CustomizeAutoSuggestSettingsScreenState(context: Context) {

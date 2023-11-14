@@ -15,8 +15,8 @@ import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.models.W3WZoomOption
 import com.what3words.components.maps.views.W3WMap
 import com.what3words.components.maps.views.W3WMapboxMapFragment
-import com.what3words.map.components.mapboxsample.BuildConfig
-import com.what3words.map.components.mapboxsample.databinding.ActivityComposeMapFragmentBinding
+import com.what3words.samples.mapbox.BuildConfig
+import com.what3words.samples.mapbox.databinding.ActivityComposeMapFragmentBinding
 import com.what3words.samples.mapbox.ui.theme.W3wandroidcomponentsmapsTheme
 
 class MapBoxComposeFragmentActivity : FragmentActivity(), W3WMapboxMapFragment.OnMapReadyCallback {

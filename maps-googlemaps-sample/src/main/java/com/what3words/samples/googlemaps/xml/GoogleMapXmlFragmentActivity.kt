@@ -9,9 +9,10 @@ import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.models.W3WZoomOption
 import com.what3words.components.maps.views.W3WGoogleMapFragment
 import com.what3words.components.maps.views.W3WMap
-import com.what3words.maps.google_maps_sample.BuildConfig
-import com.what3words.maps.google_maps_sample.R
-import com.what3words.maps.google_maps_sample.databinding.ActivityMapFragmentBinding
+import com.what3words.samples.googlemaps.BuildConfig
+import com.what3words.samples.googlemaps.R
+import com.what3words.samples.googlemaps.databinding.ActivityMapFragmentBinding
+
 
 class GoogleMapXmlFragmentActivity : AppCompatActivity(), W3WGoogleMapFragment.OnMapReadyCallback {
     private lateinit var binding: ActivityMapFragmentBinding

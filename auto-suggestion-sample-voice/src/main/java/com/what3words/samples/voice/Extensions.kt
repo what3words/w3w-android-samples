@@ -1,4 +1,4 @@
-package autosuggestsample.util
+package com.what3words.samples.voice
 
 import android.text.Editable
 import android.text.TextWatcher

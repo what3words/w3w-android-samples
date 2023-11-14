@@ -1,4 +1,4 @@
-package com.what3words.androidwrappersample;
+package com.what3words.samples.wrapper;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
