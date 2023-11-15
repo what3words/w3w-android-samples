@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.what3words.multicomponentsample.MyApplication;
+import com.what3words.samples.multiple.MyApplication;
 
 import java.io.File;
 
@@ -12,7 +12,7 @@ import io.cucumber.android.runner.CucumberAndroidJUnitRunner;
 import io.cucumber.junit.CucumberOptions;
 
 @CucumberOptions(features = "features",
-glue = "com.what3words.multicomponentsample")
+        glue = "com.what3words.multicomponentsample")
 public class TestJunitRunner extends CucumberAndroidJUnitRunner {
 
     @Override
