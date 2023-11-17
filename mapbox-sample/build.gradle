@@ -7,7 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.what3words.map.components.mapboxsample"
+        applicationId "com.what3words.samples.mapbox"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -64,6 +64,7 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'com.what3words.samples.mapbox'
 }
 
 dependencies {

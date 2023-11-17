@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.what3words.ocr.components.sample'
+    namespace "com.what3words.samples.ocr"
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.what3words.ocr.components.sample"
+        applicationId "com.what3words.samples.ocr"
         minSdk 24
         targetSdk 33
         versionCode 1

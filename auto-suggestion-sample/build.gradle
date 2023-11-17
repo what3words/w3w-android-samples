@@ -7,7 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.what3words.sample"
+        applicationId "com.what3words.samples.autosuggestion"
         minSdk 23
         targetSdk 33
         versionCode 1
@@ -46,6 +46,7 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'com.what3words.samples.autosuggestion'
 }
 
 dependencies {

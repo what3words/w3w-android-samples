@@ -7,7 +7,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.what3words.maps.google_maps_sample"
+        applicationId "com.what3words.samples.googlemaps"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -45,6 +45,7 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'com.what3words.samples.googlemaps'
 }
 
 dependencies {
