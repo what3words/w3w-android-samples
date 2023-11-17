@@ -53,13 +53,6 @@ class CucumberComposeTest(
     @OptIn(ExperimentalTestApi::class)
     @When("I choose option")
     fun iChooseOption() {
-//        onNode(hasText("///filled.count.soap"),true)
-//            .assertIsDisplayed().performClick()
-
-//        Espresso.onView(withText("///filled.count.soap"))
-//            .perform(
-//                click(),
-//            )
         onView(
             withId(R.id.w3wAutoSuggestDefaultPicker)
         )
@@ -82,12 +75,7 @@ class CucumberComposeTest(
     @And("Map show marker")
     fun mapShowMarker() {
         val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        val mMarker1 = uiDevice.findObject(UiSelector().descriptionContains("test tag"))
-
-        mMarker1.click()
-
-//        onNodeWithTag("test tag").assertIsDisplayed()
-//        onNodeWithContentDescription("test tag").assertIsDisplayed()
+        uiDevice.findObject(UiSelector().descriptionContains("test tag")).click()
     }
 
 }
