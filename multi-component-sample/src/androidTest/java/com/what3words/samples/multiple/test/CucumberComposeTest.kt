@@ -1,4 +1,4 @@
-package com.what3words.multicomponentsample.test
+package com.what3words.samples.multiple.test
 
 import android.content.Intent
 import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
@@ -7,14 +7,18 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withHint
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
-import com.google.android.gms.maps.model.LatLng
-import com.what3words.multicomponentsample.test.utils.hasItemCountGreaterThanZero
-import com.what3words.multicomponentsample.test.utils.waitUntilVisible
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import com.what3words.components.maps.extensions.generateUniqueId
+import com.what3words.javawrapper.response.Coordinates
 import com.what3words.samples.multiple.MultiComponentsActivity
+import com.what3words.samples.multiple.test.utils.hasItemCountGreaterThanZero
+import com.what3words.samples.multiple.test.utils.waitUntilVisible
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
@@ -61,11 +65,17 @@ class CucumberComposeTest(
     }
 
     @Then("Map show maker at {string}")
-    fun map_show_maker_at(coordinate: String) {
-        val coordinateElements = coordinate.split(",")
-        val position =
-            LatLng(coordinateElements[0].trim().toDouble(), coordinateElements[1].trim().toDouble())
-        Thread.sleep(5000)
+    fun map_show_maker_at(coordinatesStr: String) {
+        val coordinateElements = coordinatesStr.split(", ")
+        val coordinates =
+            Coordinates(coordinateElements[0].toDouble(), coordinateElements[1].toDouble())
+        val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        uiDevice.waitForIdle()
+        Espresso.onView(withContentDescription("Zoom out")).perform(click())
+        Espresso.onView(withContentDescription("Zoom out")).perform(click())
+        val zoomOutMarker = uiDevice.findObject(By.desc(coordinates.generateUniqueId().toString()))
+
+        assert(zoomOutMarker != null)
     }
 }
 

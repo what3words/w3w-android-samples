@@ -1,4 +1,4 @@
-package com.what3words.multicomponentsample.test.utils
+package com.what3words.samples.multiple.test.utils
 
 import android.view.View
 import android.view.ViewGroup

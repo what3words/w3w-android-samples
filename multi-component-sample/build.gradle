@@ -16,7 +16,7 @@ android {
         manifestPlaceholders = [mapsApiKey: findProperty('MAPS_API_KEY') ? findProperty('MAPS_API_KEY') : "YOUR_GOOGLE_MAPS_API_KEY_HERE"]
         buildConfigField 'String', 'W3W_API_KEY', findProperty('PROD_API_KEY') ? "\"${findProperty('PROD_API_KEY')}\"" : "\"YOUR_API_KEY_HERE\""
         resValue "string", "mapbox_access_token", findProperty('MAPBOX_ACCESS_TOKEN') ? "\"${findProperty('MAPBOX_ACCESS_TOKEN')}\"" : "\"YOUR_ACCESS_TOKEN_HERE\""
-        testApplicationId "com.what3words.multicomponentsample.test"
+        testApplicationId "com.what3words.samples.multiple.test"
         testInstrumentationRunner "io.cucumber.android.runner.CucumberAndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -51,6 +51,7 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'com.what3words.samples.multiple'
 }
 
 dependencies {
