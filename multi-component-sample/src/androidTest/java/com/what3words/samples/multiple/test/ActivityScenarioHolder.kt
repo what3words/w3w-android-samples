@@ -7,7 +7,7 @@ import io.cucumber.java.After
 
 class ActivityScenarioHolder {
 
-    private var scenario: ActivityScenario<*>? = null
+    internal var scenario: ActivityScenario<*>? = null
 
     fun launch(intent: Intent){
         scenario = ActivityScenario.launch<Activity>(intent)
