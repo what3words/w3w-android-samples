@@ -58,6 +58,11 @@ jobs:
       resource-class: xlarge
     steps:
       - checkout
+      - run:
+            name: Config emulator
+            command: |
+              cp -rf multi-component-sample/src/androidTest/resources/custom.png /opt/android/sdk/emulator/resources
+              cp -rf multi-component-sample/src/androidTest/resources/Toren1BD.posters /opt/android/sdk/emulator/resources
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}
       - android/create-avd:
