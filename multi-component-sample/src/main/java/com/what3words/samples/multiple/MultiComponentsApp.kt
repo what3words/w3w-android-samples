@@ -1,4 +1,4 @@
-package com.what3words.multicomponentsample
+package com.what3words.samples.multiple
 
 import android.app.Application
 
