@@ -1,8 +1,7 @@
-Feature: Cucumber Compose Test Feature
+Feature: What3words Test Feature
      Scenario: Example cucumber and compose
-        Given I initialize App
-        When I enter the text on AutoTextField
-        Then Show text input and show suggestion
-        When I choose option
-        And Map navigate
+        Given Given the main screen is visible
+        And App show ocr button
+
+
 

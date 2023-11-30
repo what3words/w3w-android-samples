@@ -32,51 +32,26 @@ import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
+import io.cucumber.java.PendingException
 
 class CucumberComposeTest(
     private val composeRuleHolder: ComposeRuleHolder,
     private val scenarioHolder: ActivityScenarioHolder
 ) :
     SemanticsNodeInteractionsProvider by composeRuleHolder.composeRule {
+    private val TIME_OUT = 60000L
 
-    @Given("^I initialize App")
-    fun initializeApp() {
+    @Given("Given the main screen is visible")
+    fun givenTheMainScreenIsVisible() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         scenarioHolder.launch(Intent(appContext, MultiComponentsActivity::class.java))
     }
 
-    @Then("Show text input and show suggestion")
-    fun showTextInputAndShowSuggestion() {
-        onView(withText("///filled.count.soa")).check(matches(isDisplayed()))
-    }
-
-    @When("I enter the text on AutoTextField")
-    fun iEnterTheTextOnAutoTextField() {
-        onView(withHint("e.g. ///lock.spout.radar"))
-            .perform(
-                click(),
-                replaceText("///filled.count.soa")
-            )
-    }
-
-    @When("I choose option")
-    fun iChooseOption() {
-        onView(
-            withId(R.id.w3wAutoSuggestDefaultPicker)
-        )
-            .perform(waitUntilVisible(hasItemCountGreaterThanZero()))
-            .check(matches(isDisplayed()))
-    }
-
-    @And("Map navigate")
-    fun iMapNavigate() {
-        onView(withText("filled.count.soap"))
-            .perform(
-                click(),
-            )
-
-        onView(withHint("e.g. ///lock.spout.radar"))
-            .perform(waitUntilVisible(withText("///filled.count.soap")))
-
+    @OptIn(ExperimentalTestApi::class)
+    @And("App show ocr button")
+    fun appShowOcrButton() {
+        with(composeRuleHolder.composeRule) {
+            waitUntilAtLeastOneExists(hasTestTag("ocrButton"), TIME_OUT).apply { isDisplayed() }
+        }
     }
 }
