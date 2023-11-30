@@ -133,7 +133,7 @@ fun MainAppScreen(
                 }
 
                 FloatingActionButton(
-                    modifier = Modifier
+                    modifier = Modifier.testTag("mapTypeButton")
                         .constrainAs(ref = mapTypeRef) {
                             start.linkTo(parent.start)
                             bottom.linkTo(anchor = ocrRef.top)
