@@ -1,6 +1,6 @@
 Feature: Search What3Words
 
-  Scenario: Text Search Flow Using Google Maps
+  Scenario: Text Search Flow Using MapBox
     Given The main screen is visible
     Then I change using MapBox
     When I type "///index.home.raf" into auto suggest text field

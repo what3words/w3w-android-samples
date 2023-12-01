@@ -1,5 +1,6 @@
 package com.what3words.samples.multiple.test.utils
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
@@ -47,18 +48,27 @@ inline fun <reified T : View> waitUntilVisibleInParent(
             }
 
             val changeListener = View.OnLayoutChangeListener { parent, _, _, _, _, _, _, _, _ ->
-                for (child in (parent as ViewGroup).children) {
-                    if (child.id == view?.id) {
-                        hasMatched = true
-                        idlingResourceCallback?.onTransitionToIdle()
-                        break
+                if (parent is ViewGroup) {
+                    for (index in 0 until parent.childCount) {
+                        val child = parent.getChildAt(index)
+                        if (child.id == view?.id) {
+                            hasMatched = true
+                            idlingResourceCallback?.onTransitionToIdle()
+                            break
+                        }
                     }
                 }
+
             }
 
             try {
                 IdlingRegistry.getInstance().register(idlingResource)
-                (view?.parent as ViewGroup).addOnLayoutChangeListener(changeListener)
+                val parent = view?.parent
+                if (parent is ViewGroup) {
+                    parent.addOnLayoutChangeListener(changeListener)
+                } else {
+                    Log.e("ActionUtils", "perform viewParent is not ViewGroup")
+                }
                 uiController?.loopMainThreadUntilIdle()
             } finally {
                 (view?.parent as ViewGroup).removeOnLayoutChangeListener(changeListener)
