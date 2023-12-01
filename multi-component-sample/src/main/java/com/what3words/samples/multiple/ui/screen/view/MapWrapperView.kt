@@ -138,9 +138,6 @@ private fun GoogleMapView(
 
         //Your other Markers/different APIs, i.e GooglePlacesAPI
         Marker(
-//            title = "test tag",
-            snippet = "test tag",
-            tag = "test tag",
             state = MarkerState(position = singapore),
         )
 

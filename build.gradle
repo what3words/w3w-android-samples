@@ -41,15 +41,6 @@ buildscript {
         fragment_version = "1.5.5"
         compose_constraint_layout_version = "1.0.1"
 
-        //Cucumber
-        cucumber_android_version = "7.14.0"
-        cucumber_picocontainer_version = "7.14.0"
-        test_rule_version = "1.5.0"
-        uiautomator_version = "2.2.0"
-        test_core_version = "1.5.0"
-        ui_test_junit4_version = "1.3.1"
-        ui_tooling_version = "1.3.1"
-        ui_test_manifest_version = "1.3.1"
         //Google Map
         map_compose_version = "2.7.2"
         google_play_location_services_version = "21.0.1"
