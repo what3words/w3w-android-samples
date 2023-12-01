@@ -8,7 +8,6 @@ import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
-import androidx.test.espresso.matcher.ViewMatchers.withHint
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.platform.app.InstrumentationRegistry
@@ -23,7 +22,7 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 
-class CucumberComposeTest(
+class SearchSteps(
     private val composeRuleHolder: ComposeRuleHolder,
     private val scenarioHolder: ActivityScenarioHolder
 ) :
@@ -37,7 +36,7 @@ class CucumberComposeTest(
 
     @When("I type {string} into auto suggest text field")
     fun i_type_into_auto_suggest_text_field(incompleteW3W: String) {
-        Espresso.onView(withHint("e.g. ///lock.spout.radar"))
+        Espresso.onView(withId(com.what3words.components.R.id.w3wAutoSuggestionTextField))
             .perform(
                 click(),
                 replaceText(incompleteW3W)
@@ -60,7 +59,7 @@ class CucumberComposeTest(
 
     @Then("The auto suggestion text is {string}")
     fun the_auto_suggestion_text_is(text: String) {
-        Espresso.onView(withHint("e.g. ///lock.spout.radar"))
+        Espresso.onView(withId(com.what3words.components.R.id.w3wAutoSuggestionTextField))
             .perform(waitUntilVisible(withText(text)))
     }
 

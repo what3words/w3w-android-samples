@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
+    id 'jacoco'
 }
 
 android {
@@ -24,27 +25,45 @@ android {
     }
 
     buildTypes {
+        debug {
+            testCoverageEnabled = true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         compose true
         viewBinding true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion compose_compiler_version
     }
+
     testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+        unitTests.returnDefaultValues = true
         unitTests.includeAndroidResources = true
+    }
+
+    jacoco {
+        version = "$jacoco_version"
     }
     packagingOptions {
         resources {
@@ -109,6 +128,38 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$ui_test_junit4_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$ui_tooling_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$ui_test_manifest_version"
+}
 
+task jacocoTestReport(type: JacocoReport, dependsOn: ['createDebugCoverageReport']) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports for Debug build"
+
+    reports {
+        xml.required = true
+        html.required = true
+    }
+
+    def fileFilter = ['android/databinding/**/*.class',
+                      '**/*databinding.*',
+                      '**/android/databinding/*',
+                      '**/androidx/databinding/*',
+                      '**/BR.*',
+                      '**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*',
+                      'androidx/**/*.*',
+                      'autosuggestsample/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files([mainSrc]))
+    classDirectories.setFrom(files([debugTree]))
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
 
 }
