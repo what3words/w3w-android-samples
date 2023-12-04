@@ -1,5 +1,7 @@
 package com.what3words.samples.multiple.ui.screen.view
 
+import android.content.Context
+import android.provider.Settings
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -128,7 +130,15 @@ private fun GoogleMapView(
                                 .target(latLng)
                                 .zoom(19f)
                                 .build()
-                            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                            if (shouldAnimate(context)) {
+                                map.animateCamera(
+                                    CameraUpdateFactory.newCameraPosition(
+                                        cameraPosition
+                                    )
+                                )
+                            } else {
+                                map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                            }
                             onMapClicked.invoke()
                         }
                     )
@@ -152,7 +162,19 @@ private fun GoogleMapView(
                             .target(LatLng(it.coordinates.lat, it.coordinates.lng))
                             .zoom(19f)
                             .build()
-                        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                        if (shouldAnimate(context)) {
+                            googleMap?.animateCamera(
+                                CameraUpdateFactory.newCameraPosition(
+                                    cameraPosition
+                                )
+                            )
+                        } else {
+                            googleMap?.moveCamera(
+                                CameraUpdateFactory.newCameraPosition(
+                                    cameraPosition
+                                )
+                            )
+                        }
                     })
                 }
             }
@@ -179,6 +201,9 @@ fun MapBoxView(
 
     AndroidView(modifier = modifier, factory = { it ->
         mapView = MapView(it)
+        mapView?.let {
+            it.contentDescription = "MapBoxView"
+        }
         w3wMapsWrapper = W3WMapBoxWrapper(
             context,
             mapView!!.getMapboxMap(),
@@ -262,4 +287,14 @@ fun mapBoxMoveCamera(mapView: MapView, point: Point) {
             duration(3000)
         }
     )
+}
+
+private fun shouldAnimate(context: Context): Boolean {
+    return Settings.Global.getFloat(
+        context.contentResolver,
+        Settings.Global.TRANSITION_ANIMATION_SCALE
+    ) > 0 && Settings.Global.getFloat(
+        context.contentResolver,
+        Settings.Global.WINDOW_ANIMATION_SCALE
+    ) > 0
 }
