@@ -179,6 +179,9 @@ fun MapBoxView(
 
     AndroidView(modifier = modifier, factory = { it ->
         mapView = MapView(it)
+        mapView?.let {
+            it.contentDescription = "MapBoxView"
+        }
         w3wMapsWrapper = W3WMapBoxWrapper(
             context,
             mapView!!.getMapboxMap(),
