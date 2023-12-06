@@ -50,8 +50,6 @@ public class TestJunitRunner extends CucumberAndroidJUnitRunner {
      * @return the absolute path for the report files
      */
     private String getAbsoluteFilesPath() {
-
-        //sdcard/Android/data/cucumber.cukeulator
         File directory = getTargetContext().getExternalFilesDir(null);
         return new File(directory, "reports").getAbsolutePath();
     }

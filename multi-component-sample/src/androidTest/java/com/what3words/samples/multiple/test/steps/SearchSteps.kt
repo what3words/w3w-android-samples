@@ -1,4 +1,4 @@
-package com.what3words.samples.multiple.test
+package com.what3words.samples.multiple.test.steps
 
 import android.app.Activity
 import android.content.Intent
@@ -23,6 +23,8 @@ import com.mapbox.maps.extension.style.layers.getLayer
 import com.what3words.components.maps.extensions.generateUniqueId
 import com.what3words.javawrapper.response.Coordinates
 import com.what3words.samples.multiple.MultiComponentsActivity
+import com.what3words.samples.multiple.test.ActivityScenarioHolder
+import com.what3words.samples.multiple.test.ComposeRuleHolder
 import com.what3words.samples.multiple.test.utils.hasItemCountGreaterThanZero
 import com.what3words.samples.multiple.test.utils.waitUntilVisible
 import io.cucumber.java.en.Given

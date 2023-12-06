@@ -20,6 +20,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.what3words.androidwrapper.What3WordsAndroidWrapper
 import com.what3words.androidwrapper.What3WordsV3
+import com.what3words.androidwrapper.voice.VoiceProvider
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WMapWrapper
 import com.what3words.design.library.ui.theme.W3WTheme
@@ -37,6 +38,7 @@ fun MainAppScreen(
     ocrWrapper: W3WOcrWrapper,
     isGoogleMapType: Boolean,
     dataProvider: What3WordsAndroidWrapper,
+    voiceProvider: VoiceProvider,
     selectedSuggestion: SuggestionWithCoordinates?,
     onSuggestionChanged: (SuggestionWithCoordinates?) -> (Unit)
 ) {
@@ -92,7 +94,8 @@ fun MainAppScreen(
                         top.linkTo(anchor = parent.top)
                         width = Dimension.fillToConstraints
                         height = Dimension.wrapContent
-                    }, selectedSuggestion, onItemSelected = onSuggestionChanged
+                    }, selectedSuggestion, onItemSelected = onSuggestionChanged,
+                    voiceProvider = voiceProvider
                 )
 
                 FloatingActionButton(

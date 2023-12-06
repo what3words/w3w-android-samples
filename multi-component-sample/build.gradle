@@ -133,6 +133,7 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$ui_test_junit4_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$ui_tooling_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$ui_test_manifest_version"
+    implementation 'androidx.test.espresso:espresso-contrib:3.5.1'
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['createDebugCoverageReport']) {

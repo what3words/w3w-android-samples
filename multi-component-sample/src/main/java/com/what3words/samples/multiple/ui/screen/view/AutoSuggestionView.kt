@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.what3words.androidwrapper.voice.VoiceProvider
 import com.what3words.components.compose.wrapper.AutoSuggestConfiguration
 import com.what3words.components.compose.wrapper.W3WAutoSuggestTextField
 import com.what3words.components.compose.wrapper.W3WAutoSuggestTextFieldDefaults
@@ -19,7 +20,8 @@ import com.what3words.samples.multiple.R
 fun AutoTextField(
     modifier: Modifier,
     suggestion: SuggestionWithCoordinates?,
-    onItemSelected: (SuggestionWithCoordinates?) -> Unit
+    onItemSelected: (SuggestionWithCoordinates?) -> Unit,
+    voiceProvider: VoiceProvider
 ) {
     val TAG = "AutoTextFieldView"
 
@@ -41,7 +43,7 @@ fun AutoTextField(
             modifier = modifier.padding(bottom = 12.dp),
             ref = ref,
             state = w3wTextFieldState,
-            configuration = AutoSuggestConfiguration.Api(apiKey = BuildConfig.W3W_API_KEY),
+            configuration = AutoSuggestConfiguration.Api(apiKey = BuildConfig.W3W_API_KEY, voiceProvider = voiceProvider),
             suggestionPicker = null,
             correctionPicker = null,
             invalidAddressMessageView = null,
