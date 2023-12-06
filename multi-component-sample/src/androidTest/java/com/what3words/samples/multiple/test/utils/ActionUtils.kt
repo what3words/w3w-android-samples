@@ -3,7 +3,6 @@ package com.what3words.samples.multiple.test.utils
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.children
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.UiController
