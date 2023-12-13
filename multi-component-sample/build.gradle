@@ -1,0 +1,171 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'jacoco'
+}
+
+android {
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.what3words.samples.multiple"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+        manifestPlaceholders = [mapsApiKey: findProperty('MAPS_API_KEY') ? findProperty('MAPS_API_KEY') : "YOUR_GOOGLE_MAPS_API_KEY_HERE"]
+        buildConfigField 'String', 'W3W_API_KEY', findProperty('PROD_API_KEY') ? "\"${findProperty('PROD_API_KEY')}\"" : "\"YOUR_API_KEY_HERE\""
+        resValue "string", "mapbox_access_token", findProperty('MAPBOX_ACCESS_TOKEN') ? "\"${findProperty('MAPBOX_ACCESS_TOKEN')}\"" : "\"YOUR_ACCESS_TOKEN_HERE\""
+        testApplicationId "com.what3words.samples.multiple.test"
+        testInstrumentationRunner "io.cucumber.android.runner.CucumberAndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled = true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        compose true
+        viewBinding true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+        unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
+    }
+
+    jacoco {
+        version = "$jacoco_version"
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    namespace 'com.what3words.samples.multiple'
+}
+
+dependencies {
+    // W3W API Map Lib
+    implementation "com.what3words:w3w-android-map-components:$what3words_android_map_components_version"
+
+    // W3W Component Lib
+    implementation "com.what3words:w3w-android-components:$what3words_android_components_version"
+
+    // W3W OCR Lib
+    implementation "com.what3words:w3w-android-ocr-components:$what3words_android_ocr_components_version"
+
+    // Compose
+    implementation platform('androidx.compose:compose-bom:2023.06.01')
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.ui:ui-graphics'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation "androidx.compose.ui:ui-viewbinding"
+    implementation "androidx.compose.material:material"
+    implementation "androidx.activity:activity-compose"
+    implementation "androidx.constraintlayout:constraintlayout-compose:$compose_constraint_layout_version"
+
+    implementation "androidx.core:core-ktx:$androidx_core_version"
+    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "com.google.android.material:material:$google_material_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_runtime_ktx_version"
+    implementation "androidx.fragment:fragment:$fragment_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "androidx.constraintlayout:constraintlayout-compose:$compose_constraint_layout_version"
+
+    // Google Map
+    implementation "com.google.android.gms:play-services-location:$google_play_location_services_version"
+    implementation "com.google.maps.android:android-maps-utils:$google_map_utils_version"
+    implementation "com.google.android.gms:play-services-maps:$google_play_maps_services_version"
+    implementation "com.google.maps.android:maps-compose:$map_compose_version"
+
+    //Map box
+    implementation "com.mapbox.maps:android:$map_box_version"
+
+    // mlkit
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition:$mlkit_core_version"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-chinese:$mlkit_languages_version"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-devanagari:$mlkit_languages_version"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-japanese:$mlkit_languages_version"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-korean:$mlkit_languages_version"
+
+    //Cucumber
+    androidTestImplementation "io.cucumber:cucumber-android:$cucumber_android_version"
+    androidTestImplementation "io.cucumber:cucumber-picocontainer:$cucumber_picocontainer_version"
+
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation "androidx.test:rules:$test_rule_version"
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:$uiautomator_version"
+    androidTestImplementation "androidx.test:core:$test_core_version"
+    androidTestImplementation "com.android.support:support-annotations:28.0.0"
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$ui_test_junit4_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$ui_tooling_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$ui_test_manifest_version"
+    implementation 'androidx.test.espresso:espresso-contrib:3.5.1'
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['createDebugCoverageReport']) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports for Debug build"
+
+    reports {
+        xml.required = true
+        html.required = true
+    }
+
+    def fileFilter = ['android/databinding/**/*.class',
+                      '**/*databinding.*',
+                      '**/android/databinding/*',
+                      '**/androidx/databinding/*',
+                      '**/BR.*',
+                      '**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      '**/Manifest*.*',
+                      '**/*Test*.*',
+                      'android/**/*.*',
+                      'androidx/**/*.*',
+                      'autosuggestsample/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files([mainSrc]))
+    classDirectories.setFrom(files([debugTree]))
+    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
+            "jacoco/testDebugUnitTest.exec",
+            "outputs/code-coverage/connected/*coverage.ec"
+    ]))
+
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+
+    </style>
+    Uncomment for custom style
+
+    <style name="YourCustomStyle" parent="Widget.AppCompat.W3WAutoSuggestEditText">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:hint">\u00A0</item>
+        <item name="android:background">#005379</item>
+        <item name="voiceBackgroundDrawable">@drawable/bg_gradient</item>
+        <item name="voiceIconsColor">@android:color/white</item>
+        <item name="iconTint">@android:color/white</item>
+        <item name="android:textAppearance">@style/TextLight.XL.Bold</item>
+    </style>
+
+    <style name="YourPickerCustomStyle" parent="W3WAutoSuggestPicker">
+        <item name="pickerItemBackgroundDrawable">@drawable/bg_item_gradient</item>
+        <item name="pickerItemSpacing">@dimen/main_s</item>
+        <item name="pickerBackgroundDrawable">@null</item>
+        <item name="pickerDivider">@null</item>
+        <item name="pickerDividerVisible">false</item>
+        <item name="pickerItemTitleTextColor">@android:color/white</item>
+        <item name="pickerItemTitleFontFamily">sans-serif-condensed-medium</item>
+        <item name="pickerItemSubtitleTextColor">@color/text_grey</item>
+        <item name="pickerItemSubtitleFontFamily">sans-serif-condensed</item>
+        <item name="pickerItemTitleTextSize">@dimen/text_size_l</item>
+        <item name="pickerItemSubtitleTextSize">@dimen/text_size_m</item>
+        <item name="pickerItemPadding">@dimen/main_l</item>
+        <item name="layoutManager">androidx.recyclerview.widget.GridLayoutManager</item>
+        <item name="spanCount">3</item>
+    </style>
+
+    <style name="YourCustomStyleTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextLight" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/text_light</item>
+    </style>
+
+    <style name="TextLight.XL.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextLight.XL">
+        <item name="android:textSize">@dimen/text_size_xl</item>
+        <item name="android:lineSpacingExtra">@dimen/text_line_spacing_extra_xl</item>
+    </style>
+
+</resources>
