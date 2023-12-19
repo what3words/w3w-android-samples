@@ -30,9 +30,9 @@ jobs:
           command: |
             ./gradlew ocr-sample:assembleRelease
       - run:
-          name: Auto Suggestion Sample builds
+          name: Auto Suggest Sample builds
           command: |
-            ./gradlew auto-suggestion-sample:assembleRelease
+            ./gradlew autosuggest-sample:assembleRelease
       - run:
           name: Auto Suggestion Sample Voice builds
           command: |
@@ -46,7 +46,7 @@ jobs:
       - store_artifacts:
           path: ocr-sample/build/outputs/apk/release
       - store_artifacts:
-          path: auto-suggestion-sample/build/outputs/apk/release
+          path: autosuggest-sample/build/outputs/apk/release
       - store_artifacts:
           path: auto-suggestion-sample-voice/build/outputs/apk/release
       - store_artifacts:
