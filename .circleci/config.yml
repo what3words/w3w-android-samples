@@ -48,7 +48,7 @@ jobs:
       - store_artifacts:
           path: autosuggest-sample/build/outputs/apk/release
       - store_artifacts:
-          path: autosuggestion-sample-voice/build/outputs/apk/release
+          path: autosuggest-sample-voice/build/outputs/apk/release
       - store_artifacts:
           path: multi-component-sample/build/outputs/apk/release
   build-ui-test:
