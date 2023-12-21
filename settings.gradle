@@ -25,5 +25,5 @@ include ':ocr-sample'
 include ':maps-googlemaps-sample'
 include ':mapbox-sample'
 include ':autosuggest-sample'
-include ":auto-suggestion-sample-voice"
+include ':autosuggest-sample-voice'
 include ':multi-component-sample'
