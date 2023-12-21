@@ -24,6 +24,6 @@ include ':api-wrapper-sample'
 include ':ocr-sample'
 include ':maps-googlemaps-sample'
 include ':mapbox-sample'
-include ':auto-suggestion-sample'
+include ':autosuggest-sample'
 include ":auto-suggestion-sample-voice"
 include ':multi-component-sample'
