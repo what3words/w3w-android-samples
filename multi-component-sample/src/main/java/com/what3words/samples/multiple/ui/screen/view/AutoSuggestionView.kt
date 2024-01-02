@@ -12,6 +12,7 @@ import com.what3words.components.compose.wrapper.W3WAutoSuggestTextField
 import com.what3words.components.compose.wrapper.W3WAutoSuggestTextFieldDefaults
 import com.what3words.components.compose.wrapper.rememberW3WAutoSuggestTextFieldState
 import com.what3words.components.models.VoiceScreenType
+import com.what3words.javawrapper.request.Coordinates
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
 import com.what3words.samples.multiple.BuildConfig
 import com.what3words.samples.multiple.R
@@ -37,6 +38,7 @@ fun AutoTextField(
                 returnCoordinates(true)
                 voiceEnabled(enabled = true, type = VoiceScreenType.AnimatedPopup)
                 suggestion?.let { display(it) }
+                focus(Coordinates(51.520847, -0.195521))
             }
 
         W3WAutoSuggestTextField(
