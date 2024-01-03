@@ -70,9 +70,9 @@ private fun GoogleMapView(
 ) {
     val TAG = "GoogleMapView"
     val context = LocalContext.current
-    val singapore = LatLng(1.35, 103.87)
+    val office = LatLng(51.520847, -0.195521)
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(singapore, 16f)
+        position = CameraPosition.fromLatLngZoom(office, 16f)
     }
     var w3wMapsWrapper: W3WGoogleMapsWrapper? by remember {
         mutableStateOf(null)
@@ -148,7 +148,7 @@ private fun GoogleMapView(
 
         //Your other Markers/different APIs, i.e GooglePlacesAPI
         Marker(
-            state = MarkerState(position = singapore),
+            state = MarkerState(position = office),
         )
 
         //Update search w3w marker

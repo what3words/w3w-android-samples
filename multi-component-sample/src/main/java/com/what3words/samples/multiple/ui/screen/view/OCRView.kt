@@ -30,7 +30,7 @@ fun OcrView(
 ) {
     val options = remember {
         AutosuggestOptions().apply {
-            focus = Coordinates(51.2, 1.2)
+            focus = Coordinates(51.520847, -0.195521)
         }
     }
 

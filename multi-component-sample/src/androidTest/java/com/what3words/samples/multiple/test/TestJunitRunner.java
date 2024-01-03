@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.what3words.samples.multiple.MultiComponentApplication;
+import com.what3words.samples.multiple.MultiComponentsApp;
 
 import java.io.File;
 
@@ -56,6 +56,6 @@ public class TestJunitRunner extends CucumberAndroidJUnitRunner {
 
     @Override
     public Application newApplication(ClassLoader cl, String className, Context context) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        return super.newApplication(cl, MultiComponentApplication.class.getName(), context);
+        return super.newApplication(cl, MultiComponentsApp.class.getName(), context);
     }
 }
