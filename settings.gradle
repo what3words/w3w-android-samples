@@ -30,8 +30,3 @@ include ':mapbox-sample'
 include ':autosuggest-sample'
 include ':autosuggest-sample-voice'
 include ':multi-component-sample'
-includeBuild("../w3w-android-components") {
-    dependencySubstitution {
-        substitute module ("com.what3words:w3w-android-components") using project(":lib")
-    }
-}
