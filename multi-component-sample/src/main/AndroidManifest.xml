@@ -20,7 +20,7 @@
         <activity
             android:name="com.what3words.samples.multiple.MultiComponentsActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.W3WComposeGoogleMap">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

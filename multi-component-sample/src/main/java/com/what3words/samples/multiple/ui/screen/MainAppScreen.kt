@@ -10,6 +10,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -28,6 +29,7 @@ import com.what3words.javawrapper.response.SuggestionWithCoordinates
 import com.what3words.ocr.components.models.W3WOcrWrapper
 import com.what3words.samples.multiple.R
 import com.what3words.samples.multiple.ui.screen.view.AutoTextField
+import com.what3words.samples.multiple.ui.screen.view.AutoTextFieldUIState
 import com.what3words.samples.multiple.ui.screen.view.MapWrapperView
 import com.what3words.samples.multiple.ui.screen.view.OcrView
 import com.what3words.samples.multiple.ui.theme.W3WMultiComponentTheme
@@ -48,6 +50,12 @@ fun MainAppScreen(
     }
     var w3wMapsWrapper: W3WMapWrapper? by rememberSaveable {
         mutableStateOf(null)
+    }
+
+    var autoTextFieldUIState by remember(selectedSuggestion) {
+        mutableStateOf(
+            AutoTextFieldUIState(voiceProvider, selectedSuggestion, false)
+        )
     }
 
     W3WMultiComponentTheme {
@@ -94,8 +102,9 @@ fun MainAppScreen(
                         top.linkTo(anchor = parent.top)
                         width = Dimension.fillToConstraints
                         height = Dimension.wrapContent
-                    }, selectedSuggestion, onItemSelected = onSuggestionChanged,
-                    voiceProvider = voiceProvider
+                    },
+                    onItemSelected = onSuggestionChanged,
+                    uiState = autoTextFieldUIState
                 )
 
                 FloatingActionButton(
@@ -160,6 +169,7 @@ fun MainAppScreen(
                         }
                         .padding(bottom = 32.dp, start = 24.dp),
                     onClick = {
+                        autoTextFieldUIState = autoTextFieldUIState.copy().apply { isClearFocus = true }
                         scanScreenVisible = true
                     },
                     backgroundColor = W3WTheme.colors.background,
