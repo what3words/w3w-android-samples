@@ -48,7 +48,7 @@ fun MainAppScreen(
     var isGGMap by rememberSaveable {
         mutableStateOf(isGoogleMapType)
     }
-    var w3wMapsWrapper: W3WMapWrapper? by rememberSaveable {
+    var w3wMapsWrapper: W3WMapWrapper? by remember {
         mutableStateOf(null)
     }
 
@@ -142,7 +142,8 @@ fun MainAppScreen(
                 }
 
                 FloatingActionButton(
-                    modifier = Modifier.testTag("mapTypeButton")
+                    modifier = Modifier
+                        .testTag("mapTypeButton")
                         .constrainAs(ref = mapTypeRef) {
                             start.linkTo(parent.start)
                             bottom.linkTo(anchor = ocrRef.top)
@@ -160,7 +161,8 @@ fun MainAppScreen(
                 }
 
                 FloatingActionButton(
-                    modifier = Modifier.testTag("ocrButton")
+                    modifier = Modifier
+                        .testTag("ocrButton")
                         .constrainAs(ref = ocrRef) {
                             start.linkTo(parent.start)
                             bottom.linkTo(anchor = parent.bottom)

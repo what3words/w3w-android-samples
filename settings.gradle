@@ -16,9 +16,6 @@ dependencyResolutionManagement {
                 password = MAPBOX_DOWNLOADS_TOKEN
             }
         }
-        maven {
-            url "https://s01.oss.sonatype.org/content/repositories/comwhat3words-1292"
-        }
     }
 }
 
