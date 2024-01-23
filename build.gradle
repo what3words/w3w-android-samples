@@ -64,7 +64,7 @@ buildscript {
         what3words_android_wrapper_version = "3.+"
         what3words_android_ocr_components_version = "1.+"
         what3words_android_map_components_version = "1.+"
-        what3words_android_components_version = "3.+"
+        what3words_android_components_version = "3.2.4" // Fix me: Change to wildcard version after android_components 3.2.4 is released
     }
 }
 
