@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.W3WMapBoxCompose">
+
+<!--    //Start MapBox Compose Sample Launcher -->
+        <!-- Sample for what3words features in an existing Mapbox maps app using W3WMapBoxWrapper-->
+        <activity
+            android:name="com.what3words.samples.mapbox.compose.MapBoxComposeWrapperActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.W3WMapBoxCompose">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Sample for enable what3words features in an new Mapbox maps app using W3WMapboxMapFragment -->
+        <!-- Change the launcher for testing -->
+        <activity
+            android:name="com.what3words.samples.mapbox.compose.MapBoxComposeFragmentActivity"
+            android:exported="true" >
+        </activity>
+
+<!--  End Compose section// -->
+
+
+<!--    //Start MapBox XML Sample Launcher -->
+
+        <!-- Sample for what3words features in an existing Mapbox maps app using W3WMapBoxWrapper-->
+        <activity
+            android:name="com.what3words.samples.mapbox.xml.MapBoxXmlWrapperActivity"
+            android:theme="@style/Theme.W3WMapBox"
+            android:exported="true">
+            <!-- Change the launcher for testing -->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+
+        <!-- Sample for enable what3words features in an new Mapbox maps app using W3WMapboxMapFragment -->
+        <!-- Change the launcher for testing -->
+        <activity
+            android:name="com.what3words.samples.mapbox.xml.MapBoxFragmentActivity"
+            android:exported="true" >
+        </activity>
+
+<!--  End XML section// -->
+
+    </application>
+
+</manifest>

@@ -1,0 +1,82 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace "com.what3words.samples.ocr"
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.what3words.samples.ocr"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+        buildConfigField 'String', 'W3W_API_KEY', findProperty('PROD_API_KEY') ? "\"${findProperty('PROD_API_KEY')}\"" : "\"YOUR_API_KEY_HERE\""
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+        compose true
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("../.signing/release.jks")
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456"
+
+            // Optional, specify signing versions used
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_compiler_version
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/*'
+        }
+    }
+}
+
+dependencies {
+    // compose
+    implementation "androidx.activity:activity-compose:$compose_activity_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "com.google.android.material:material:$material_version"
+
+    // W3W API OCR Lib
+    implementation "com.what3words:w3w-android-ocr-components:$what3words_android_ocr_components_version"
+
+    // mlkit
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition:$mlkit_core_version"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-chinese:$mlkit_languages_version"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-devanagari:$mlkit_languages_version"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-japanese:$mlkit_languages_version"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-korean:$mlkit_languages_version"
+}
