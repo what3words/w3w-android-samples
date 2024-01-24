@@ -18,6 +18,7 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import com.what3words.androidwrapper.What3WordsV3
+import com.what3words.androidwrapper.voice.VoiceProvider
 import com.what3words.components.R
 import com.what3words.components.maps.extensions.generateUniqueId
 import com.what3words.javawrapper.response.Coordinates
@@ -40,19 +41,15 @@ class VoiceSteps(
     private val scenarioHolder: ActivityScenarioHolder
 ) :
     SemanticsNodeInteractionsProvider by composeRuleHolder.composeRule {
-    private lateinit var mockVoiceApi: MockVoiceApi
+    private lateinit var mockVoiceApi: VoiceProvider
 
     @Given("The main screen is visible voice")
     fun theMainScreenIsVisible() {
         composeRuleHolder.composeRule.setContent {
             val viewModel = MultiComponentsViewModel()
             val context = LocalContext.current
-            val wrapper = What3WordsV3(BuildConfig.W3W_API_KEY, context)
             val ocrWrapper = W3WOcrMLKitWrapper(context = context)
-            val dataProvider = What3WordsV3(
-                BuildConfig.W3W_API_KEY,
-                context
-            )
+
             val selectedSuggestion by viewModel.selectedSuggestion.collectAsState()
             val mockDataSound = context.assets.open("soundFilledCountSoap.dat")
 
@@ -61,16 +58,20 @@ class VoiceSteps(
                 mockDataSound = mockDataSound
             )
 
+            val dataProvider = What3WordsV3(
+                apiKey = BuildConfig.W3W_API_KEY,
+                context = context,
+                voiceProvider = mockVoiceApi
+            )
+
             MainAppScreen(
-                wrapper,
+                dataProvider,
                 ocrWrapper,
                 true,
-                dataProvider,
                 selectedSuggestion = selectedSuggestion,
                 onSuggestionChanged = {
                     viewModel.selectedSuggestion.value = it
-                },
-                voiceProvider = mockVoiceApi
+                }
             )
         }
     }

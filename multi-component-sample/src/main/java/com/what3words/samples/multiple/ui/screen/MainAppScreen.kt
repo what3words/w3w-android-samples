@@ -34,10 +34,9 @@ import com.what3words.samples.multiple.ui.theme.W3WMultiComponentTheme
 
 @Composable
 fun MainAppScreen(
-    wrapper: What3WordsAndroidWrapper,
+    dataProvider: What3WordsAndroidWrapper,
     ocrWrapper: W3WOcrWrapper,
     isGoogleMapType: Boolean,
-    dataProvider: What3WordsAndroidWrapper,
     selectedSuggestion: SuggestionWithCoordinates?,
     onSuggestionChanged: (SuggestionWithCoordinates?) -> (Unit)
 ) {
@@ -79,7 +78,7 @@ fun MainAppScreen(
                 )
 
                 MapWrapperView(
-                    wrapper,
+                    dataProvider,
                     modifier = Modifier.constrainAs(ref = mapRef) {
                         linkTo(start = parent.start, end = parent.end)
                         top.linkTo(anchor = parent.top)
