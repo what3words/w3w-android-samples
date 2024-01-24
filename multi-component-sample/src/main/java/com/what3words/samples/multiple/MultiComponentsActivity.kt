@@ -24,16 +24,14 @@ class MultiComponentsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ocrWrapper = W3WOcrMLKitWrapper(context = this@MultiComponentsActivity)
-        val wrapper = What3WordsV3(BuildConfig.W3W_API_KEY, this)
 
         setContent {
             val selectedSuggestion by viewModel.selectedSuggestion.collectAsState()
 
             MainAppScreen(
-                wrapper,
+                dataProvider,
                 ocrWrapper,
                 true,
-                dataProvider,
                 selectedSuggestion = selectedSuggestion,
                 onSuggestionChanged = {
                     viewModel.selectedSuggestion.value = it
