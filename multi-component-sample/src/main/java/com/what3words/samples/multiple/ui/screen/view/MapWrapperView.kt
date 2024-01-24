@@ -26,7 +26,7 @@ import com.mapbox.maps.MapView
 import com.mapbox.maps.plugin.animation.MapAnimationOptions.Companion.mapAnimationOptions
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
-import com.what3words.androidwrapper.What3WordsV3
+import com.what3words.androidwrapper.What3WordsAndroidWrapper
 import com.what3words.components.maps.wrappers.W3WGoogleMapsWrapper
 import com.what3words.components.maps.wrappers.W3WMapBoxWrapper
 import com.what3words.components.maps.wrappers.W3WMapWrapper
@@ -34,7 +34,7 @@ import com.what3words.javawrapper.response.SuggestionWithCoordinates
 
 @Composable
 fun MapWrapperView(
-    wrapper: What3WordsV3,
+    wrapper: What3WordsAndroidWrapper,
     modifier: Modifier,
     isGGMap: Boolean,
     suggestion: SuggestionWithCoordinates?,
@@ -62,7 +62,7 @@ fun MapWrapperView(
 
 @Composable
 private fun GoogleMapView(
-    wrapper: What3WordsV3,
+    wrapper: What3WordsAndroidWrapper,
     modifier: Modifier,
     suggestion: SuggestionWithCoordinates?,
     onMapClicked: () -> (Unit),
@@ -184,7 +184,7 @@ private fun GoogleMapView(
 
 @Composable
 fun MapBoxView(
-    wrapper: What3WordsV3,
+    wrapper: What3WordsAndroidWrapper,
     modifier: Modifier,
     suggestion: SuggestionWithCoordinates?,
     onMapClicked: () -> (Unit),

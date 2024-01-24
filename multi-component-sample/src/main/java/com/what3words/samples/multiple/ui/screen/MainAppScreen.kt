@@ -20,8 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.what3words.androidwrapper.What3WordsAndroidWrapper
-import com.what3words.androidwrapper.What3WordsV3
-import com.what3words.androidwrapper.voice.VoiceProvider
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WMapWrapper
 import com.what3words.design.library.ui.theme.W3WTheme
@@ -36,11 +34,10 @@ import com.what3words.samples.multiple.ui.theme.W3WMultiComponentTheme
 
 @Composable
 fun MainAppScreen(
-    wrapper: What3WordsV3,
+    wrapper: What3WordsAndroidWrapper,
     ocrWrapper: W3WOcrWrapper,
     isGoogleMapType: Boolean,
     dataProvider: What3WordsAndroidWrapper,
-    voiceProvider: VoiceProvider,
     selectedSuggestion: SuggestionWithCoordinates?,
     onSuggestionChanged: (SuggestionWithCoordinates?) -> (Unit)
 ) {
@@ -54,7 +51,7 @@ fun MainAppScreen(
 
     var autoTextFieldUIState by remember(selectedSuggestion) {
         mutableStateOf(
-            AutoTextFieldUIState(voiceProvider, selectedSuggestion, false)
+            AutoTextFieldUIState(dataProvider.voiceProvider, selectedSuggestion, false)
         )
     }
 
