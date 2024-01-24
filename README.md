@@ -44,9 +44,9 @@ MAPS_API_KEY for GoogleMap access. Please follow the quick start tutorial on the
 
 ### Full What3words library repositories:
 
-| Name | Repository |
-|---|----|
-|What3Words-android-wrapper|https://github.com/what3words/w3w-android-wrapper
-|What3Words-android-components|https://github.com/what3words/w3w-android-components
-|What3Words-android-map-components|https://github.com/what3words/w3w-android-map-components
-|What3Words-android-ocr-components|https://github.com/what3words/w3w-android-ocr-components
+| Name                       | Repository |
+|----------------------------|----|
+| w3w-android-wrapper        |https://github.com/what3words/w3w-android-wrapper
+| w3w-android-components     |https://github.com/what3words/w3w-android-components
+| w3w-android-map-components |https://github.com/what3words/w3w-android-map-components
+| w3w-android-ocr-components |https://github.com/what3words/w3w-android-ocr-components
