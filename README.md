@@ -1,4 +1,4 @@
-# <img src="https://what3words.com/assets/images/w3w_square_red.png" width="64" height="64" alt="what3words">&nbsp;what3words Library Samples
+# <img src="https://what3words.com/assets/images/w3w_square_red.png" width="64" height="64" alt="what3words">&nbsp;Samples for what3words libraries and components
 
 This repository contains a set of individual Android Studio projects to help you learn about
 how to use what3words Library. Each sample demonstrates different use cases, complexity levels and APIs.
