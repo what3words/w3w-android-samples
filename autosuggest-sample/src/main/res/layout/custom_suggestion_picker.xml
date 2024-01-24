@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.what3words.components.picker.W3WAutoSuggestPicker xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/suggestionPicker"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="@dimen/xlarge_margin"
+    android:layout_marginEnd="8dp"
+    android:elevation="4dp" />

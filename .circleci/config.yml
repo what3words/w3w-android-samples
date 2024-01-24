@@ -1,0 +1,101 @@
+version: 2.1
+orbs:
+  gradle: circleci/gradle@3.0.0
+  android: circleci/android@2.3.0
+
+jobs:
+  build-assemble:
+    executor:
+      name: android/android-machine
+      tag: 2023.11.1
+      resource-class: xlarge
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}
+      - run:
+          name: Set Up
+          command: | 
+            ./gradlew wrapper
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}
+      - run:
+          name: API Wrapper Sample Assemble builds
+          command: |
+            ./gradlew api-wrapper-sample:assembleRelease
+      - run:
+          name: OCR Sample Assemble builds
+          command: |
+            ./gradlew ocr-sample:assembleRelease
+      - run:
+          name: Auto Suggest Sample builds
+          command: |
+            ./gradlew autosuggest-sample:assembleRelease
+      - run:
+          name: Auto Suggest Sample Voice builds
+          command: |
+            ./gradlew autosuggest-sample-voice:assembleRelease
+      - run:
+          name: Multi Component Sample Assemble builds
+          command: |
+            ./gradlew multi-component-sample:assembleRelease
+      - store_artifacts:
+          path: api-wrapper-sample/build/outputs/apk/release
+      - store_artifacts:
+          path: ocr-sample/build/outputs/apk/release
+      - store_artifacts:
+          path: autosuggest-sample/build/outputs/apk/release
+      - store_artifacts:
+          path: autosuggest-sample-voice/build/outputs/apk/release
+      - store_artifacts:
+          path: multi-component-sample/build/outputs/apk/release
+  build-ui-test:
+    executor:
+      name: android/android-machine
+      tag: 2023.11.1
+      resource-class: xlarge
+    steps:
+      - checkout
+      - run:
+            name: Config emulator
+            command: |
+              cp -rf multi-component-sample/src/androidTest/resources/custom.png /opt/android/sdk/emulator/resources
+              cp -rf multi-component-sample/src/androidTest/resources/Toren1BD.posters /opt/android/sdk/emulator/resources
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}
+      - android/create-avd:
+          avd-name: testDevice
+          system-image: system-images;android-34;google_apis_playstore;x86_64
+          install: true
+      - android/start-emulator:
+          avd-name: testDevice
+          no-window: true
+          camera-back: virtualscene
+          restore-gradle-cache-prefix: v1a
+          post-emulator-launch-assemble-command: echo "Emulator Started"
+      - run:
+          name: Set Up
+          command: |
+            ./gradlew wrapper
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}
+      - android/run-tests:
+          test-command: ./gradlew multi-component-sample:jacocoTestReport
+          max-tries: 5
+      - store_test_results:
+          path: multi-component-sample/build/outputs/androidTest-results
+      - android/save-gradle-cache:
+          cache-prefix: v1a
+workflows:
+  build-test:
+    jobs:
+      - build-assemble:
+          context:
+            - mobile
+      - build-ui-test:
+          context:
+            - mobile
