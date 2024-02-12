@@ -3,10 +3,13 @@ package com.what3words.samples.multiple.ui.screen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Map
+import androidx.compose.material.icons.filled.PinDrop
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,7 +18,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -25,12 +27,10 @@ import com.what3words.components.maps.wrappers.W3WMapWrapper
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
 import com.what3words.ocr.components.models.W3WOcrWrapper
-import com.what3words.samples.multiple.R
 import com.what3words.samples.multiple.ui.screen.view.AutoTextField
 import com.what3words.samples.multiple.ui.screen.view.AutoTextFieldUIState
 import com.what3words.samples.multiple.ui.screen.view.MapWrapperView
 import com.what3words.samples.multiple.ui.screen.view.OcrView
-import com.what3words.samples.multiple.ui.theme.W3WMultiComponentTheme
 
 @Composable
 fun MainAppScreen(
@@ -54,11 +54,9 @@ fun MainAppScreen(
         )
     }
 
-    W3WMultiComponentTheme {
-        // A surface container using the 'background' color from the theme
+    W3WTheme {
         Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
+            modifier = Modifier.fillMaxSize()
         ) {
 
             ConstraintLayout(
@@ -130,11 +128,9 @@ fun MainAppScreen(
                                 )
                             }
                         }
-                    },
-                    backgroundColor = W3WTheme.colors.background,
-                    contentColor = W3WTheme.colors.primary
+                    }
                 ) {
-                    Icon(painterResource(R.drawable.icon_pin_drop), "Add Marker")
+                    Icon(Icons.Filled.PinDrop, "Add Marker")
                 }
 
                 FloatingActionButton(
@@ -149,11 +145,9 @@ fun MainAppScreen(
                         .padding(bottom = 12.dp, start = 24.dp),
                     onClick = {
                         isGGMap = !isGGMap
-                    },
-                    backgroundColor = W3WTheme.colors.background,
-                    contentColor = W3WTheme.colors.primary
+                    }
                 ) {
-                    Icon(painterResource(R.drawable.icon_map), "Map Type")
+                    Icon(Icons.Filled.Map, "Map Type")
                 }
 
                 FloatingActionButton(
@@ -169,14 +163,11 @@ fun MainAppScreen(
                     onClick = {
                         autoTextFieldUIState = autoTextFieldUIState.copy().apply { isClearFocus = true }
                         scanScreenVisible = true
-                    },
-                    backgroundColor = W3WTheme.colors.background,
-                    contentColor = W3WTheme.colors.primary
+                    }
                 ) {
-                    Icon(painterResource(R.drawable.icon_camera), "OCR Button")
+                    Icon(Icons.Filled.CameraAlt, "OCR Button")
                 }
             }
         }
     }
-
 }
