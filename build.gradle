@@ -14,6 +14,7 @@ buildscript {
     }
 
     ext {
+        compose_bom_version = '2023.06.01'
         compose_version = "1.3.1"
         compose_compiler_version = "1.4.6"
         compose_activity_version = "1.7.2"
@@ -62,7 +63,7 @@ buildscript {
         jacoco_version = "0.8.7"
 
         what3words_android_wrapper_version = "3.+"
-        what3words_android_ocr_components_version = "1.+"
+        what3words_android_ocr_components_version = "1.0.+"
         what3words_android_map_components_version = "1.+"
         what3words_android_components_version = "3.+"
     }
