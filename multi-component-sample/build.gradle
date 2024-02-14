@@ -84,12 +84,12 @@ dependencies {
     implementation "com.what3words:w3w-android-ocr-components:$what3words_android_ocr_components_version"
 
     // Compose
-    implementation platform('androidx.compose:compose-bom:2023.06.01')
+    implementation platform("androidx.compose:compose-bom:$compose_bom_version")
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation "androidx.compose.ui:ui-viewbinding"
-    implementation "androidx.compose.material:material"
+    implementation "androidx.compose.material3:material3"
     implementation "androidx.activity:activity-compose"
     implementation "androidx.constraintlayout:constraintlayout-compose:$compose_constraint_layout_version"
 

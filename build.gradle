@@ -63,7 +63,7 @@ buildscript {
         jacoco_version = "0.8.7"
 
         what3words_android_wrapper_version = "3.+"
-        what3words_android_ocr_components_version = "1.0.+"
+        what3words_android_ocr_components_version = "1.+"
         what3words_android_map_components_version = "1.+"
         what3words_android_components_version = "3.+"
     }
