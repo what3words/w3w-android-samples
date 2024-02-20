@@ -97,9 +97,7 @@ class MockVoiceApi(
         )
     }
 
-
-
-    override fun sendData(byteString: ByteString) {
+    override fun sendData(readCount: Int, buffer: ShortArray) {
         if(!isSendData) {
             isSendData = true
             CoroutineScope(Dispatchers.IO).launch {
@@ -114,6 +112,5 @@ class MockVoiceApi(
                 }
             }
         }
-
     }
 }
