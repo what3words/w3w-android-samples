@@ -41,6 +41,7 @@ buildscript {
         androidx_core_ktx_version = "1.8.0"
         fragment_version = "1.5.5"
         compose_constraint_layout_version = "1.0.1"
+        androidx_lifecycle_version="2.7.0"
 
         //Google Map
         map_compose_version = "2.7.2"
