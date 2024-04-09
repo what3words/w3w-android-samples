@@ -24,6 +24,7 @@ dependencyResolutionManagement {
         // Core library staging repository
         maven {
             url "https://s01.oss.sonatype.org/content/repositories/comwhat3words-1385"
+        }
 
         maven {
             url "https://s01.oss.sonatype.org/content/repositories/comwhat3words-1337"
