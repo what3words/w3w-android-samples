@@ -4,14 +4,16 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.zIndex
 import com.what3words.androidwrapper.What3WordsAndroidWrapper
-import com.what3words.design.library.ui.components.SuggestionWhat3wordsDefaults
-import com.what3words.design.library.ui.theme.W3WTheme
+import com.what3words.design.library.ui.components.What3wordsAddressListItemDefaults
+import com.what3words.design.library.ui.theme.surfaceVariationsColors
+import com.what3words.design.library.ui.theme.w3wTypography
 import com.what3words.javawrapper.request.AutosuggestOptions
 import com.what3words.javawrapper.request.Coordinates
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
@@ -59,19 +61,19 @@ fun OcrView(
             ),
             //optional if you want to override any colors of the scanner composable.
             scannerColors = W3WOcrScannerDefaults.defaultColors(
-                bottomDrawerBackground = W3WTheme.colors.background
+                bottomDrawerBackground = MaterialTheme.surfaceVariationsColors.surfaceContainerLowest
             ),
             //optional if you want to override any text styles.
             scannerTextStyles = W3WOcrScannerDefaults.defaultTextStyles(
-                stateTextStyle = W3WTheme.typography.headline
+                stateTextStyle = MaterialTheme.typography.titleMedium,
             ),
             //optional if you want to override any colors of the scanned list item composable.
-            suggestionColors = SuggestionWhat3wordsDefaults.defaultColors(
-                background = W3WTheme.colors.background
+            suggestionColors = What3wordsAddressListItemDefaults.defaultColors(
+                background = MaterialTheme.surfaceVariationsColors.surfaceContainerLowest
             ),
             //optional if you want to override any text styles of the scanned list item composable.
-            suggestionTextStyles = SuggestionWhat3wordsDefaults.defaultTextStyles(
-                wordsTextStyle = W3WTheme.typography.headline
+            suggestionTextStyles = What3wordsAddressListItemDefaults.defaultTextStyles(
+                wordsTextStyle = MaterialTheme.w3wTypography.titleMediumProminent
             ),
             onError = {
                 onScanScreenVisibleChange(false)
