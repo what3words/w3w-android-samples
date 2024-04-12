@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 33
+    compileSdk 34
 
     buildFeatures {
         viewBinding true
@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.what3words.samples.wrapper"
         minSdkVersion 19
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -60,6 +60,8 @@ dependencies {
     // kotlin
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"
     runtimeOnly "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_version"
 
     // java
     implementation "io.reactivex.rxjava3:rxjava:$rxjava3_version"
