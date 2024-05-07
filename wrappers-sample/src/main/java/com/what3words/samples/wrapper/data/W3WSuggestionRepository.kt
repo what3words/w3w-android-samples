@@ -30,7 +30,7 @@ class W3WSuggestionRepository(
         w3wTextDataSource.convertTo3wa(coordinates, language)
     }
 
-    suspend fun convertToCoordinates(words: String): W3WResult<W3WCoordinates> =
+    suspend fun convertToCoordinates(words: String): W3WResult<W3WAddress> =
         withContext(dispatcher) {
             w3wTextDataSource.convertToCoordinates(words)
         }
@@ -56,13 +56,13 @@ class W3WSuggestionRepository(
         input: W3WAudioStream,
         voiceLanguage: W3WLanguage,
         options: W3WAutosuggestOptions?,
-        onSpeechDetected: ((String) -> Unit)?,
+        onRawResult: ((String) -> Unit)?,
     ): W3WResult<List<W3WSuggestion>> = suspendCancellableCoroutine { continuation ->
         w3wVoiceDataSource.autosuggest(
             input,
             voiceLanguage,
             options,
-            onSpeechDetected
+            onRawResult
         ) { result ->
             continuation.resume(result)
         }

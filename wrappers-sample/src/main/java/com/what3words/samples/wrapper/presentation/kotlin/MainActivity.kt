@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
                         is W3WResult.Success -> {
                             binding.resultConvertTo3wa.text =
-                                "3 word address: ${result.value.address}"
+                                "what3words address: ${result.value.words}"
                         }
                     }
                 }
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
                     is W3WResult.Success -> {
                         binding.resultConvertToCoordinates.text =
-                            "Coordinates: ${result.value.lat}, ${result.value.lng}"
+                            "Coordinates: ${result.value.center?.lat}, ${result.value.center?.lng}"
                     }
                 }
             }
@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
 
                     is W3WResult.Success -> {
                         binding.resultAutoSuggest.text = if (result.value.isNotEmpty())
-                            "Suggestions: ${result.value.joinToString { it.w3wAddress.address }}"
+                            "Suggestions: ${result.value.joinToString { it.w3wAddress.words }}"
                         else "No suggestions available"
                     }
                 }
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
                     binding.volumeAutoSuggestVoice.text =
                         "volume: ${state.volume}"
                     binding.resultAutoSuggestVoice.text =
-                        "Suggestions: ${state.suggestions.joinToString { it.w3wAddress.address }}"
+                        "Suggestions: ${state.suggestions.joinToString { it.w3wAddress.words }}"
                     state.error?.let {
                         if (it is W3WApiVoiceError) {
                             binding.resultAutoSuggestVoice.text = "${it.message}"
