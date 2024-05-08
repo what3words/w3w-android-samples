@@ -31,36 +31,28 @@ class MainViewModel(
     init {
         microphone.setEventsListener(object : W3WAudioStream.EventsListener {
             override fun onVolumeChange(volume: Float) {
-                viewModelScope.launch {
-                    _state.update {
-                        it.copy(volume = (volume.times(100).roundToInt()))
-                    }
+                _state.update {
+                    it.copy(volume = (volume.times(100).roundToInt()))
                 }
             }
 
             override fun onError(error: W3WError) {
-                viewModelScope.launch {
-                    _state.update {
-                        it.copy(error = error)
-                    }
+                _state.update {
+                    it.copy(error = error)
                 }
             }
 
             override fun onAudioStreamStateChange(state: W3WAudioStreamState) {
                 when (state) {
                     W3WAudioStreamState.LISTENING -> {
-                        viewModelScope.launch {
-                            _state.update {
-                                it.copy(isRecording = true)
-                            }
+                        _state.update {
+                            it.copy(isRecording = true)
                         }
                     }
 
                     W3WAudioStreamState.STOPPED -> {
-                        viewModelScope.launch {
-                            _state.update {
-                                it.copy(isRecording = false, volume = 0)
-                            }
+                        _state.update {
+                            it.copy(isRecording = false, volume = 0)
                         }
                     }
                 }

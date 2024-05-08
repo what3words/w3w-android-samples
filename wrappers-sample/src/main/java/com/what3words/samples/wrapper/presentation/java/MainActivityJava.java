@@ -142,7 +142,7 @@ public class MainActivityJava extends AppCompatActivity {
                                 if (result instanceof W3WResult.Success) {
                                     List<String> suggestionsWords = new ArrayList<>();
                                     for (W3WSuggestion suggestion : ((W3WResult.Success<List<W3WSuggestion>>) result).getValue()) {
-                                        suggestionsWords.add(suggestion.getW3wAddress().getAddress());
+                                        suggestionsWords.add(suggestion.getW3wAddress().getWords());
                                     }
                                     resultAutoSuggest.setText(String.format("Suggestions: %s", TextUtils.join(",", suggestionsWords)));
                                 } else {
@@ -165,9 +165,9 @@ public class MainActivityJava extends AppCompatActivity {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(result -> {
                                 if (result instanceof W3WResult.Success) {
-                                    resultConvertToCoordinates.setText(String.format("Coordinates: %s,%s", ((W3WResult.Success<W3WCoordinates>) result).getValue().getLat(), ((W3WResult.Success<W3WCoordinates>) result).getValue().getLng()));
+                                    resultConvertToCoordinates.setText(String.format("Coordinates: %s,%s", ((W3WResult.Success<W3WAddress>) result).getValue().getCenter().getLat(), ((W3WResult.Success<W3WAddress>) result).getValue().getCenter().getLng()));
                                 } else {
-                                    resultConvertToCoordinates.setText(((W3WResult.Failure<W3WCoordinates>) result).getMessage());
+                                    resultConvertToCoordinates.setText(((W3WResult.Failure<W3WAddress>) result).getMessage());
                                 }
                             })
             );
@@ -186,7 +186,7 @@ public class MainActivityJava extends AppCompatActivity {
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(result -> {
                                     if (result instanceof W3WResult.Success) {
-                                        resultConvertTo3wa.setText(String.format("3 word address: %s", ((W3WResult.Success<W3WAddress>) result).getValue().getAddress()));
+                                        resultConvertTo3wa.setText(String.format("3 word address: %s", ((W3WResult.Success<W3WAddress>) result).getValue().getWords()));
                                     } else {
                                         resultConvertTo3wa.setText(((W3WResult.Failure<W3WAddress>) result).getMessage());
                                     }
@@ -232,7 +232,7 @@ public class MainActivityJava extends AppCompatActivity {
                 if (onResult instanceof W3WResult.Success) {
                     List<String> suggestionsWords = new ArrayList<>();
                     for (W3WSuggestion suggestion : ((W3WResult.Success<List<W3WSuggestion>>) onResult).getValue()) {
-                        suggestionsWords.add(suggestion.getW3wAddress().getAddress());
+                        suggestionsWords.add(suggestion.getW3wAddress().getWords());
                     }
                     runOnUiThread(() -> resultAutoSuggestVoice.setText(String.format("Suggestions: %s", TextUtils.join(",", suggestionsWords))));
                 } else {
