@@ -11,6 +11,7 @@ import com.what3words.core.types.geometry.W3WGridSection
 import com.what3words.core.types.geometry.W3WRectangle
 import com.what3words.core.types.language.W3WLanguage
 import com.what3words.core.types.language.W3WProprietaryLanguage
+import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.core.types.options.W3WAutosuggestOptions
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -54,7 +55,7 @@ class W3WSuggestionRepository(
 
     suspend fun voiceAutosuggest(
         input: W3WAudioStream,
-        voiceLanguage: W3WLanguage,
+        voiceLanguage: W3WRFC5646Language,
         options: W3WAutosuggestOptions?,
         onRawResult: ((String) -> Unit)?,
     ): W3WResult<List<W3WSuggestion>> = suspendCancellableCoroutine { continuation ->
