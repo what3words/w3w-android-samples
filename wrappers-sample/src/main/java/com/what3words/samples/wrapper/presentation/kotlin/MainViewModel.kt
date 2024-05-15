@@ -11,6 +11,7 @@ import com.what3words.core.types.common.W3WResult
 import com.what3words.core.types.domain.W3WSuggestion
 import com.what3words.core.types.geometry.W3WCoordinates
 import com.what3words.core.types.language.W3WLanguage
+import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.samples.wrapper.data.W3WSuggestionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -71,7 +72,7 @@ class MainViewModel(
     suspend fun autosuggest(input: String) =
         w3WSuggestionRepository.autosuggest(input, null)
 
-    fun autosuggestWithVoice(language: W3WLanguage) {
+    fun autosuggestWithVoice(language: W3WRFC5646Language) {
         viewModelScope.launch {
             when (val result =
                 w3WSuggestionRepository.voiceAutosuggest(microphone, language, null, null)) {
