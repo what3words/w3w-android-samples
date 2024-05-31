@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         // convert-to-3wa sample
         binding.buttonConvertTo3wa.setOnClickListener {
             val latLong =
-                binding.textInputConvertTo3wa.text?.replace("\\s".toRegex(), "")?.split(",")
+                binding.textInputConvertTo3wa.text?.replace("\\s".toRegex(), "")?.split(Regex(","),  2)
                     ?.filter { it.isNotEmpty() }
             val lat = latLong?.getOrNull(0)?.toDoubleOrNull()
             val long = latLong?.getOrNull(1)?.toDoubleOrNull()
