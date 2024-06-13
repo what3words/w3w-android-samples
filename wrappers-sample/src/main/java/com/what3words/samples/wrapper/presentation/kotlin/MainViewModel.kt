@@ -72,6 +72,9 @@ class MainViewModel(
     suspend fun autosuggest(input: String) =
         w3WSuggestionRepository.autosuggest(input, null)
 
+    suspend fun isValid3wa(input: String) =
+        w3WSuggestionRepository.isValid3wa(input)
+
     fun autosuggestWithVoice(language: W3WRFC5646Language) {
         viewModelScope.launch {
             when (val result =

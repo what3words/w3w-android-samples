@@ -191,6 +191,63 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/resultAutoSuggest" />
 
+        <!-- isValid3wa -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textFieldIsValid3wa"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:hint="isValid3wa, i.e: index.home.raft"
+            app:layout_constraintEnd_toStartOf="@id/buttonIsValid3wa"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separated3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputIsValid3wa"
+                style="@style/TextLight.XS"
+                android:imeOptions="actionDone"
+                android:inputType="textNoSuggestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonIsValid3wa"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/main_xs"
+            app:icon="@drawable/ic_check"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/textFieldIsValid3wa"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/textFieldIsValid3wa"
+            app:layout_constraintTop_toTopOf="@id/textFieldIsValid3wa" />
+
+        <TextView
+            android:id="@+id/resultIsValid3wa"
+            style="@style/TextLight.S"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/main_xs"
+            android:text="Is valid: "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textFieldIsValid3wa" />
+
+        <View
+            android:id="@+id/separated4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/main_xs"
+            android:background="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/resultIsValid3wa" />
+
         <TextView
             android:id="@+id/titleVoice"
             style="@style/TextLight.L.Medium"
@@ -200,7 +257,7 @@
             android:layout_marginTop="@dimen/main_l"
             android:text="Voice samples:"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/separated3" />
+            app:layout_constraintTop_toBottomOf="@id/separated4" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonAutoSuggestVoice"
