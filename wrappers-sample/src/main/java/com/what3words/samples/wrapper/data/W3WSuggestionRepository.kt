@@ -43,6 +43,13 @@ class W3WSuggestionRepository(
         w3wTextDataSource.autosuggest(input, options)
     }
 
+    suspend fun isValid3wa(
+        input: String
+    ): W3WResult<Boolean> = withContext(dispatcher) {
+        w3wTextDataSource.isValid3wa(input)
+    }
+
+
     suspend fun gridSection(boundingBox: W3WRectangle): W3WResult<W3WGridSection> =
         withContext(dispatcher) {
             w3wTextDataSource.gridSection(boundingBox)

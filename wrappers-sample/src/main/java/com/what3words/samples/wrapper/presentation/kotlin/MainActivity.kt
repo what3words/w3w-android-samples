@@ -120,6 +120,21 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.buttonIsValid3wa.setOnClickListener {
+            lifecycleScope.launch {
+                val result = viewModel.isValid3wa(binding.textInputIsValid3wa.text.toString())
+                when (result) {
+                    is W3WResult.Failure -> {
+                        binding.resultIsValid3wa.text = result.message
+                    }
+
+                    is W3WResult.Success -> {
+                        binding.resultIsValid3wa.text = "isValid: ${result.value}"
+                    }
+                }
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")

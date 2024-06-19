@@ -47,6 +47,12 @@ public class MainActivityJava extends AppCompatActivity {
 
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+    private MaterialButton buttonIsValid3wa;
+
+    private TextInputEditText textInputIsValid3wa;
+
+    private TextView resultIsValid3wa;
+
     private MaterialButton buttonConvertTo3wa;
 
     private TextInputEditText textInputConvertTo3wa;
@@ -86,6 +92,7 @@ public class MainActivityJava extends AppCompatActivity {
         setupConvertToCoordinates();
         setupAutoSuggest();
         setupAutoSuggestVoice();
+        setupIsValid3wa();
     }
 
     private void setupAutoSuggestVoice() {
@@ -198,6 +205,27 @@ public class MainActivityJava extends AppCompatActivity {
         });
     }
 
+    private void setupIsValid3wa() {
+        buttonIsValid3wa.setOnClickListener(view -> {
+            String address = "";
+            if (textInputIsValid3wa.getText() != null)
+                address = textInputIsValid3wa.getText().toString();
+            String finalAddress = address;
+            compositeDisposable.add(
+                    Observable.fromCallable(() -> textDataSource.isValid3wa(finalAddress))
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(result -> {
+                                if (result instanceof W3WResult.Success) {
+                                    resultIsValid3wa.setText(String.format("IsValid: %s", ((W3WResult.Success<Boolean>) result).getValue().toString()));
+                                } else {
+                                    resultIsValid3wa.setText(((W3WResult.Failure<Boolean>) result).getMessage());
+                                }
+                            })
+            );
+        });
+    }
+
     private void initializeViews() {
         buttonConvertTo3wa = findViewById(R.id.buttonConvertTo3wa);
         textInputConvertTo3wa = findViewById(R.id.textInputConvertTo3wa);
@@ -211,6 +239,9 @@ public class MainActivityJava extends AppCompatActivity {
         buttonAutoSuggestVoice = findViewById(R.id.buttonAutoSuggestVoice);
         volumeAutoSuggestVoice = findViewById(R.id.volumeAutoSuggestVoice);
         resultAutoSuggestVoice = findViewById(R.id.resultAutoSuggestVoice);
+        buttonIsValid3wa = findViewById(R.id.buttonIsValid3wa);
+        textInputIsValid3wa = findViewById(R.id.textInputIsValid3wa);
+        resultIsValid3wa = findViewById(R.id.resultIsValid3wa);
     }
 
     private final ActivityResultLauncher<String> requestRecordPermission = registerForActivityResult(
