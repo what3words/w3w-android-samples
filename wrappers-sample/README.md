@@ -137,7 +137,7 @@ binding.buttonAutoSuggest.setOnClickListener {
 ### Testing it by switch the launcher Activity in the Manifest file
 ```
 <activity
-    android:name="com.what3words.samples.wrapper.MainActivity"
+    android:name="com.what3words.samples.wrapper.presentation.kotlin.MainActivity"
     android:exported="true">
     <intent-filter>
         <action android:name="android.intent.action.MAIN" />
