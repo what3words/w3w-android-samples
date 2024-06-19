@@ -24,7 +24,7 @@ jobs:
       - run:
           name: API Wrapper Sample Assemble builds
           command: |
-            ./gradlew api-wrapper-sample:assembleRelease
+            ./gradlew wrappers-sample:assembleRelease
       - run:
           name: OCR Sample Assemble builds
           command: |
@@ -42,7 +42,7 @@ jobs:
           command: |
             ./gradlew multi-component-sample:assembleRelease
       - store_artifacts:
-          path: api-wrapper-sample/build/outputs/apk/release
+          path: wrappers-sample/build/outputs/apk/release
       - store_artifacts:
           path: ocr-sample/build/outputs/apk/release
       - store_artifacts:

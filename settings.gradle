@@ -16,14 +16,15 @@ dependencyResolutionManagement {
                 password = MAPBOX_DOWNLOADS_TOKEN
             }
         }
+        // Android-wrapper staging repository
         maven {
-            url "https://s01.oss.sonatype.org/content/repositories/comwhat3words-1337"
+            url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
         }
     }
 }
 
 rootProject.name = "w3w-android-samples"
-include ':api-wrapper-sample'
+include ':wrappers-sample'
 include ':ocr-sample'
 include ':maps-googlemaps-sample'
 include ':mapbox-sample'
