@@ -8,12 +8,14 @@ import com.mapbox.maps.Style
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.models.W3WZoomOption
 import com.what3words.components.maps.views.W3WMap
+import com.what3words.components.maps.views.W3WMapFragment
 import com.what3words.components.maps.views.W3WMapboxMapFragment
+import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.samples.mapbox.BuildConfig
 import com.what3words.samples.mapbox.R
 import com.what3words.samples.mapbox.databinding.ActivityMapFragmentBinding
 
-class MapBoxFragmentActivity : AppCompatActivity() , W3WMapboxMapFragment.OnMapReadyCallback {
+class MapBoxFragmentActivity : AppCompatActivity() , W3WMapFragment.OnMapReadyCallback {
     private lateinit var binding: ActivityMapFragmentBinding
     private val TAG = MapBoxFragmentActivity::class.qualifiedName
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,22 +31,22 @@ class MapBoxFragmentActivity : AppCompatActivity() , W3WMapboxMapFragment.OnMapR
 
     override fun onMapReady(map: W3WMap) {
         //set language to get all the 3wa in the desired language (default english)
-        map.setLanguage("en")
+        map.setLanguage(W3WRFC5646Language.EN_GB)
 
         //example how to use W3WMap features (check interface for documentation).
         map.addMarkerAtWords(
             "filled.count.soap",
             W3WMarkerColor.BLUE,
             W3WZoomOption.CENTER_AND_ZOOM,
-            {
+            { address ->
                 Log.i(
                     TAG,
-                    "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}"
+                    "added $address"
                 )
             }, {
                 Toast.makeText(
                     this@MapBoxFragmentActivity,
-                    "${it.key}, ${it.message}",
+                    "$it",
                     Toast.LENGTH_LONG
                 ).show()
             }

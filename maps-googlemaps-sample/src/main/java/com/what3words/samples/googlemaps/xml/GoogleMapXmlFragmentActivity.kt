@@ -9,12 +9,14 @@ import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.models.W3WZoomOption
 import com.what3words.components.maps.views.W3WGoogleMapFragment
 import com.what3words.components.maps.views.W3WMap
+import com.what3words.components.maps.views.W3WMapFragment
+import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.samples.googlemaps.BuildConfig
 import com.what3words.samples.googlemaps.R
 import com.what3words.samples.googlemaps.databinding.ActivityMapFragmentBinding
 
 
-class GoogleMapXmlFragmentActivity : AppCompatActivity(), W3WGoogleMapFragment.OnMapReadyCallback {
+class GoogleMapXmlFragmentActivity : AppCompatActivity(), W3WMapFragment.OnMapReadyCallback {
     private lateinit var binding: ActivityMapFragmentBinding
     private val TAG = GoogleMapXmlFragmentActivity::class.qualifiedName
 
@@ -31,7 +33,7 @@ class GoogleMapXmlFragmentActivity : AppCompatActivity(), W3WGoogleMapFragment.O
 
     override fun onMapReady(map: W3WMap) {
         //set language to get all the 3wa in the desired language (default english)
-        map.setLanguage("en")
+        map.setLanguage(W3WRFC5646Language.EN_GB)
 
         //example how to use W3WMap features (check interface for documentation).
         map.addMarkerAtWords(
@@ -41,12 +43,12 @@ class GoogleMapXmlFragmentActivity : AppCompatActivity(), W3WGoogleMapFragment.O
             {
                 Log.i(
                     TAG,
-                    "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}"
+                    "added $it"
                 )
             }, {
                 Toast.makeText(
                     this@GoogleMapXmlFragmentActivity,
-                    "${it.key}, ${it.message}",
+                    "$it",
                     Toast.LENGTH_LONG
                 ).show()
             }

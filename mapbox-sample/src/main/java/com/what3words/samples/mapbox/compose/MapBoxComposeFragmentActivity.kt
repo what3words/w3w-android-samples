@@ -5,8 +5,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.fragment.app.FragmentActivity
@@ -14,22 +14,24 @@ import com.mapbox.maps.Style
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.models.W3WZoomOption
 import com.what3words.components.maps.views.W3WMap
+import com.what3words.components.maps.views.W3WMapFragment
 import com.what3words.components.maps.views.W3WMapboxMapFragment
+import com.what3words.core.types.language.W3WRFC5646Language
+import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.samples.mapbox.BuildConfig
 import com.what3words.samples.mapbox.databinding.ActivityComposeMapFragmentBinding
-import com.what3words.samples.mapbox.ui.theme.W3wandroidcomponentsmapsTheme
 
-class MapBoxComposeFragmentActivity : FragmentActivity(), W3WMapboxMapFragment.OnMapReadyCallback {
+class MapBoxComposeFragmentActivity : FragmentActivity(), W3WMapFragment.OnMapReadyCallback {
     private val TAG = MapBoxComposeFragmentActivity::class.qualifiedName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            W3wandroidcomponentsmapsTheme {
+            W3WTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     AndroidViewBinding(
                         factory = { inflater, parent, attachToParent ->
@@ -55,7 +57,7 @@ class MapBoxComposeFragmentActivity : FragmentActivity(), W3WMapboxMapFragment.O
 
     override fun onMapReady(map: W3WMap) {
         //set language to get all the 3wa in the desired language (default english)
-        map.setLanguage("en")
+        map.setLanguage(W3WRFC5646Language.EN_GB)
 
         //example how to use W3WMap features (check interface for documentation).
         map.addMarkerAtWords(
@@ -65,12 +67,12 @@ class MapBoxComposeFragmentActivity : FragmentActivity(), W3WMapboxMapFragment.O
             {
                 Log.i(
                     TAG,
-                    "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}"
+                    "added $it"
                 )
             }, {
                 Toast.makeText(
                     this@MapBoxComposeFragmentActivity,
-                    "${it.key}, ${it.message}",
+                    "$it",
                     Toast.LENGTH_LONG
                 ).show()
             }

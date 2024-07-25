@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.what3words.samples.mapbox"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
         buildConfigField 'String', 'W3W_API_KEY', findProperty('PROD_API_KEY') ? "\"${findProperty('PROD_API_KEY')}\"" : "\"YOUR_API_KEY_HERE\""
@@ -73,11 +73,14 @@ dependencies {
 
     implementation "androidx.core:core-ktx:$androidx_core_version"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
-    implementation "androidx.compose.material:material:$compose_version"
+    implementation platform("androidx.compose:compose-bom:2024.06.00")
+    implementation 'androidx.compose.ui:ui'
+    implementation 'androidx.compose.ui:ui-graphics'
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    implementation "androidx.compose.ui:ui-viewbinding"
+    implementation "androidx.compose.material3:material3"
+    implementation "androidx.activity:activity-compose"
     implementation "com.google.android.material:material:$google_material_version"
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.ui:ui-viewbinding:$compose_version"
-    implementation "androidx.activity:activity-compose:$compose_activity_version"
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
@@ -87,5 +90,5 @@ dependencies {
     // kotlin
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
-    implementation "com.mapbox.maps:android:$map_box_version"
+    implementation "com.mapbox.maps:android:10.4.0"
 }

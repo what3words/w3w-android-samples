@@ -9,8 +9,10 @@ import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.what3words.androidwrapper.What3WordsV3
+import com.what3words.androidwrapper.datasource.text.W3WApiTextDataSource
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WMapBoxWrapper
+import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.samples.mapbox.BuildConfig
 import com.what3words.samples.mapbox.databinding.ActivityMapWrapperBinding
 
@@ -25,30 +27,33 @@ class MapBoxXmlWrapperActivity : AppCompatActivity() {
         binding.mapView.getMapboxMap().loadStyleUri(Style.OUTDOORS)
         setContentView(binding.root)
 
-        val wrapper = What3WordsV3(BuildConfig.W3W_API_KEY, this)
+        val textDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
         this.w3wMapsWrapper = W3WMapBoxWrapper(
             this,
             binding.mapView.getMapboxMap(),
-            wrapper,
-        ).setLanguage("en")
+            textDataSource,
+        ).setLanguage(W3WRFC5646Language.EN_GB)
 
         w3wMapsWrapper.addMarkerAtWords(
             "filled.count.soap",
             W3WMarkerColor.BLUE,
-            {
+            { address ->
                 Log.i(
                     TAG,
-                    "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}"
+                    "added $address"
                 )
-                val cameraOptions = CameraOptions.Builder()
-                    .center(Point.fromLngLat(it.coordinates.lng, it.coordinates.lat))
-                    .zoom(18.5)
-                    .build()
-                binding.mapView.getMapboxMap().setCamera(cameraOptions)
+                address.center?.let { center ->
+                    val cameraOptions = CameraOptions.Builder()
+                        .center(Point.fromLngLat(center.lng, center.lat))
+                        .zoom(18.5)
+                        .build()
+                    binding.mapView.getMapboxMap().setCamera(cameraOptions)
+                }
+
             }, {
                 Toast.makeText(
                     this@MapBoxXmlWrapperActivity,
-                    "${it.key}, ${it.message}",
+                    "$it",
                     Toast.LENGTH_LONG
                 ).show()
             }

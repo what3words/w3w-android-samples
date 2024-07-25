@@ -5,8 +5,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.fragment.app.FragmentActivity
@@ -15,20 +15,22 @@ import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.models.W3WZoomOption
 import com.what3words.components.maps.views.W3WGoogleMapFragment
 import com.what3words.components.maps.views.W3WMap
+import com.what3words.components.maps.views.W3WMapFragment
+import com.what3words.core.types.language.W3WRFC5646Language
+import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.samples.googlemaps.BuildConfig
 import com.what3words.samples.googlemaps.databinding.ActivityComposeMapFragmentBinding
-import com.what3words.samples.googlemaps.ui.theme.W3wandroidcomponentsmapsTheme
 
-class GoogleMapFragmentActivity : FragmentActivity(), W3WGoogleMapFragment.OnMapReadyCallback {
+class GoogleMapFragmentActivity : FragmentActivity(), W3WMapFragment.OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            W3wandroidcomponentsmapsTheme {
+            W3WTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     AndroidViewBinding(
                         factory = { inflater, parent, attachToParent ->
@@ -54,7 +56,7 @@ class GoogleMapFragmentActivity : FragmentActivity(), W3WGoogleMapFragment.OnMap
 
     override fun onMapReady(map: W3WMap) {
         //set language to get all the 3wa in the desired language (default english)
-        map.setLanguage("en")
+        map.setLanguage(W3WRFC5646Language.EN_GB)
 
         //example how to use W3WMap features (check interface for documentation).
         map.addMarkerAtWords(
@@ -64,12 +66,12 @@ class GoogleMapFragmentActivity : FragmentActivity(), W3WGoogleMapFragment.OnMap
             {
                 Log.i(
                     "UsingMapFragmentActivity",
-                    "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}"
+                    "added $it"
                 )
             }, {
                 Toast.makeText(
                     this,
-                    "${it.key}, ${it.message}",
+                    "$it",
                     Toast.LENGTH_LONG
                 ).show()
             }

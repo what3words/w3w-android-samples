@@ -10,9 +10,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.what3words.androidwrapper.What3WordsV3
+import com.what3words.androidwrapper.datasource.text.W3WApiTextDataSource
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WGoogleMapsWrapper
+import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.samples.googlemaps.BuildConfig
 import com.what3words.samples.googlemaps.R
 import com.what3words.samples.googlemaps.databinding.ActivityMapWrapperBinding
@@ -33,30 +34,32 @@ class GoogleMapsWrapperXmlActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
-        val wrapper = What3WordsV3(BuildConfig.W3W_API_KEY, this)
+        val wrapper = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
         this.w3wMapsWrapper = W3WGoogleMapsWrapper(
             this,
             map,
             wrapper,
-        ).setLanguage("en")
+        ).setLanguage(W3WRFC5646Language.EN_GB)
 
         w3wMapsWrapper.addMarkerAtWords(
             "filled.count.soap",
             W3WMarkerColor.BLUE,
-            {
+            { addedAddress ->
                 Log.i(
                     TAG,
-                    "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}"
+                    "added $addedAddress"
                 )
-                val cameraPosition = CameraPosition.Builder()
-                    .target(LatLng(it.coordinates.lat, it.coordinates.lng))
-                    .zoom(19f)
-                    .build()
-                map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                addedAddress.center?.let { center ->
+                    val cameraPosition = CameraPosition.Builder()
+                        .target(LatLng(center.lat, center.lng))
+                        .zoom(19f)
+                        .build()
+                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                }
             }, {
                 Toast.makeText(
                     this@GoogleMapsWrapperXmlActivity,
-                    "${it.key}, ${it.message}",
+                    it.message,
                     Toast.LENGTH_LONG
                 ).show()
             }

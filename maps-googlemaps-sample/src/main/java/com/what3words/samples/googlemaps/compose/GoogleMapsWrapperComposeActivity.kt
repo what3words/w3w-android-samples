@@ -5,8 +5,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.fragment.app.FragmentActivity
@@ -16,12 +16,13 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.what3words.androidwrapper.What3WordsV3
+import com.what3words.androidwrapper.datasource.text.W3WApiTextDataSource
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WGoogleMapsWrapper
+import com.what3words.core.types.language.W3WRFC5646Language
+import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.samples.googlemaps.BuildConfig
 import com.what3words.samples.googlemaps.databinding.ActivityComposeMapWrapperBinding
-import com.what3words.samples.googlemaps.ui.theme.W3wandroidcomponentsmapsTheme
 
 class GoogleMapsWrapperComposeActivity : FragmentActivity(), OnMapReadyCallback {
     private lateinit var w3wMapsWrapper: W3WGoogleMapsWrapper
@@ -30,11 +31,11 @@ class GoogleMapsWrapperComposeActivity : FragmentActivity(), OnMapReadyCallback 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            W3wandroidcomponentsmapsTheme {
+            W3WTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     AndroidViewBinding(factory = { inflater, parent, attachToParent ->
                         val view =
@@ -52,30 +53,33 @@ class GoogleMapsWrapperComposeActivity : FragmentActivity(), OnMapReadyCallback 
     }
 
     override fun onMapReady(map: GoogleMap) {
-        val wrapper = What3WordsV3(BuildConfig.W3W_API_KEY, this)
+        val textDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
         this.w3wMapsWrapper = W3WGoogleMapsWrapper(
             this,
             map,
-            wrapper,
-        ).setLanguage("en")
+            textDataSource,
+        ).setLanguage(W3WRFC5646Language.EN_GB)
 
         w3wMapsWrapper.addMarkerAtWords(
             "index.home.raft",
             W3WMarkerColor.BLUE,
-            {
+            { address ->
                 Log.i(
                     TAG,
-                    "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}"
+                    "added $address"
                 )
-                val cameraPosition = CameraPosition.Builder()
-                    .target(LatLng(it.coordinates.lat, it.coordinates.lng))
-                    .zoom(16f)
-                    .build()
-                map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                address.center?.let { center ->
+                    val cameraPosition = CameraPosition.Builder()
+                        .target(LatLng(center.lat, center.lng))
+                        .zoom(16f)
+                        .build()
+                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                }
+
             }, {
                 Toast.makeText(
                     this@GoogleMapsWrapperComposeActivity,
-                    "${it.key}, ${it.message}",
+                    "$it",
                     Toast.LENGTH_LONG
                 ).show()
             }

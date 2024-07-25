@@ -6,19 +6,20 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
-import com.what3words.androidwrapper.What3WordsV3
+import com.what3words.androidwrapper.datasource.text.W3WApiTextDataSource
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WMapBoxWrapper
+import com.what3words.core.types.language.W3WRFC5646Language
+import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.samples.mapbox.BuildConfig
-import com.what3words.samples.mapbox.ui.theme.W3wandroidcomponentsmapsTheme
 
 class MapBoxComposeWrapperActivity : ComponentActivity() {
     private lateinit var w3wMapsWrapper: W3WMapBoxWrapper
@@ -28,11 +29,11 @@ class MapBoxComposeWrapperActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            W3wandroidcomponentsmapsTheme {
+            W3WTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     AndroidView(factory = {
                         val view = MapView(it)
@@ -45,30 +46,33 @@ class MapBoxComposeWrapperActivity : ComponentActivity() {
     }
 
     private fun enableWhat3wordsFeatures(mapView: MapView) {
-        val wrapper = What3WordsV3(BuildConfig.W3W_API_KEY, this)
+        val textDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
         this.w3wMapsWrapper = W3WMapBoxWrapper(
             this,
             mapView.getMapboxMap(),
-            wrapper,
-        ).setLanguage("en")
+            textDataSource,
+        ).setLanguage(W3WRFC5646Language.EN_GB)
 
         w3wMapsWrapper.addMarkerAtWords(
             "filled.count.soap",
             W3WMarkerColor.BLUE,
-            {
+            { address ->
+
                 Log.i(
                     TAG,
-                    "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}"
+                    "added $address"
                 )
-                val cameraOptions = CameraOptions.Builder()
-                    .center(Point.fromLngLat(it.coordinates.lng, it.coordinates.lat))
-                    .zoom(18.5)
-                    .build()
-                mapView.getMapboxMap().setCamera(cameraOptions)
+                address.center?.let { center ->
+                    val cameraOptions = CameraOptions.Builder()
+                        .center(Point.fromLngLat(center.lng, center.lat))
+                        .zoom(18.5)
+                        .build()
+                    mapView.getMapboxMap().setCamera(cameraOptions)
+                }
             }, {
                 Toast.makeText(
                     this@MapBoxComposeWrapperActivity,
-                    "${it.key}, ${it.message}",
+                    "$it",
                     Toast.LENGTH_LONG
                 ).show()
             }
