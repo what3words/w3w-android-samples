@@ -65,7 +65,7 @@ buildscript {
 
         what3words_android_wrapper_v4_version = "4.+"
         what3words_android_wrapper_v3_version = "3.+"
-        what3words_android_ocr_components_version = "1.+"
+        what3words_android_ocr_components_version = "1.1.0"
         what3words_android_map_components_version = "1.+"
         what3words_android_components_version = "3.+"
         what3words_android_map_components_v2_version = "2.0.0-SNAPSHOT"
