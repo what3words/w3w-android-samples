@@ -122,7 +122,7 @@ dependencies {
     implementation "com.google.maps.android:maps-compose:$map_compose_version"
 
     //Map box
-    implementation "com.mapbox.maps:android:$map_box_version"
+    implementation "com.mapbox.maps:android:10.4.0"
 
     // mlkit
     implementation "com.google.android.gms:play-services-mlkit-text-recognition:$mlkit_core_version"
