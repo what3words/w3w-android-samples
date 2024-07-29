@@ -45,7 +45,7 @@ class MapBoxXmlWrapperActivity : AppCompatActivity() {
                 address.center?.let { center ->
                     val cameraOptions = CameraOptions.Builder()
                         .center(Point.fromLngLat(center.lng, center.lat))
-                        .zoom(18.5)
+                        .zoom(19.0)
                         .build()
                     binding.mapView.getMapboxMap().setCamera(cameraOptions)
                 }

@@ -50,7 +50,7 @@ buildscript {
         google_play_maps_services_version = "18.2.0"
 
         //Map Box
-        map_box_version = "10.4.0"
+        map_box_version = "10.16.4"
 
         //Cucumber
         cucumber_android_version = "7.14.0"
@@ -68,6 +68,7 @@ buildscript {
         what3words_android_ocr_components_version = "1.+"
         what3words_android_map_components_version = "1.+"
         what3words_android_components_version = "3.+"
+        what3words_android_map_components_v2_version = "2.0.0-SNAPSHOT"
     }
 }
 
