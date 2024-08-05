@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.what3words.samples.wrapper"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 34
         versionCode 1
         versionName "1.0"
@@ -52,21 +52,21 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    implementation "com.google.android.material:material:$google_material_version"
-    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
+    implementation "androidx.core:core-ktx:1.13.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "com.google.android.material:material:1.12.0"
+    implementation "androidx.appcompat:appcompat:1.7.0"
 
     // kotlin
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinx_coroutines_version"
-    runtimeOnly "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0"
+    runtimeOnly "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.4"
 
     // java
-    implementation "io.reactivex.rxjava3:rxjava:$rxjava3_version"
-    implementation "io.reactivex.rxjava3:rxandroid:$rxjava3_android_version"
+    implementation "io.reactivex.rxjava3:rxjava:3.1.6"
+    implementation "io.reactivex.rxjava3:rxandroid:3.0.2"
 
     // W3W API Wrapper Lib
-    implementation "com.what3words:w3w-android-wrapper:$what3words_android_wrapper_v4_version"
+    implementation "com.what3words:w3w-android-wrapper:4.0.1"
 }
