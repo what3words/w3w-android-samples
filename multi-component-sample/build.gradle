@@ -95,7 +95,7 @@ dependencies {
     implementation "com.what3words:w3w-android-components:$what3words_android_components_version"
 
     // W3W OCR Lib
-    implementation "com.what3words:w3w-android-ocr-components:$what3words_android_ocr_components_version"
+    implementation "com.what3words:w3w-android-ocr-components:1.1.0"
 
     // Compose
     implementation platform("androidx.compose:compose-bom:$compose_bom_version")
