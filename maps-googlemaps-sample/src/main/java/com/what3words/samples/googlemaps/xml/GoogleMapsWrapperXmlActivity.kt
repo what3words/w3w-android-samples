@@ -33,6 +33,8 @@ class GoogleMapsWrapperXmlActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: GoogleMap) {
+        // grid and zoomed in pins will not show over buildings so we disable them, but this is optional depending on your use case
+        map.isBuildingsEnabled = false
         val wrapper = What3WordsV3(BuildConfig.W3W_API_KEY, this)
         this.w3wMapsWrapper = W3WGoogleMapsWrapper(
             this,
@@ -62,11 +64,6 @@ class GoogleMapsWrapperXmlActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         )
 
-        //click even on existing w3w added markers on the map.
-        w3wMapsWrapper.onMarkerClicked {
-            Log.i(TAG, "clicked: ${it.words}")
-        }
-
         //REQUIRED
         map.setOnCameraIdleListener {
             //...
@@ -83,13 +80,34 @@ class GoogleMapsWrapperXmlActivity : AppCompatActivity(), OnMapReadyCallback {
             this.w3wMapsWrapper.updateMove()
         }
 
+        //In GoogleMaps onMapClickListener and MarkerClickListener are separate events that do not propagate to each other,
+        //so it needs to be handled separately, when setOnMapClickListener is triggered means that there was not marker clicked.
+        //and you can optionally select the unmarked square
         map.setOnMapClickListener { latLng ->
             //..
 
             //example of how to select a 3x3m w3w square using lat/lng
             this.w3wMapsWrapper.selectAtCoordinates(
                 latLng.latitude,
-                latLng.longitude
+                latLng.longitude,
+                onSuccess = {
+                    Log.i(TAG, "selected square: ${it.words}, byTouch: true, isMarked: false")
+                },
+                onError = {
+                    Log.e(TAG, "error: ${it.key}, ${it.message}")
+                }
+            )
+        }
+
+        //if there was a marker clicked then it will be handled here and you can optionally select the marked square
+        w3wMapsWrapper.onMarkerClicked { clickedMarker ->
+            this.w3wMapsWrapper.selectAtSuggestionWithCoordinates(
+                clickedMarker, onSuccess = {
+                    Log.i(TAG, "selected square: ${clickedMarker.words}, byTouch: true, isMarked: true")
+                },
+                onError = {
+                    Log.e(TAG, "error: ${it.key}, ${it.message}")
+                }
             )
         }
     }

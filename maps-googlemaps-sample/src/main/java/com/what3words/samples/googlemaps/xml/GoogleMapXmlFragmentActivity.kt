@@ -3,18 +3,18 @@ package com.what3words.samples.googlemaps.xml
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.models.W3WZoomOption
 import com.what3words.components.maps.views.W3WGoogleMapFragment
 import com.what3words.components.maps.views.W3WMap
+import com.what3words.components.maps.views.W3WMapFragment
 import com.what3words.samples.googlemaps.BuildConfig
 import com.what3words.samples.googlemaps.R
 import com.what3words.samples.googlemaps.databinding.ActivityMapFragmentBinding
 
-
-class GoogleMapXmlFragmentActivity : AppCompatActivity(), W3WGoogleMapFragment.OnMapReadyCallback {
+class GoogleMapXmlFragmentActivity : FragmentActivity(), W3WMapFragment.OnMapReadyCallback {
     private lateinit var binding: ActivityMapFragmentBinding
     private val TAG = GoogleMapXmlFragmentActivity::class.qualifiedName
 
@@ -33,6 +33,16 @@ class GoogleMapXmlFragmentActivity : AppCompatActivity(), W3WGoogleMapFragment.O
         //set language to get all the 3wa in the desired language (default english)
         map.setLanguage("en")
 
+        //set the callback for when a square is selected
+        map.onSquareSelected(
+            onSuccess = { selectedSquare, selectedByTouch, isMarked ->
+                Log.i(TAG, "square selected: ${selectedSquare.words}, byTouch: $selectedByTouch, isMarked: $isMarked")
+            },
+            onError = {
+                Log.e(TAG, "error: ${it.key}, ${it.message}")
+            }
+        )
+
         //example how to use W3WMap features (check interface for documentation).
         map.addMarkerAtWords(
             "filled.count.soap",
@@ -43,6 +53,8 @@ class GoogleMapXmlFragmentActivity : AppCompatActivity(), W3WGoogleMapFragment.O
                     TAG,
                     "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}"
                 )
+                //optionally select after adding a marker successfully
+                map.selectAtSquare(it, W3WZoomOption.NONE)
             }, {
                 Toast.makeText(
                     this@GoogleMapXmlFragmentActivity,

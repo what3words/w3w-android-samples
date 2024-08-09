@@ -27,6 +27,10 @@
         <activity
             android:name="com.what3words.samples.mapbox.compose.MapBoxComposeFragmentActivity"
             android:exported="true" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
 <!--  End Compose section// -->
@@ -51,6 +55,10 @@
         <activity
             android:name="com.what3words.samples.mapbox.xml.MapBoxFragmentActivity"
             android:exported="true" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
 <!--  End XML section// -->
