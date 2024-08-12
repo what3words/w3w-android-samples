@@ -5,8 +5,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.fragment.app.FragmentActivity
@@ -21,7 +21,6 @@ import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WGoogleMapsWrapper
 import com.what3words.samples.googlemaps.BuildConfig
 import com.what3words.samples.googlemaps.databinding.ActivityComposeMapWrapperBinding
-import com.what3words.samples.googlemaps.ui.theme.W3wandroidcomponentsmapsTheme
 
 class GoogleMapsWrapperComposeActivity : FragmentActivity(), OnMapReadyCallback {
     private lateinit var w3wMapsWrapper: W3WGoogleMapsWrapper
@@ -30,11 +29,11 @@ class GoogleMapsWrapperComposeActivity : FragmentActivity(), OnMapReadyCallback 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            W3wandroidcomponentsmapsTheme {
+            MaterialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     AndroidViewBinding(factory = { inflater, parent, attachToParent ->
                         val view =
@@ -52,6 +51,8 @@ class GoogleMapsWrapperComposeActivity : FragmentActivity(), OnMapReadyCallback 
     }
 
     override fun onMapReady(map: GoogleMap) {
+        // grid and zoomed in pins will not show over buildings so we disable them, but this is optional depending on your use case
+        map.isBuildingsEnabled = false
         val wrapper = What3WordsV3(BuildConfig.W3W_API_KEY, this)
         this.w3wMapsWrapper = W3WGoogleMapsWrapper(
             this,
@@ -69,7 +70,7 @@ class GoogleMapsWrapperComposeActivity : FragmentActivity(), OnMapReadyCallback 
                 )
                 val cameraPosition = CameraPosition.Builder()
                     .target(LatLng(it.coordinates.lat, it.coordinates.lng))
-                    .zoom(16f)
+                    .zoom(19f)
                     .build()
                 map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
             }, {
@@ -80,11 +81,6 @@ class GoogleMapsWrapperComposeActivity : FragmentActivity(), OnMapReadyCallback 
                 ).show()
             }
         )
-
-        //click even on existing w3w added markers on the map.
-        w3wMapsWrapper.onMarkerClicked {
-            Log.i("TAG", "clicked: ${it.words}")
-        }
 
         //REQUIRED
         map.setOnCameraIdleListener {
@@ -102,15 +98,35 @@ class GoogleMapsWrapperComposeActivity : FragmentActivity(), OnMapReadyCallback 
             this.w3wMapsWrapper.updateMove()
         }
 
+        //In GoogleMaps onMapClickListener and MarkerClickListener are separate events that do not propagate to each other,
+        //so it needs to be handled separately, when setOnMapClickListener is triggered means that there was not marker clicked.
+        //and you can optionally select the unmarked square
         map.setOnMapClickListener { latLng ->
             //..
 
             //example of how to select a 3x3m w3w square using lat/lng
             this.w3wMapsWrapper.selectAtCoordinates(
                 latLng.latitude,
-                latLng.longitude
+                latLng.longitude,
+                onSuccess = {
+                    Log.i(TAG, "selected square: ${it.words}, byTouch: true, isMarked: false")
+                },
+                onError = {
+                    Log.e(TAG, "error: ${it.key}, ${it.message}")
+                }
             )
         }
 
+        //if there was a marker clicked then it will be handled here and you can optionally select the marked square
+        w3wMapsWrapper.onMarkerClicked { clickedMarker ->
+            this.w3wMapsWrapper.selectAtSuggestionWithCoordinates(
+                clickedMarker, onSuccess = {
+                    Log.i(TAG, "selected square: ${clickedMarker.words}, byTouch: true, isMarked: true")
+                },
+                onError = {
+                    Log.e(TAG, "error: ${it.key}, ${it.message}")
+                }
+            )
+        }
     }
 }
