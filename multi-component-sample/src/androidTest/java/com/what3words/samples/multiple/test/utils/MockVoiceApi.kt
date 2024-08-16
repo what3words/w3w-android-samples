@@ -4,7 +4,6 @@ import android.media.AudioFormat
 import com.what3words.androidwrapper.voice.VoiceApi
 import com.what3words.androidwrapper.voice.VoiceApiListener
 import com.what3words.androidwrapper.voice.VoiceApiListenerWithCoordinates
-import com.what3words.core.domain.language.W3WLanguage
 import com.what3words.javawrapper.request.AutosuggestOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,42 +23,6 @@ class MockVoiceApi(
 ) : VoiceApi(apiKey, baseUrl, client) {
 
     private var isSendData = false
-
-    override fun initialize(
-        sampleRate: Int,
-        samplesPerChannel: Int,
-        encoding: Int,
-        language: W3WLanguage,
-        autosuggestOptions: AutosuggestOptions,
-        listener: VoiceApiListener
-    ) {
-        super.initialize(
-            mockSampleRate,
-            samplesPerChannel,
-            mockBitPerRate,
-            language,
-            autosuggestOptions,
-            listener
-        )
-    }
-
-    override fun initialize(
-        sampleRate: Int,
-        samplesPerChannel: Int,
-        encoding: Int,
-        language: W3WLanguage,
-        autosuggestOptions: AutosuggestOptions,
-        listener: VoiceApiListenerWithCoordinates
-    ) {
-        super.initialize(
-            mockSampleRate,
-            samplesPerChannel,
-            mockBitPerRate,
-            language,
-            autosuggestOptions,
-            listener
-        )
-    }
 
     override fun initialize(
         sampleRate: Int,

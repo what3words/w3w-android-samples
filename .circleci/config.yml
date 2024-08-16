@@ -37,10 +37,10 @@ jobs:
           name: Auto Suggest Sample Voice builds
           command: |
             ./gradlew autosuggest-sample-voice:assembleRelease
-#      - run:
-#          name: Multi Component Sample Assemble builds
-#          command: |
-#            ./gradlew multi-component-sample:assembleRelease
+      - run:
+          name: Multi Component Sample Assemble builds
+          command: |
+            ./gradlew multi-component-sample:assembleRelease
       - store_artifacts:
           path: wrappers-sample/build/outputs/apk/release
       - store_artifacts:
@@ -49,8 +49,8 @@ jobs:
           path: autosuggest-sample/build/outputs/apk/release
       - store_artifacts:
           path: autosuggest-sample-voice/build/outputs/apk/release
-#      - store_artifacts:
-#          path: multi-component-sample/build/outputs/apk/release
+      - store_artifacts:
+          path: multi-component-sample/build/outputs/apk/release
   build-ui-test:
     executor:
       name: android/android-machine
@@ -96,6 +96,6 @@ workflows:
       - build-assemble:
           context:
             - mobile
-#      - build-ui-test:
-#          context:
-#            - mobile
+      - build-ui-test:
+          context:
+            - mobile
