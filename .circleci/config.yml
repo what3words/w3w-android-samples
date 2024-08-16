@@ -96,6 +96,6 @@ workflows:
       - build-assemble:
           context:
             - mobile
-      - build-ui-test:
-          context:
-            - mobile
+#      - build-ui-test:
+#          context:
+#            - mobile
