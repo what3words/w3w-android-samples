@@ -21,7 +21,7 @@ dependencyResolutionManagement {
             url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
         }
         maven {
-            url "https://s01.oss.sonatype.org/content/repositories/comwhat3words-1446"
+            url "https://s01.oss.sonatype.org/content/repositories/comwhat3words-1450"
         }
     }
 }
@@ -34,9 +34,3 @@ include ':mapbox-sample'
 include ':autosuggest-sample'
 include ':autosuggest-sample-voice'
 include ':multi-component-sample'
-
-includeBuild('../w3w-android-components'){
-    dependencySubstitution {
-        substitute module('com.what3words:what3words-android-components') using project(':lib')
-    }
-}

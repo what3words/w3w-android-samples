@@ -55,6 +55,6 @@ dependencies {
     implementation "androidx.core:core-ktx:1.13.1"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "com.google.android.material:material:1.12.0"
-    implementation "com.what3words:w3w-android-components:$what3words_android_components_version"
+    implementation "com.what3words:w3w-android-components:3.2.5-SNAPSHOT"
 
 }

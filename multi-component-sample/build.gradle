@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.what3words.samples.multiple"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [mapsApiKey: findProperty('MAPS_API_KEY') ? findProperty('MAPS_API_KEY') : "YOUR_GOOGLE_MAPS_API_KEY_HERE"]
@@ -89,47 +89,47 @@ android {
 
 dependencies {
     // W3W API Map Lib
-    implementation "com.what3words:w3w-android-map-components:$what3words_android_map_components_version"
+    implementation "com.what3words:w3w-android-map-components:1.0.5-SNAPSHOT"
 
     // W3W Component Lib
-    implementation "com.what3words:w3w-android-components:$what3words_android_components_version"
+    implementation "com.what3words:w3w-android-components:3.2.5-SNAPSHOT"
 
     // W3W OCR Lib
-    implementation "com.what3words:w3w-android-ocr-components:1.1.0"
+    implementation "com.what3words:w3w-android-ocr-components:1.1.1-SNAPSHOT"
 
     // Compose
-    implementation platform("androidx.compose:compose-bom:$compose_bom_version")
+    implementation platform("androidx.compose:compose-bom:2024.06.00")
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation "androidx.compose.ui:ui-viewbinding"
     implementation "androidx.compose.material3:material3"
     implementation "androidx.activity:activity-compose"
-    implementation "androidx.constraintlayout:constraintlayout-compose:$compose_constraint_layout_version"
+    debugImplementation "androidx.compose.ui:ui-tooling"
+    debugImplementation "androidx.compose.ui:ui-test-manifest"
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
-    implementation "com.google.android.material:material:$google_material_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_runtime_ktx_version"
-    implementation "androidx.fragment:fragment:$fragment_version"
-    implementation "androidx.fragment:fragment-ktx:$fragment_version"
-    implementation "androidx.constraintlayout:constraintlayout-compose:$compose_constraint_layout_version"
+    implementation "androidx.core:core-ktx:1.13.1"
+    implementation "androidx.appcompat:appcompat:1.7.0"
+    implementation "com.google.android.material:material:1.12.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.4"
+    implementation "androidx.fragment:fragment-ktx:1.8.2"
 
     // Google Map
-    implementation "com.google.android.gms:play-services-location:$google_play_location_services_version"
-    implementation "com.google.maps.android:android-maps-utils:$google_map_utils_version"
-    implementation "com.google.android.gms:play-services-maps:$google_play_maps_services_version"
-    implementation "com.google.maps.android:maps-compose:$map_compose_version"
+    implementation "com.google.android.gms:play-services-location:21.3.0"
+    implementation "com.google.maps.android:android-maps-utils:3.4.0"
+    implementation "com.google.android.gms:play-services-maps:19.0.0"
+    implementation "com.google.maps.android:maps-compose:6.1.1"
 
     //Map box
-    implementation "com.mapbox.maps:android:$map_box_version"
+    implementation "com.mapbox.maps:android:10.18.3"
 
     // mlkit
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition:$mlkit_core_version"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-chinese:$mlkit_languages_version"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-devanagari:$mlkit_languages_version"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-japanese:$mlkit_languages_version"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-korean:$mlkit_languages_version"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition:19.0.0"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-chinese:16.0.0"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-devanagari:16.0.0"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-japanese:16.0.0"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-korean:16.0.0"
 
     //Cucumber
     androidTestImplementation "io.cucumber:cucumber-android:$cucumber_android_version"
@@ -137,17 +137,16 @@ dependencies {
 
     // Testing
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation "androidx.test:rules:$test_rule_version"
-    androidTestImplementation "androidx.test.uiautomator:uiautomator:$uiautomator_version"
-    androidTestImplementation "androidx.test:core:$test_core_version"
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation "androidx.test:rules:1.6.1"
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:2.3.0"
+    androidTestImplementation "androidx.test:core:1.6.1"
     androidTestImplementation "com.android.support:support-annotations:28.0.0"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$ui_test_junit4_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$ui_tooling_version"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$ui_test_manifest_version"
-    implementation 'androidx.test.espresso:espresso-contrib:3.5.1'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.6.8"
+
+    implementation 'androidx.test.espresso:espresso-contrib:3.6.1'
 }
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['createDebugCoverageReport']) {
