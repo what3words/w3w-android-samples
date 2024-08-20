@@ -41,6 +41,14 @@ jobs:
           name: Multi Component Sample Assemble builds
           command: |
             ./gradlew multi-component-sample:assembleRelease
+      - run:
+          name: Google maps Sample Assemble builds
+          command: |
+            ./gradlew maps-googlemaps-sample:assembleRelease
+      - run:
+          name: Mapbox Sample Assemble builds
+          command: |
+            ./gradlew mapbox-sample:assembleRelease
       - store_artifacts:
           path: wrappers-sample/build/outputs/apk/release
       - store_artifacts:
@@ -51,6 +59,10 @@ jobs:
           path: autosuggest-sample-voice/build/outputs/apk/release
       - store_artifacts:
           path: multi-component-sample/build/outputs/apk/release
+      - store_artifacts:
+          path: maps-googlemaps-sample/build/outputs/apk/release
+      - store_artifacts:
+          path: mapbox-sample/build/outputs/apk/release
   build-ui-test:
     executor:
       name: android/android-machine
