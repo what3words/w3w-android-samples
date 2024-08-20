@@ -11,6 +11,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +47,12 @@ fun MainAppScreen(
     }
     var w3wMapsWrapper: W3WMapWrapper? by remember {
         mutableStateOf(null)
+    }
+
+    LaunchedEffect(key1 = w3wMapsWrapper) {
+        w3wMapsWrapper?.selectAtWords("filled.count.soap", onSuccess = {
+            onSuggestionChanged(it)
+        })
     }
 
     var autoTextFieldUIState by remember(selectedSuggestion) {
@@ -90,13 +97,14 @@ fun MainAppScreen(
                     onWrapperInitialized = { w3wMapsWrapper = it }
                 )
 
-                AutoTextField(modifier = Modifier
-                    .constrainAs(ref = w3wTextFieldRef) {
-                        linkTo(start = parent.start, end = parent.end)
-                        top.linkTo(anchor = parent.top)
-                        width = Dimension.fillToConstraints
-                        height = Dimension.wrapContent
-                    },
+                AutoTextField(
+                    modifier = Modifier
+                        .constrainAs(ref = w3wTextFieldRef) {
+                            linkTo(start = parent.start, end = parent.end)
+                            top.linkTo(anchor = parent.top)
+                            width = Dimension.fillToConstraints
+                            height = Dimension.wrapContent
+                        },
                     onItemSelected = onSuggestionChanged,
                     uiState = autoTextFieldUIState
                 )
@@ -161,7 +169,8 @@ fun MainAppScreen(
                         }
                         .padding(bottom = 32.dp, start = 24.dp),
                     onClick = {
-                        autoTextFieldUIState = autoTextFieldUIState.copy().apply { isClearFocus = true }
+                        autoTextFieldUIState =
+                            autoTextFieldUIState.copy().apply { isClearFocus = true }
                         scanScreenVisible = true
                     }
                 ) {
