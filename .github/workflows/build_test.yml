@@ -6,6 +6,7 @@ on:
       - closed
     branches:
       - 'task/**'
+# Test
 
 jobs:
   if_merged:
