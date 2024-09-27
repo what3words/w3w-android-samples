@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.geojson.Point
@@ -18,8 +18,14 @@ import com.what3words.androidwrapper.What3WordsV3
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WMapBoxWrapper
 import com.what3words.samples.mapbox.BuildConfig
-import com.what3words.samples.mapbox.ui.theme.W3wandroidcomponentsmapsTheme
 
+/**
+This sample demonstrates how to use the [W3WMapBoxWrapper] in a Compose activity.
+
+Note: Since you are trying to add what3words support to an existing map app/screen, you can shoulder always opt to use our [W3WMapBoxWrapper],
+which will work along side any other location APIs that you may be using, it needs a bit more set uo
+but it's more flexible and you can have more control over the map and the what3words features.
+ **/
 class MapBoxComposeWrapperActivity : ComponentActivity() {
     private lateinit var w3wMapsWrapper: W3WMapBoxWrapper
     private val TAG = MapBoxComposeWrapperActivity::class.qualifiedName
@@ -28,11 +34,11 @@ class MapBoxComposeWrapperActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            W3wandroidcomponentsmapsTheme {
+            MaterialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colorScheme.background
                 ) {
                     AndroidView(factory = {
                         val view = MapView(it)
@@ -62,7 +68,7 @@ class MapBoxComposeWrapperActivity : ComponentActivity() {
                 )
                 val cameraOptions = CameraOptions.Builder()
                     .center(Point.fromLngLat(it.coordinates.lng, it.coordinates.lat))
-                    .zoom(18.5)
+                    .zoom(19.0)
                     .build()
                 mapView.getMapboxMap().setCamera(cameraOptions)
             }, {
@@ -73,11 +79,6 @@ class MapBoxComposeWrapperActivity : ComponentActivity() {
                 ).show()
             }
         )
-
-        //click even on existing w3w added markers on the map.
-        w3wMapsWrapper.onMarkerClicked {
-            Log.i("UsingMapWrapperActivity", "clicked: ${it.words}")
-        }
 
         //REQUIRED
         mapView.getMapboxMap().addOnMapIdleListener {
@@ -96,13 +97,39 @@ class MapBoxComposeWrapperActivity : ComponentActivity() {
         }
 
         mapView.getMapboxMap().addOnMapClickListener { latLng ->
-            //..
-
-            //example of how to select a 3x3m w3w square using lat/lng
-            this.w3wMapsWrapper.selectAtCoordinates(
-                latLng.latitude(),
-                latLng.longitude()
-            )
+            //check if a marker was clicked, if so you can have the option to select the square that's marked or
+            //select a new square at the clicked lat/lng
+            this.w3wMapsWrapper.checkIfMarkerClicked(latLng) { clickedMarker ->
+                if (clickedMarker == null) {
+                    //example of how to select a 3x3m w3w square using lat/lng
+                    this.w3wMapsWrapper.selectAtCoordinates(
+                        latLng.latitude(),
+                        latLng.longitude(),
+                        onSuccess = {
+                            Log.i(
+                                TAG,
+                                "selected square: ${it.words}, byTouch: true, isMarked: false"
+                            )
+                        },
+                        onError = {
+                            Log.e(TAG, "error: ${it.key}, ${it.message}")
+                        }
+                    )
+                } else {
+                    this.w3wMapsWrapper.selectAtSuggestionWithCoordinates(
+                        clickedMarker,
+                        onSuccess = {
+                            Log.i(
+                                TAG,
+                                "selected square: ${clickedMarker.words}, byTouch: true, isMarked: true"
+                            )
+                        },
+                        onError = {
+                            Log.e(TAG, "error: ${it.key}, ${it.message}")
+                        }
+                    )
+                }
+            }
             true
         }
     }

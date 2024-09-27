@@ -99,8 +99,14 @@ private fun GoogleMapView(
                 onWrapperInitialized(it)
 
                 //click even on existing w3w added markers on the map.
-                it.onMarkerClicked {
-                    Log.d(TAG, "clicked: ${it.words}")
+                it.onMarkerClicked { marker ->
+                    Log.d(TAG, "clicked: ${marker.words}")
+                    it.selectAtCoordinates(
+                        marker.coordinates.lat,
+                        marker.coordinates.lng, onSuccess = {
+                            onMapClicked.invoke()
+                        }
+                    )
                 }
 
                 //REQUIRED
@@ -126,30 +132,12 @@ private fun GoogleMapView(
                     it.selectAtCoordinates(
                         latLng.latitude,
                         latLng.longitude, onSuccess = {
-                            val cameraPosition = CameraPosition.Builder()
-                                .target(latLng)
-                                .zoom(19f)
-                                .build()
-                            if (shouldAnimate(context)) {
-                                map.animateCamera(
-                                    CameraUpdateFactory.newCameraPosition(
-                                        cameraPosition
-                                    )
-                                )
-                            } else {
-                                map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-                            }
                             onMapClicked.invoke()
                         }
                     )
                 }
             }
         }
-
-        //Your other Markers/different APIs, i.e GooglePlacesAPI
-        Marker(
-            state = MarkerState(position = office),
-        )
 
         //Update search w3w marker
         w3wMapsWrapper?.let { w3wMapsWrapper ->
@@ -235,19 +223,39 @@ fun MapBoxView(
             }
 
             mapView!!.getMapboxMap().addOnMapClickListener { latLng ->
-                //..
-
-                //example of how to select a 3x3m w3w square using lat/lng
-                w3wMapsWrapper.selectAtCoordinates(
-                    latLng.latitude(),
-                    latLng.longitude(), onSuccess = {
-                        onMapClicked.invoke()
-                        mapBoxMoveCamera(
-                            mapView!!,
-                            Point.fromLngLat(it.coordinates.lng, it.coordinates.lat)
+                w3wMapsWrapper.checkIfMarkerClicked(latLng) { clickedMarker ->
+                    if (clickedMarker == null) {
+                        //example of how to select a 3x3m w3w square using lat/lng
+                        w3wMapsWrapper.selectAtCoordinates(
+                            latLng.latitude(),
+                            latLng.longitude(),
+                            onSuccess = {
+                                Log.i(
+                                    TAG,
+                                    "selected square: ${it.words}, byTouch: true, isMarked: false"
+                                )
+                                onMapClicked.invoke()
+                            },
+                            onError = {
+                                Log.e(TAG, "error: ${it.key}, ${it.message}")
+                            }
+                        )
+                    } else {
+                        w3wMapsWrapper.selectAtSuggestionWithCoordinates(
+                            clickedMarker,
+                            onSuccess = {
+                                Log.i(
+                                    TAG,
+                                    "selected square: ${clickedMarker.words}, byTouch: true, isMarked: true"
+                                )
+                                onMapClicked.invoke()
+                            },
+                            onError = {
+                                Log.e(TAG, "error: ${it.key}, ${it.message}")
+                            }
                         )
                     }
-                )
+                }
                 true
             }
         }

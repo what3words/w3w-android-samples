@@ -31,6 +31,10 @@
         <activity
             android:name="com.what3words.samples.googlemaps.compose.GoogleMapFragmentActivity"
             android:exported="true" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <!-- Sample for Use library with Jetpack Compose -->
@@ -38,6 +42,10 @@
         <activity
             android:name="com.what3words.samples.googlemaps.compose.GoogleMapComposeLibraryActivity"
             android:exported="true" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <!--  End Compose section// -->
@@ -62,6 +70,10 @@
         <activity
             android:name="com.what3words.samples.googlemaps.xml.GoogleMapXmlFragmentActivity"
             android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <!--  End XML section// -->

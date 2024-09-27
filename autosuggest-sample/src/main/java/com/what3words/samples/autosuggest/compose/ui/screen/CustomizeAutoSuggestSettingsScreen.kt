@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -81,7 +81,7 @@ fun CustomizeAutoSuggestSettingsScreen(
         // customize the autosuggest component label
         Text(
             text = stringResource(id = R.string.txt_label_customize_the_autosuggest_component),
-            style = MaterialTheme.typography.body2.copy(color = LocalContentColor.current.copy(alpha = 0.5f))
+            style = MaterialTheme.typography.bodySmall.copy(color = LocalContentColor.current.copy(alpha = 0.5f))
         )
 
         // return coordinates checkbox
