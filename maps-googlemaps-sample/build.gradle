@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.what3words.samples.googlemaps"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [mapsApiKey: findProperty('MAPS_API_KEY') ? findProperty('MAPS_API_KEY') : "YOUR_GOOGLE_MAPS_API_KEY_HERE"]
@@ -65,31 +65,30 @@ android {
 
 dependencies {
     // W3W API Map Lib
-    implementation "com.what3words:w3w-android-map-components:$what3words_android_map_components_version"
+    implementation "com.what3words:w3w-android-map-components:1.0.5"
 
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.ui:ui-viewbinding:$compose_version"
-    implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
-    implementation "com.google.android.material:material:$google_material_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_runtime_ktx_version"
-    implementation "androidx.activity:activity-compose:$compose_activity_version"
-    implementation "androidx.fragment:fragment:$fragment_version"
-    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "androidx.core:core-ktx:1.13.1"
+
+    implementation platform("androidx.compose:compose-bom:2024.06.00")
+    implementation "androidx.activity:activity-compose:1.9.1"
+    implementation "androidx.compose.material3:material3"
+    implementation "androidx.compose.ui:ui"
+    implementation "androidx.compose.ui:ui-viewbinding"
+    implementation "androidx.compose.ui:ui-tooling-preview"
+    implementation "com.google.android.material:material:1.12.0"
+
+    implementation "androidx.appcompat:appcompat:1.7.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.4"
+    implementation "androidx.fragment:fragment-ktx:1.8.2"
 
 
     // Testing
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 
-    implementation "com.google.android.gms:play-services-location:$google_play_location_services_version"
-    implementation "com.google.maps.android:android-maps-utils:$google_map_utils_version"
-    implementation "com.google.android.gms:play-services-maps:$google_play_maps_services_version"
-    implementation "com.google.maps.android:maps-compose:$map_compose_version"
+    implementation "com.google.android.gms:play-services-location:21.3.0"
+    implementation "com.google.maps.android:android-maps-utils:3.4.0"
+    implementation "com.google.android.gms:play-services-maps:19.0.0"
+    implementation "com.google.maps.android:maps-compose:6.1.1"
 }

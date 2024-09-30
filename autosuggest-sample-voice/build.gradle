@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 33
+    compileSdk 34
 
     buildFeatures {
         viewBinding true
@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId "com.what3words.samples.voice"
         minSdkVersion 23
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 5
         versionName "1.4"
         multiDexEnabled true
@@ -52,10 +52,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    implementation "com.google.android.material:material:$google_material_version"
-    implementation "com.what3words:w3w-android-wrapper:$what3words_android_wrapper_v3_version"
-    implementation "com.what3words:w3w-android-components:$what3words_android_components_version"
+    implementation "androidx.core:core-ktx:1.13.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "com.google.android.material:material:1.12.0"
+    implementation "com.what3words:w3w-android-components:3.2.5"
 
 }

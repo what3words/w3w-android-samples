@@ -7,9 +7,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +36,6 @@ import com.what3words.samples.autosuggest.BuildConfig
 import com.what3words.samples.autosuggest.R
 import com.what3words.samples.autosuggest.databinding.CustomCorrectionPickerBinding
 import com.what3words.samples.autosuggest.databinding.CustomSuggestionPickerBinding
-
 
 /**
  * A jetpack compose screen that's intends to be replica of the W3WAutoSuggestComponent Sample(view-specific) app.
@@ -80,13 +79,13 @@ fun W3WTextFieldInConstraintLayoutScreen(
                     top.linkTo(anchor = parent.top)
                     width = Dimension.fillToConstraints
                 },
-            style = MaterialTheme.typography.body2.copy(color = LocalContentColor.current.copy(alpha = 0.5f))
+            style = MaterialTheme.typography.bodySmall.copy(color = LocalContentColor.current.copy(alpha = 0.5f))
         )
 
         //  what3words autosuggest text component for compose
         val w3wTextFieldState =
             rememberW3WAutoSuggestTextFieldState().apply {
-                nResults(n = 4)
+                nResults(n = 3)
             }
 
         W3WAutoSuggestTextField(
@@ -135,7 +134,7 @@ fun W3WTextFieldInConstraintLayoutScreen(
                     width = Dimension.fillToConstraints
                 },
             fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.body1.copy(color = LocalContentColor.current.copy(alpha = 0.7f))
+            style = MaterialTheme.typography.bodyLarge.copy(color = LocalContentColor.current.copy(alpha = 0.7f))
         )
 
 
