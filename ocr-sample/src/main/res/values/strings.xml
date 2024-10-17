@@ -3,4 +3,5 @@
     <string name="title_activity_main2">MainActivity</string>
     <string name="scan_again">Scan again</string>
     <string name="language_to_scan">Language to scan:</string>
+    <string name="title_activity_w3w_ocr_sample">W3W OCR Sample</string>
 </resources>
