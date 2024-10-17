@@ -72,7 +72,7 @@ dependencies {
     implementation "androidx.compose.ui:ui"
 
     // W3W API OCR Lib
-    implementation "com.what3words:w3w-android-ocr-components:1.1.1"
+    implementation "com.what3words:w3w-android-ocr-components:2.0.0-SNAPSHOT"
 
     // mlkit
     implementation "com.google.android.gms:play-services-mlkit-text-recognition:19.0.1"
