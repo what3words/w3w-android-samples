@@ -70,6 +70,7 @@ android {
 dependencies {
     // W3W API Map Lib
     implementation "com.what3words:w3w-android-map-components:1.0.6"
+    implementation "com.what3words:w3w-android-map-components-compose:1.0.6"
 
     implementation "androidx.core:core-ktx:1.13.1"
     implementation "androidx.appcompat:appcompat:1.7.0"
