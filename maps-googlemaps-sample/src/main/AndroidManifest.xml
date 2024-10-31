@@ -13,41 +13,15 @@
             android:value="${mapsApiKey}" />
 
 <!--    //Start Google Maps Compose Sample Launcher -->
-
-        <!-- Sample for enable  what3words features in an existing Google Maps app using W3WGoogleMapsWrapper-->
         <activity
-            android:name="com.what3words.samples.googlemaps.compose.GoogleMapsWrapperComposeActivity"
+            android:name="com.what3words.samples.googlemaps.compose.MapComposeActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.W3WComposeGoogleMap">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <!-- Sample for enable what3words features in an new Google Maps app using W3WGoogleMapFragment -->
-        <!-- Change the launcher for testing -->
-        <activity
-            android:name="com.what3words.samples.googlemaps.compose.GoogleMapFragmentActivity"
-            android:exported="true" >
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
-
-        <!-- Sample for Use library with Jetpack Compose -->
-        <!-- Change the launcher for testing -->
-        <activity
-            android:name="com.what3words.samples.googlemaps.compose.GoogleMapComposeLibraryActivity"
-            android:exported="true" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
-
         <!--  End Compose section// -->
 
 
@@ -70,10 +44,10 @@
         <activity
             android:name="com.what3words.samples.googlemaps.xml.GoogleMapXmlFragmentActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!--  End XML section// -->
