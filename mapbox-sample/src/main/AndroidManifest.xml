@@ -12,14 +12,27 @@
 <!--    //Start MapBox Compose Sample Launcher -->
         <!-- Sample for what3words features in an existing Mapbox maps app using W3WMapBoxWrapper-->
         <activity
-            android:name="com.what3words.samples.mapbox.compose.MapComposeActivity"
+            android:name="com.what3words.samples.mapbox.compose.MapBoxComposeWrapperActivity"
             android:exported="true"
+            android:label="@string/app_name"
             android:theme="@style/Theme.W3WMapBoxCompose">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Sample for enable what3words features in an new Mapbox maps app using W3WMapboxMapFragment -->
+        <!-- Change the launcher for testing -->
+        <activity
+            android:name="com.what3words.samples.mapbox.compose.MapBoxComposeFragmentActivity"
+            android:exported="true" >
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
+
 <!--  End Compose section// -->
 
 
@@ -31,10 +44,10 @@
             android:theme="@style/Theme.W3WMapBox"
             android:exported="true">
             <!-- Change the launcher for testing -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <!-- Sample for enable what3words features in an new Mapbox maps app using W3WMapboxMapFragment -->
