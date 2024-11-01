@@ -33,7 +33,7 @@ class GoogleMapXmlFragmentActivity : FragmentActivity(), W3WMapFragment.OnMapRea
 
     override fun onMapReady(map: W3WMap) {
         //set language to get all the 3wa in the desired language (default english)
-        map.setLanguage(W3WRFC5646Language.VI)
+        map.setLanguage(W3WRFC5646Language.EN_GB)
 
         //set the callback for when a square is selected
         map.onSquareSelected(

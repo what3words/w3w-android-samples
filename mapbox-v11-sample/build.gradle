@@ -7,7 +7,7 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.what3words.samples.mapbox"
+        applicationId "com.what3words.samples.mapbox.v11"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -64,12 +64,13 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-    namespace 'com.what3words.samples.mapbox'
+    namespace 'com.what3words.samples.mapbox.v11'
 }
 
 dependencies {
     // W3W API Map Lib
-    implementation "com.what3words:w3w-android-map-components:2.0.0-SNAPSHOT"
+    implementation "com.what3words:w3w-android-map-components-compose:2.0.0-SNAPSHOT"
+    implementation("com.mapbox.extension:maps-compose:11.7.1")
 
     implementation "androidx.core:core-ktx:1.13.1"
     implementation "androidx.appcompat:appcompat:1.7.0"
