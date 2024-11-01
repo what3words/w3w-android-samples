@@ -42,7 +42,7 @@ class GoogleMapsWrapperXmlActivity : AppCompatActivity(), OnMapReadyCallback {
             this,
             map,
             textDataSource,
-        ).setLanguage(W3WRFC5646Language.VI)
+        ).setLanguage(W3WRFC5646Language.EN_GB)
 
         w3wMapsWrapper.addMarkerAtWords(
             "filled.count.soap",
