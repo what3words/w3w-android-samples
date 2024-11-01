@@ -1,4 +1,4 @@
-package com.what3words.samples.googlemaps.compose
+package com.what3words.samples.mapbox.compose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,18 +13,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.google.maps.android.compose.DefaultMapProperties
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapEffect
-import com.google.maps.android.compose.MapsComposeExperimentalApi
-import com.google.maps.android.compose.rememberCameraPositionState
+import com.mapbox.maps.extension.compose.MapboxMap
 import com.what3words.androidwrapper.datasource.text.W3WApiTextDataSource
 import com.what3words.components.compose.maps.W3WMapComponent
 import com.what3words.components.compose.maps.W3WMapManager
-import com.what3words.components.compose.maps.providers.googlemap.W3WGoogleMapDrawer
-import com.what3words.components.compose.maps.providers.googlemap.W3WGoogleMapProvider
-import com.what3words.core.types.geometry.W3WCoordinates
-import com.what3words.samples.googlemaps.BuildConfig
+import com.what3words.components.compose.maps.providers.mapbox.W3WMapBoxDrawer
+import com.what3words.components.compose.maps.providers.mapbox.W3WMapBoxProvider
+import com.what3words.samples.mapbox.v11.BuildConfig
 
 class MapComposeActivity : ComponentActivity() {
 
@@ -40,14 +35,13 @@ class MapComposeActivity : ComponentActivity() {
                     // Sample for using W3WMapComponent fully
                     W3WMapComponentApp()
 
-                    // Sample for using W3WMapComponent with an existing GoogleMap
+                    // Sample for using W3WMapComponent with an existing MapBox
                     // Uncomment the following line to use
-//                    W3WMapComponentWithExistingGoogleMap()
+//                    W3WMapComponentWithExistingMapBox()
                 }
             }
         }
     }
-
 
     @Composable
     fun W3WMapComponentApp() {
@@ -63,13 +57,12 @@ class MapComposeActivity : ComponentActivity() {
         W3WMapComponent(
             modifier = Modifier.fillMaxSize(),
             mapManager = mapManager,
-            mapProvider = W3WGoogleMapProvider()
+            mapProvider = W3WMapBoxProvider()
         )
     }
 
-    @OptIn(MapsComposeExperimentalApi::class)
     @Composable
-    fun W3WMapComponentWithExistingGoogleMap() {
+    fun W3WMapComponentWithExistingMapBox() {
         val context = LocalContext.current
 
         val mapManager by remember {
@@ -82,33 +75,11 @@ class MapComposeActivity : ComponentActivity() {
 
         val state by mapManager.state.collectAsState()
 
-        GoogleMap(
-            cameraPositionState = rememberCameraPositionState(),
-            properties = DefaultMapProperties,
+        MapboxMap(
             modifier = Modifier.fillMaxSize(),
-            onMapClick = { latLng ->
-                mapManager.selectAtCoordinates(W3WCoordinates(latLng.latitude, latLng.longitude))
-            }
         ) {
-            MapEffect { map ->
-                //REQUIRED
-                map.setOnCameraIdleListener {
-                    //needed to draw the 3x3m grid on the map
-                    mapManager.updateMap()
-                }
-
-                //REQUIRED
-                map.setOnCameraMoveListener {
-                    //...
-
-                    //needed to draw the 3x3m grid on the map
-                    mapManager.updateMove()
-                }
-            }
-
-            //REQUIRED
-            //needed to draw the 3x3m grid, markers and selected square on the map
-            W3WGoogleMapDrawer(state = state)
+            W3WMapBoxDrawer(state)
         }
     }
+
 }

@@ -1,12 +1,18 @@
-package com.what3words.samples.mapbox.xml
+package com.what3words.samples.mapbox.compose
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.viewinterop.AndroidView
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.Style
+import com.mapbox.maps.MapView
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.what3words.androidwrapper.datasource.text.W3WApiTextDataSource
 import com.what3words.components.maps.models.W3WMarkerColor
@@ -14,30 +20,43 @@ import com.what3words.components.maps.wrappers.W3WMapBoxWrapper
 import com.what3words.core.types.geometry.W3WCoordinates
 import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.samples.mapbox.BuildConfig
-import com.what3words.samples.mapbox.databinding.ActivityMapWrapperBinding
 
 /**
-This sample demonstrates how to use the [W3WMapBoxWrapper] in a XML activity.
+This sample demonstrates how to use the [W3WMapBoxWrapper] in a Compose activity.
 
 Note: Since you are trying to add what3words support to an existing map app/screen, you can shoulder always opt to use our [W3WMapBoxWrapper],
 which will work along side any other location APIs that you may be using, it needs a bit more set uo
 but it's more flexible and you can have more control over the map and the what3words features.
  **/
-class MapBoxXmlWrapperActivity : AppCompatActivity() {
+class MapBoxComposeWrapperActivity : ComponentActivity() {
     private lateinit var w3wMapsWrapper: W3WMapBoxWrapper
-    private lateinit var binding: ActivityMapWrapperBinding
-    private val TAG = MapBoxXmlWrapperActivity::class.qualifiedName
+    private val TAG = MapBoxComposeWrapperActivity::class.qualifiedName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMapWrapperBinding.inflate(layoutInflater)
-        binding.mapView.getMapboxMap().loadStyleUri(Style.OUTDOORS)
-        setContentView(binding.root)
 
+        setContent {
+            MaterialTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    AndroidView(factory = {
+                        val view = MapView(it)
+                        enableWhat3wordsFeatures(view)
+                        view
+                    })
+                }
+            }
+        }
+    }
+
+    private fun enableWhat3wordsFeatures(mapView: MapView) {
         val textDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
         this.w3wMapsWrapper = W3WMapBoxWrapper(
             this,
-            binding.mapView.getMapboxMap(),
+            mapView.getMapboxMap(),
             textDataSource,
         ).setLanguage(W3WRFC5646Language.EN_GB)
 
@@ -53,10 +72,10 @@ class MapBoxXmlWrapperActivity : AppCompatActivity() {
                     .center(Point.fromLngLat(it.center?.lng ?: 0.0, it.center?.lat ?: 0.0))
                     .zoom(19.0)
                     .build()
-                binding.mapView.getMapboxMap().setCamera(cameraOptions)
+                mapView.getMapboxMap().setCamera(cameraOptions)
             }, {
                 Toast.makeText(
-                    this@MapBoxXmlWrapperActivity,
+                    this@MapBoxComposeWrapperActivity,
                     "${it.message}",
                     Toast.LENGTH_LONG
                 ).show()
@@ -64,7 +83,7 @@ class MapBoxXmlWrapperActivity : AppCompatActivity() {
         )
 
         //REQUIRED
-        binding.mapView.getMapboxMap().addOnMapIdleListener {
+        mapView.getMapboxMap().addOnMapIdleListener {
             //...
 
             //needed to draw the 3x3m grid on the map
@@ -72,14 +91,14 @@ class MapBoxXmlWrapperActivity : AppCompatActivity() {
         }
 
         //REQUIRED
-        binding.mapView.getMapboxMap().addOnCameraChangeListener {
+        mapView.getMapboxMap().addOnCameraChangeListener {
             //...
 
             //needed to draw the 3x3m grid on the map
             this.w3wMapsWrapper.updateMove()
         }
 
-        binding.mapView.getMapboxMap().addOnMapClickListener { latLng ->
+        mapView.getMapboxMap().addOnMapClickListener { latLng ->
             //check if a marker was clicked, if so you can have the option to select the square that's marked or
             //select a new square at the clicked lat/lng
             this.w3wMapsWrapper.checkIfMarkerClicked(latLng) { clickedMarker ->
@@ -102,7 +121,8 @@ class MapBoxXmlWrapperActivity : AppCompatActivity() {
                     )
                 } else {
                     this.w3wMapsWrapper.selectAtAddress(
-                        clickedMarker, onSuccess = {
+                        clickedMarker,
+                        onSuccess = {
                             Log.i(
                                 TAG,
                                 "selected square: ${clickedMarker.words}, byTouch: true, isMarked: true"
