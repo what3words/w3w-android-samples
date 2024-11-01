@@ -66,5 +66,8 @@ class MapBoxFragmentActivity : FragmentActivity(), W3WMapFragment.OnMapReadyCall
                 ).show()
             }
         )
+
+        //if you want to access the mapbox map instance inside W3WMapboxMapFragment do the following
+        (map as? W3WMapboxMapFragment.Map)?.mapBoxMap()?.loadStyleUri(Style.MAPBOX_STREETS)
     }
 }
