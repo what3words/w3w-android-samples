@@ -15,9 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.what3words.androidwrapper.datasource.text.W3WApiTextDataSource
+import com.what3words.components.compose.maps.MapProvider
 import com.what3words.components.compose.maps.W3WMapComponent
+import com.what3words.components.compose.maps.W3WMapDefaults
 import com.what3words.components.compose.maps.W3WMapManager
-import com.what3words.components.compose.maps.providers.mapbox.W3WMapBoxProvider
+import com.what3words.components.compose.maps.providers.mapbox.W3WMapBoxDrawer
 import com.what3words.samples.mapbox.v11.BuildConfig
 
 class MapComposeActivity : ComponentActivity() {
@@ -49,7 +51,6 @@ class MapComposeActivity : ComponentActivity() {
             mutableStateOf(
                 W3WMapManager(
                     textDataSource = W3WApiTextDataSource.create(context, BuildConfig.W3W_API_KEY),
-                    mapProvider = W3WMapBoxProvider()
                 )
             )
         }
@@ -57,6 +58,7 @@ class MapComposeActivity : ComponentActivity() {
         W3WMapComponent(
             modifier = Modifier.fillMaxSize(),
             mapManager = mapManager,
+            mapProvider = MapProvider.MAPBOX
         )
     }
 
@@ -68,7 +70,6 @@ class MapComposeActivity : ComponentActivity() {
             mutableStateOf(
                 W3WMapManager(
                     textDataSource = W3WApiTextDataSource.create(context, BuildConfig.W3W_API_KEY),
-                    mapProvider = W3WMapBoxProvider()
                 )
             )
         }
@@ -78,7 +79,7 @@ class MapComposeActivity : ComponentActivity() {
         MapboxMap(
             modifier = Modifier.fillMaxSize(),
         ) {
-            mapManager.mapProvider.W3WMapDrawer(state)
+            W3WMapBoxDrawer(state, W3WMapDefaults.defaultMapConfig())
         }
     }
 
