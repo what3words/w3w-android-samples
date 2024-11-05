@@ -14,9 +14,11 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.MapView
 import com.mapbox.maps.plugin.gestures.addOnMapClickListener
-import com.what3words.androidwrapper.What3WordsV3
+import com.what3words.androidwrapper.datasource.text.W3WApiTextDataSource
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WMapBoxWrapper
+import com.what3words.core.types.geometry.W3WCoordinates
+import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.samples.mapbox.BuildConfig
 
 /**
@@ -51,12 +53,12 @@ class MapBoxComposeWrapperActivity : ComponentActivity() {
     }
 
     private fun enableWhat3wordsFeatures(mapView: MapView) {
-        val wrapper = What3WordsV3(BuildConfig.W3W_API_KEY, this)
+        val textDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
         this.w3wMapsWrapper = W3WMapBoxWrapper(
             this,
             mapView.getMapboxMap(),
-            wrapper,
-        ).setLanguage("en")
+            textDataSource,
+        ).setLanguage(W3WRFC5646Language.EN_GB)
 
         w3wMapsWrapper.addMarkerAtWords(
             "filled.count.soap",
@@ -64,17 +66,17 @@ class MapBoxComposeWrapperActivity : ComponentActivity() {
             {
                 Log.i(
                     TAG,
-                    "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}"
+                    "added ${it.words} at ${it.center?.lat}, ${it.center?.lng}"
                 )
                 val cameraOptions = CameraOptions.Builder()
-                    .center(Point.fromLngLat(it.coordinates.lng, it.coordinates.lat))
+                    .center(Point.fromLngLat(it.center?.lng ?: 0.0, it.center?.lat ?: 0.0))
                     .zoom(19.0)
                     .build()
                 mapView.getMapboxMap().setCamera(cameraOptions)
             }, {
                 Toast.makeText(
                     this@MapBoxComposeWrapperActivity,
-                    "${it.key}, ${it.message}",
+                    "${it.message}",
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -103,8 +105,10 @@ class MapBoxComposeWrapperActivity : ComponentActivity() {
                 if (clickedMarker == null) {
                     //example of how to select a 3x3m w3w square using lat/lng
                     this.w3wMapsWrapper.selectAtCoordinates(
-                        latLng.latitude(),
-                        latLng.longitude(),
+                        W3WCoordinates(
+                            latLng.latitude(),
+                            latLng.longitude()
+                        ),
                         onSuccess = {
                             Log.i(
                                 TAG,
@@ -112,11 +116,11 @@ class MapBoxComposeWrapperActivity : ComponentActivity() {
                             )
                         },
                         onError = {
-                            Log.e(TAG, "error: ${it.key}, ${it.message}")
+                            Log.e(TAG, "error: ${it.message}")
                         }
                     )
                 } else {
-                    this.w3wMapsWrapper.selectAtSuggestionWithCoordinates(
+                    this.w3wMapsWrapper.selectAtAddress(
                         clickedMarker,
                         onSuccess = {
                             Log.i(
@@ -125,7 +129,7 @@ class MapBoxComposeWrapperActivity : ComponentActivity() {
                             )
                         },
                         onError = {
-                            Log.e(TAG, "error: ${it.key}, ${it.message}")
+                            Log.e(TAG, "error: ${it.message}")
                         }
                     )
                 }

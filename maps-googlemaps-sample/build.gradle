@@ -65,7 +65,8 @@ android {
 
 dependencies {
     // W3W API Map Lib
-    implementation "com.what3words:w3w-android-map-components:1.0.6"
+    implementation "com.what3words:w3w-android-map-components:2.0.0-SNAPSHOT"
+    implementation "com.what3words:w3w-android-map-components-compose:2.0.0-SNAPSHOT"
 
     implementation "androidx.core:core-ktx:1.13.1"
 
@@ -76,6 +77,7 @@ dependencies {
     implementation "androidx.compose.ui:ui-viewbinding"
     implementation "androidx.compose.ui:ui-tooling-preview"
     implementation "com.google.android.material:material:1.12.0"
+    debugImplementation 'androidx.compose.ui:ui-tooling:1.7.5'
 
     implementation "androidx.appcompat:appcompat:1.7.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.4"
