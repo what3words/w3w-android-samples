@@ -32,3 +32,11 @@ include ':mapbox-v11-sample'
 include ':autosuggest-sample'
 include ':autosuggest-sample-voice'
 include ':multi-component-sample'
+
+// Sample for include local build, will be remove after finishing implement
+//includeBuild("../../w3w-public/w3w-android-map-components") {
+//    dependencySubstitution {
+//        substitute module ("com.what3words:w3w-android-map-components-compose") using project(":lib-compose")
+//        substitute module ("com.what3words:w3w-android-map-components") using project(":lib")
+//    }
+//}
