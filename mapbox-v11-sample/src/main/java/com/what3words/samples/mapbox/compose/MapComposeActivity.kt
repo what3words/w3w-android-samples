@@ -51,6 +51,7 @@ class MapComposeActivity : ComponentActivity() {
             mutableStateOf(
                 W3WMapManager(
                     textDataSource = W3WApiTextDataSource.create(context, BuildConfig.W3W_API_KEY),
+                    mapProvider = MapProvider.MAPBOX
                 )
             )
         }
@@ -58,7 +59,6 @@ class MapComposeActivity : ComponentActivity() {
         W3WMapComponent(
             modifier = Modifier.fillMaxSize(),
             mapManager = mapManager,
-            mapProvider = MapProvider.MAPBOX
         )
     }
 
@@ -70,6 +70,7 @@ class MapComposeActivity : ComponentActivity() {
             mutableStateOf(
                 W3WMapManager(
                     textDataSource = W3WApiTextDataSource.create(context, BuildConfig.W3W_API_KEY),
+                    mapProvider = MapProvider.MAPBOX
                 )
             )
         }
