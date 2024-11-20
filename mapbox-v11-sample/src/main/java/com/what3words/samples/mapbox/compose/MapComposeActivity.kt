@@ -20,6 +20,7 @@ import com.what3words.components.compose.maps.W3WMapComponent
 import com.what3words.components.compose.maps.W3WMapDefaults
 import com.what3words.components.compose.maps.W3WMapManager
 import com.what3words.components.compose.maps.providers.mapbox.W3WMapBoxDrawer
+import com.what3words.components.compose.maps.state.W3WMapState
 import com.what3words.samples.mapbox.v11.BuildConfig
 
 class MapComposeActivity : ComponentActivity() {
@@ -51,7 +52,10 @@ class MapComposeActivity : ComponentActivity() {
             mutableStateOf(
                 W3WMapManager(
                     textDataSource = W3WApiTextDataSource.create(context, BuildConfig.W3W_API_KEY),
-                    mapProvider = MapProvider.MAPBOX
+                    mapProvider = MapProvider.MAPBOX,
+                    mapState = W3WMapState(
+                        isMyLocationEnabled = true,
+                    )
                 )
             )
         }
@@ -59,6 +63,7 @@ class MapComposeActivity : ComponentActivity() {
         W3WMapComponent(
             modifier = Modifier.fillMaxSize(),
             mapManager = mapManager,
+            locationSource = LocationSourceImpl(context)
         )
     }
 
@@ -75,7 +80,7 @@ class MapComposeActivity : ComponentActivity() {
             )
         }
 
-        val state by mapManager.state.collectAsState()
+        val state by mapManager.mapState.collectAsState()
 
         MapboxMap(
             modifier = Modifier.fillMaxSize(),
