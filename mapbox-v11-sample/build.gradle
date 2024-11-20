@@ -71,6 +71,7 @@ dependencies {
     // W3W API Map Lib
     implementation "com.what3words:w3w-android-map-components-compose:2.0.0-SNAPSHOT"
     implementation("com.mapbox.extension:maps-compose:11.7.1")
+    implementation "com.google.android.gms:play-services-location:21.3.0"
 
     implementation "androidx.core:core-ktx:1.13.1"
     implementation "androidx.appcompat:appcompat:1.7.0"
