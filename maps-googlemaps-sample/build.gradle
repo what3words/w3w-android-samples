@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 android {
@@ -52,9 +53,7 @@ android {
         compose true
         viewBinding true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
-    }
+
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
@@ -65,7 +64,7 @@ android {
 
 dependencies {
     // W3W API Map Lib
-    implementation "com.what3words:w3w-android-map-components:2.0.0-SNAPSHOT"
+    implementation "com.what3words:w3w-android-map-components:1.0.7"
     implementation "com.what3words:w3w-android-map-components-compose:2.0.0-SNAPSHOT"
 
     implementation "androidx.core:core-ktx:1.13.1"

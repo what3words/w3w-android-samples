@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
     id 'jacoco'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 android {
@@ -62,10 +63,6 @@ android {
         viewBinding true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
-    }
-
     testOptions {
         unitTests.all {
             jacoco {
@@ -90,6 +87,7 @@ android {
 dependencies {
     // W3W API Map Lib
     implementation "com.what3words:w3w-android-map-components:1.0.7"
+    implementation "com.what3words:w3w-android-map-components-compose:2.0.0-SNAPSHOT"
 
     // W3W Component Lib
     implementation "com.what3words:w3w-android-components:3.2.5"
