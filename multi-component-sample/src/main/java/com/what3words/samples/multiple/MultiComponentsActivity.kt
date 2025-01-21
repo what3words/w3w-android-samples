@@ -11,8 +11,9 @@ import com.what3words.androidwrapper.What3WordsV3
 import com.what3words.androidwrapper.datasource.text.W3WApiTextDataSource
 import com.what3words.core.datasource.image.W3WImageDataSource
 import com.what3words.core.datasource.text.W3WTextDataSource
+import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.ocr.components.datasource.W3WMLKitImageDataSource
-import com.what3words.samples.multiple.ui.screen.MainAppScreen
+import com.what3words.samples.multiple.home.HomeScreen
 
 class MultiComponentsActivity : ComponentActivity() {
     private val viewModel: MultiComponentsViewModel by viewModels()
@@ -34,18 +35,19 @@ class MultiComponentsActivity : ComponentActivity() {
         )
 
         setContent {
-            val selectedSuggestion by viewModel.selectedSuggestion.collectAsState()
+            W3WTheme {
+                val uiState by viewModel.uiState.collectAsState()
 
-            MainAppScreen(
-                w3WTextDataSource,
-                w3WImageDataSource,
-                dataProvider,
-                true,
-                selectedSuggestion = selectedSuggestion,
-                onSuggestionChanged = {
-                    viewModel.selectedSuggestion.value = it
-                }
-            )
+                HomeScreen(
+                    textDataSource = w3WTextDataSource,
+                    imageDataSource = w3WImageDataSource,
+                    dataProvider = dataProvider,
+                    uiState = uiState,
+                    onSuggestionChanged = viewModel::onSuggestionChanged,
+                    onMapTypeChange = viewModel::onMapTypeChange,
+                    onMarkerActionEvent = viewModel::onMarkerActionEvent
+                )
+            }
         }
     }
 }
