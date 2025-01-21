@@ -25,18 +25,21 @@ import androidx.constraintlayout.compose.Dimension
 import com.what3words.androidwrapper.What3WordsAndroidWrapper
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WMapWrapper
+import com.what3words.core.datasource.image.W3WImageDataSource
+import com.what3words.core.datasource.text.W3WTextDataSource
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
-import com.what3words.ocr.components.models.W3WOcrWrapper
 import com.what3words.samples.multiple.ui.screen.view.AutoTextField
 import com.what3words.samples.multiple.ui.screen.view.AutoTextFieldUIState
 import com.what3words.samples.multiple.ui.screen.view.MapWrapperView
 import com.what3words.samples.multiple.ui.screen.view.OcrView
+import com.what3words.samples.multiple.util.toSuggestionWithCoordinates
 
 @Composable
 fun MainAppScreen(
+    w3WTextDataSource: W3WTextDataSource,
+    w3WImageDataSource: W3WImageDataSource,
     dataProvider: What3WordsAndroidWrapper,
-    ocrWrapper: W3WOcrWrapper,
     isGoogleMapType: Boolean,
     selectedSuggestion: SuggestionWithCoordinates?,
     onSuggestionChanged: (SuggestionWithCoordinates?) -> (Unit)
@@ -75,11 +78,13 @@ fun MainAppScreen(
                 val (w3wTextFieldRef, mapRef, ocrRef, mapTypeRef, addMarkerRef) = createRefs()
 
                 OcrView(
-                    ocrWrapper,
-                    dataProvider,
+                    w3WTextDataSource = w3WTextDataSource,
+                    w3WImageDataSource = w3WImageDataSource,
                     scanScreenVisible = scanScreenVisible,
                     onScanScreenVisibleChange = { scanScreenVisible = it },
-                    onSuggestionScanned = onSuggestionChanged
+                    onSuggestionScanned = { w3wSuggestion ->
+                        onSuggestionChanged(w3wSuggestion.toSuggestionWithCoordinates())
+                    }
                 )
 
                 MapWrapperView(

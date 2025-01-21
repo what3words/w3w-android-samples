@@ -6,34 +6,29 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.zIndex
-import com.what3words.androidwrapper.What3WordsAndroidWrapper
+import com.what3words.core.datasource.image.W3WImageDataSource
+import com.what3words.core.datasource.text.W3WTextDataSource
+import com.what3words.core.types.domain.W3WSuggestion
+import com.what3words.core.types.geometry.W3WCoordinates
+import com.what3words.core.types.options.W3WAutosuggestOptions
 import com.what3words.design.library.ui.components.What3wordsAddressListItemDefaults
 import com.what3words.design.library.ui.theme.w3wTypography
-import com.what3words.javawrapper.request.AutosuggestOptions
-import com.what3words.javawrapper.request.Coordinates
-import com.what3words.javawrapper.response.SuggestionWithCoordinates
 import com.what3words.ocr.components.R
-import com.what3words.ocr.components.models.W3WOcrWrapper
 import com.what3words.ocr.components.ui.W3WOcrScanner
 import com.what3words.ocr.components.ui.W3WOcrScannerDefaults
+import com.what3words.ocr.components.ui.rememberOcrScanManager
 
 
 @Composable
 fun OcrView(
-    ocrWrapper: W3WOcrWrapper,
-    dataProvider: What3WordsAndroidWrapper,
+    w3WImageDataSource: W3WImageDataSource,
+    w3WTextDataSource: W3WTextDataSource,
     scanScreenVisible: Boolean, onScanScreenVisibleChange: (Boolean) -> Unit,
-    onSuggestionScanned: (SuggestionWithCoordinates) -> (Unit)
+    onSuggestionScanned: (W3WSuggestion) -> (Unit)
 ) {
-    val options = remember {
-        AutosuggestOptions().apply {
-            focus = Coordinates(51.520847, -0.195521)
-        }
-    }
 
     AnimatedVisibility(
         visible = scanScreenVisible,
@@ -50,10 +45,24 @@ fun OcrView(
         )
     ) {
         W3WOcrScanner(
-            ocrWrapper,
-            dataProvider = dataProvider,
-            options = options,
-            returnCoordinates = true,
+            ocrScanManager = rememberOcrScanManager(
+                w3wImageDataSource = w3WImageDataSource,
+                w3wTextDataSource = w3WTextDataSource,
+                options = W3WAutosuggestOptions.Builder()
+                    .focus(W3WCoordinates(51.520847, -0.195521))
+                    .includeCoordinates(true)
+                    .build(),
+            ),
+            onDismiss = {
+                onScanScreenVisibleChange(false)
+            },
+            onSuggestionSelected = {
+                onSuggestionScanned(it)
+                onScanScreenVisibleChange(false)
+            },
+            onError = {
+                onScanScreenVisibleChange(false)
+            },
             //optional if you want to override any string of the scanner composable, to allow localisation and accessibility.
             scannerStrings = W3WOcrScannerDefaults.defaultStrings(
                 scanStateFoundTitle = stringResource(id = R.string.scan_state_found),
@@ -74,15 +83,6 @@ fun OcrView(
             suggestionTextStyles = What3wordsAddressListItemDefaults.defaultTextStyles(
                 wordsTextStyle = MaterialTheme.w3wTypography.titleMediumSemibold
             ),
-            onError = {
-                onScanScreenVisibleChange(false)
-            },
-            onDismiss = {
-                onScanScreenVisibleChange(false)
-            },
-            onSuggestionSelected = {
-                onSuggestionScanned(it)
-                onScanScreenVisibleChange(false)
-            })
+        )
     }
 }
