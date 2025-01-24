@@ -7,8 +7,10 @@ import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -48,21 +50,21 @@ import androidx.constraintlayout.compose.Dimension
 import com.what3words.androidwrapper.What3WordsAndroidWrapper
 import com.what3words.components.compose.maps.W3WMapComponent
 import com.what3words.components.compose.maps.W3WMapDefaults
+import com.what3words.components.compose.maps.W3WMapManager
 import com.what3words.components.compose.maps.models.W3WMarkerColor
 import com.what3words.components.compose.maps.models.W3WMarkerWithList
-import com.what3words.components.compose.maps.rememberW3WMapManager
 import com.what3words.core.datasource.image.W3WImageDataSource
 import com.what3words.core.datasource.text.W3WTextDataSource
 import com.what3words.core.types.geometry.W3WCoordinates
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
 import com.what3words.samples.multiple.UiState
-import com.what3words.samples.multiple.data.LocationSourceImpl
 import com.what3words.samples.multiple.component.AddMarkerDialog
 import com.what3words.samples.multiple.component.AutoTextField
 import com.what3words.samples.multiple.component.AutoTextFieldUIState
 import com.what3words.samples.multiple.component.OcrView
 import com.what3words.samples.multiple.component.RemoveAllMarkersDialog
 import com.what3words.samples.multiple.component.RemoveSpecificMarkersDialog
+import com.what3words.samples.multiple.data.LocationSourceImpl
 import com.what3words.samples.multiple.util.DummyData
 import com.what3words.samples.multiple.util.toSuggestionWithCoordinates
 import kotlinx.coroutines.launch
@@ -72,6 +74,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     textDataSource: W3WTextDataSource,
     imageDataSource: W3WImageDataSource,
+    mapManager: W3WMapManager,
     dataProvider: What3WordsAndroidWrapper,
     uiState: UiState,
     onSuggestionChanged: (SuggestionWithCoordinates?) -> Unit,
@@ -88,10 +91,7 @@ fun HomeScreen(
         LocationSourceImpl(context)
     }
 
-    val mapManager = rememberW3WMapManager(
-        textDataSource = textDataSource,
-        mapProvider = uiState.mapProvider,
-    )
+    val isDarkTheme = isSystemInDarkTheme()
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberStandardBottomSheetState(
@@ -144,6 +144,11 @@ fun HomeScreen(
     // Update the map provider accordingly when the UI state changes
     LaunchedEffect(uiState.mapProvider) {
         mapManager.setMapProvider(uiState.mapProvider)
+    }
+
+    // Update map dark theme by system dark theme
+    LaunchedEffect(isDarkTheme) {
+        mapManager.enableDarkMode(isDarkTheme)
     }
 
     DisposableEffect(Unit) {
@@ -295,6 +300,14 @@ fun HomeScreen(
                     width = Dimension.fillToConstraints
                     height = Dimension.fillToConstraints
                 },
+                layoutConfig = W3WMapDefaults.defaultLayoutConfig(
+                    contentPadding = PaddingValues(
+                        top = 70.dp,
+                        start = 16.dp,
+                        end = 4.dp,
+                        bottom = 4.dp
+                    )
+                ),
                 locationSource = locationSource,
                 mapConfig = W3WMapDefaults.defaultMapConfig(
                     buttonConfig = W3WMapDefaults.ButtonConfig(
