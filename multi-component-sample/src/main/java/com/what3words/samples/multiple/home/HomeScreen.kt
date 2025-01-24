@@ -7,8 +7,10 @@ import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -29,7 +31,6 @@ import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,6 +49,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.what3words.androidwrapper.What3WordsAndroidWrapper
 import com.what3words.components.compose.maps.W3WMapComponent
 import com.what3words.components.compose.maps.W3WMapDefaults
+import com.what3words.components.compose.maps.models.W3WLocationSource
 import com.what3words.components.compose.maps.models.W3WMarkerColor
 import com.what3words.components.compose.maps.models.W3WMarkerWithList
 import com.what3words.components.compose.maps.rememberW3WMapManager
@@ -56,7 +58,6 @@ import com.what3words.core.datasource.text.W3WTextDataSource
 import com.what3words.core.types.geometry.W3WCoordinates
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
 import com.what3words.samples.multiple.UiState
-import com.what3words.samples.multiple.data.LocationSourceImpl
 import com.what3words.samples.multiple.component.AddMarkerDialog
 import com.what3words.samples.multiple.component.AutoTextField
 import com.what3words.samples.multiple.component.AutoTextFieldUIState
@@ -72,6 +73,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     textDataSource: W3WTextDataSource,
     imageDataSource: W3WImageDataSource,
+    locationSource: W3WLocationSource,
     dataProvider: What3WordsAndroidWrapper,
     uiState: UiState,
     onSuggestionChanged: (SuggestionWithCoordinates?) -> Unit,
@@ -84,13 +86,9 @@ fun HomeScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
-    val locationSource = remember {
-        LocationSourceImpl(context)
-    }
-
+    val isDarkTheme = isSystemInDarkTheme()
     val mapManager = rememberW3WMapManager(
-        textDataSource = textDataSource,
-        mapProvider = uiState.mapProvider,
+        mapProvider = uiState.mapProvider
     )
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
@@ -146,10 +144,9 @@ fun HomeScreen(
         mapManager.setMapProvider(uiState.mapProvider)
     }
 
-    DisposableEffect(Unit) {
-        onDispose {
-            locationSource.onDestroy()
-        }
+    // Update map dark theme by system dark theme
+    LaunchedEffect(isDarkTheme) {
+        mapManager.enableDarkMode(isDarkTheme)
     }
 
     BottomSheetScaffold(
@@ -288,6 +285,7 @@ fun HomeScreen(
             )
 
             W3WMapComponent(
+                textDataSource = textDataSource,
                 modifier = Modifier.constrainAs(ref = mapRef) {
                     linkTo(start = parent.start, end = parent.end)
                     top.linkTo(anchor = parent.top)
@@ -295,6 +293,14 @@ fun HomeScreen(
                     width = Dimension.fillToConstraints
                     height = Dimension.fillToConstraints
                 },
+                layoutConfig = W3WMapDefaults.defaultLayoutConfig(
+                    contentPadding = PaddingValues(
+                        top = 70.dp,
+                        start = 16.dp,
+                        end = 4.dp,
+                        bottom = 4.dp
+                    )
+                ),
                 locationSource = locationSource,
                 mapConfig = W3WMapDefaults.defaultMapConfig(
                     buttonConfig = W3WMapDefaults.ButtonConfig(

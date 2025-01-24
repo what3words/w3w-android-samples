@@ -1,16 +1,24 @@
 package com.what3words.samples.multiple
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.what3words.androidwrapper.What3WordsV3
 import com.what3words.components.compose.maps.MapProvider
+import com.what3words.core.datasource.image.W3WImageDataSource
+import com.what3words.core.datasource.text.W3WTextDataSource
 import com.what3words.core.types.language.W3WLanguage
 import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
+import com.what3words.samples.multiple.data.LocationSourceImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class MultiComponentsViewModel : ViewModel() {
+class MultiComponentsViewModel(
+    val w3WTextDataSource: W3WTextDataSource,
+    val locationSource: LocationSourceImpl,
+    val w3WImageDataSource: W3WImageDataSource,
+    val dataProvider: What3WordsV3
+) : ViewModel() {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
@@ -25,12 +33,16 @@ class MultiComponentsViewModel : ViewModel() {
     }
 
     fun onSuggestionChanged(suggestion: SuggestionWithCoordinates?) {
-        Log.d("DUY", "HomeViewModel onSuggestionChanged: ${suggestion?.words}")
         _uiState.value = _uiState.value.copy(selectedSuggestion = suggestion)
     }
 
     fun onMarkerActionEvent(markerActionEvent: UiState.MarkerActionEvent) {
         _uiState.value = _uiState.value.copy(markerActionEvent = markerActionEvent)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        locationSource.onDestroy()
     }
 }
 
