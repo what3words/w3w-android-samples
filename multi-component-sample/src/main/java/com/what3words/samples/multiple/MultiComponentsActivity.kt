@@ -16,7 +16,6 @@ import com.what3words.ocr.components.datasource.W3WMLKitImageDataSource
 import com.what3words.samples.multiple.home.HomeScreen
 
 class MultiComponentsActivity : ComponentActivity() {
-    private val viewModel: MultiComponentsViewModel by viewModels()
     private lateinit var w3WImageDataSource: W3WImageDataSource
     private lateinit var w3WTextDataSource: W3WTextDataSource
     private lateinit var dataProvider: What3WordsV3
@@ -25,6 +24,9 @@ class MultiComponentsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         w3WTextDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
+        val viewModel: MultiComponentsViewModel by viewModels {
+            MultiComponentsViewModelFactory(w3WTextDataSource)
+        }
         w3WImageDataSource = W3WMLKitImageDataSource.create(
             context = this,
             recognizerOptions = LATIN
@@ -42,6 +44,7 @@ class MultiComponentsActivity : ComponentActivity() {
                     textDataSource = w3WTextDataSource,
                     imageDataSource = w3WImageDataSource,
                     dataProvider = dataProvider,
+                    mapManager = viewModel.mapManager,
                     uiState = uiState,
                     onSuggestionChanged = viewModel::onSuggestionChanged,
                     onMapTypeChange = viewModel::onMapTypeChange,

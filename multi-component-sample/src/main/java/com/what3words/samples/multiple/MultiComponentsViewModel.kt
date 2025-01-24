@@ -3,6 +3,8 @@ package com.what3words.samples.multiple
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.what3words.components.compose.maps.MapProvider
+import com.what3words.components.compose.maps.W3WMapManager
+import com.what3words.core.datasource.text.W3WTextDataSource
 import com.what3words.core.types.language.W3WLanguage
 import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.javawrapper.response.SuggestionWithCoordinates
@@ -10,10 +12,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class MultiComponentsViewModel : ViewModel() {
+class MultiComponentsViewModel(
+    w3WTextDataSource: W3WTextDataSource
+) : ViewModel() {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+
+    // Initialize the map manager with the data source and map provider
+    val mapManager: W3WMapManager = W3WMapManager(
+        textDataSource = w3WTextDataSource,
+        mapProvider = uiState.value.mapProvider
+    )
 
     fun onMapTypeChange() {
         // Switch the map type
