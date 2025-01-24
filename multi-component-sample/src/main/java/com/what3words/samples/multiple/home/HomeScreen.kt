@@ -29,6 +29,7 @@ import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -143,6 +144,12 @@ fun HomeScreen(
     // Update the map provider accordingly when the UI state changes
     LaunchedEffect(uiState.mapProvider) {
         mapManager.setMapProvider(uiState.mapProvider)
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            locationSource.onDestroy()
+        }
     }
 
     BottomSheetScaffold(
