@@ -1,4 +1,4 @@
-package com.what3words.samples.multiple.ui.screen.view
+package com.what3words.samples.multiple.component
 
 import android.util.Log
 import androidx.compose.foundation.layout.padding

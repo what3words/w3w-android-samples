@@ -1,4 +1,4 @@
-package com.what3words.samples.multiple.ui.screen.view
+package com.what3words.samples.multiple.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween

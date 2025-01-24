@@ -30,7 +30,7 @@ import com.what3words.samples.multiple.test.CustomComposableRuleHolder
 import com.what3words.samples.multiple.test.utils.MockVoiceApi
 import com.what3words.samples.multiple.test.utils.hasItemCountGreaterThanZero
 import com.what3words.samples.multiple.test.utils.waitUntilVisible
-import com.what3words.samples.multiple.ui.screen.MainAppScreen
+import com.what3words.samples.multiple.home.HomeScreen
 import io.cucumber.java.en.And
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
@@ -64,7 +64,7 @@ class VoiceSteps(
                 voiceProvider = mockVoiceApi
             )
 
-            MainAppScreen(
+            HomeScreen(
                 dataProvider,
                 ocrWrapper,
                 true,

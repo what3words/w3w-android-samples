@@ -1,4 +1,4 @@
-package com.what3words.samples.googlemaps.compose
+package com.what3words.samples.multiple.data
 
 import android.Manifest
 import android.content.BroadcastReceiver
