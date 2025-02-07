@@ -18,6 +18,7 @@ import com.what3words.components.compose.maps.W3WMapComponent
 import com.what3words.components.compose.maps.W3WMapDefaults
 import com.what3words.components.compose.maps.models.W3WMarkerColor
 import com.what3words.components.compose.maps.rememberW3WMapManager
+import com.what3words.core.datasource.text.W3WTextDataSource
 import com.what3words.core.types.geometry.W3WCoordinates
 import com.what3words.design.library.ui.theme.W3WTheme
 import com.what3words.samples.mapbox.v11.BuildConfig
@@ -39,7 +40,9 @@ class MapComposeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             W3WTheme {
-                W3WMapComponentApp()
+                W3WMapComponentApp(
+                    textDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
+                )
             }
         }
     }
@@ -48,13 +51,13 @@ class MapComposeActivity : ComponentActivity() {
 
 @Composable
 fun W3WMapComponentApp(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    textDataSource: W3WTextDataSource
 ) {
 
     val context = LocalContext.current
 
     val mapManager = rememberW3WMapManager(
-        textDataSource = W3WApiTextDataSource.create(context, BuildConfig.W3W_API_KEY),
         mapProvider = MapProvider.MAPBOX
     )
 
@@ -124,6 +127,7 @@ fun W3WMapComponentApp(
         modifier = modifier.fillMaxSize()
     ) {
         W3WMapComponent(
+            textDataSource = textDataSource,
             modifier = Modifier.fillMaxSize(),
             locationSource = locationSource,
             mapConfig = W3WMapDefaults.defaultMapConfig(
