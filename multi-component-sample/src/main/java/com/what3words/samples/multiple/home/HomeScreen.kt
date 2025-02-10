@@ -31,7 +31,6 @@ import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,9 +49,10 @@ import androidx.constraintlayout.compose.Dimension
 import com.what3words.androidwrapper.What3WordsAndroidWrapper
 import com.what3words.components.compose.maps.W3WMapComponent
 import com.what3words.components.compose.maps.W3WMapDefaults
-import com.what3words.components.compose.maps.W3WMapManager
+import com.what3words.components.compose.maps.models.W3WLocationSource
 import com.what3words.components.compose.maps.models.W3WMarkerColor
 import com.what3words.components.compose.maps.models.W3WMarkerWithList
+import com.what3words.components.compose.maps.rememberW3WMapManager
 import com.what3words.core.datasource.image.W3WImageDataSource
 import com.what3words.core.datasource.text.W3WTextDataSource
 import com.what3words.core.types.geometry.W3WCoordinates
@@ -64,7 +64,6 @@ import com.what3words.samples.multiple.component.AutoTextFieldUIState
 import com.what3words.samples.multiple.component.OcrView
 import com.what3words.samples.multiple.component.RemoveAllMarkersDialog
 import com.what3words.samples.multiple.component.RemoveSpecificMarkersDialog
-import com.what3words.samples.multiple.data.LocationSourceImpl
 import com.what3words.samples.multiple.util.DummyData
 import com.what3words.samples.multiple.util.toSuggestionWithCoordinates
 import kotlinx.coroutines.launch
@@ -74,7 +73,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     textDataSource: W3WTextDataSource,
     imageDataSource: W3WImageDataSource,
-    mapManager: W3WMapManager,
+    locationSource: W3WLocationSource,
     dataProvider: What3WordsAndroidWrapper,
     uiState: UiState,
     onSuggestionChanged: (SuggestionWithCoordinates?) -> Unit,
@@ -87,11 +86,10 @@ fun HomeScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
-    val locationSource = remember {
-        LocationSourceImpl(context)
-    }
-
     val isDarkTheme = isSystemInDarkTheme()
+    val mapManager = rememberW3WMapManager(
+        mapProvider = uiState.mapProvider
+    )
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberStandardBottomSheetState(
@@ -149,12 +147,6 @@ fun HomeScreen(
     // Update map dark theme by system dark theme
     LaunchedEffect(isDarkTheme) {
         mapManager.enableDarkMode(isDarkTheme)
-    }
-
-    DisposableEffect(Unit) {
-        onDispose {
-            locationSource.onDestroy()
-        }
     }
 
     BottomSheetScaffold(
@@ -293,6 +285,7 @@ fun HomeScreen(
             )
 
             W3WMapComponent(
+                textDataSource = textDataSource,
                 modifier = Modifier.constrainAs(ref = mapRef) {
                     linkTo(start = parent.start, end = parent.end)
                     top.linkTo(anchor = parent.top)
