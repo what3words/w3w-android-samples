@@ -42,7 +42,7 @@ class MapComposeActivity : ComponentActivity() {
         setContent {
             W3WTheme {
                 W3WMapComponentApp(
-                    textDataSource = W3WApiTextDataSource.create(this,BuildConfig.W3W_API_KEY)
+                    textDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
                 )
             }
         }
@@ -132,9 +132,9 @@ fun W3WMapComponentApp(
             locationSource = locationSource,
             mapConfig = W3WMapDefaults.defaultMapConfig(
                 buttonConfig = W3WMapDefaults.ButtonConfig(
-                    isRecallButtonAvailable = true,
-                    isMapSwitchButtonAvailable = true,
-                    isMyLocationButtonAvailable = true
+                    isRecallFeatureEnabled = true,
+                    isMapSwitchFeatureEnabled = true,
+                    isMyLocationFeatureEnabled = true
                 )
             ),
             mapManager = mapManager,

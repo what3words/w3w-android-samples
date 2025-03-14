@@ -304,9 +304,9 @@ fun HomeScreen(
                 locationSource = locationSource,
                 mapConfig = W3WMapDefaults.defaultMapConfig(
                     buttonConfig = W3WMapDefaults.ButtonConfig(
-                        isRecallButtonAvailable = true,
-                        isMapSwitchButtonAvailable = true,
-                        isMyLocationButtonAvailable = true
+                        isRecallFeatureEnabled = true,
+                        isMapSwitchFeatureEnabled = true,
+                        isMyLocationFeatureEnabled = true
                     )
                 ),
                 mapManager = mapManager,
