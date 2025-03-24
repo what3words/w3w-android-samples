@@ -35,7 +35,7 @@ jobs:
           echo "MAPBOX_ACCESS_TOKEN=${MAPBOX_DOWNLOADS_TOKEN}">> ~/.gradle/gradle.properties
           echo "MAPS_API_KEY=${MAPBOX_DOWNLOADS_TOKEN}">> ~/.gradle/gradle.properties
           echo "PROD_API_KEY=${MAPBOX_DOWNLOADS_TOKEN}">> ~/.gradle/gradle.properties
-          cat ~/.gradle/gradle.properties
+          cat ~/.gradle/gradle.
 
       - name: Set Up Gradle Wrapper
         run: ./gradlew wrapper
