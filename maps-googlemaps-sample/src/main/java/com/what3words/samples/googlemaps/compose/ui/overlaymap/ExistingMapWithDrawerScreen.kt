@@ -37,7 +37,6 @@ import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.ComposeMapColorScheme
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapEffect
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
@@ -52,7 +51,6 @@ import com.what3words.components.compose.maps.W3WMapDefaults
 import com.what3words.components.compose.maps.mapper.toGoogleLatLng
 import com.what3words.components.compose.maps.models.W3WMarkerColor
 import com.what3words.components.compose.maps.providers.googlemap.W3WGoogleMapDrawer
-import com.what3words.components.compose.maps.providers.googlemap.W3WGoogleMapProjection
 import com.what3words.components.compose.maps.providers.googlemap.updateCameraBound
 import com.what3words.components.compose.maps.rememberW3WMapManager
 import com.what3words.components.compose.maps.state.camera.W3WGoogleCameraState
@@ -72,7 +70,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-private const val TAG = "GoogleMapWithW3WActivity"
+private const val TAG = "ExistingMapWithDrawerScreen"
 
 val defaultCameraPosition = CameraPosition.fromLatLngZoom(london1Coordinate.toGoogleLatLng(), 11f)
 
@@ -119,9 +117,7 @@ fun ExistingMapWithDrawerScreen(
         w3wGoogleCameraState?.cameraState = cameraPositionState
         onDispose { }
     }
-    var mapProjection: W3WGoogleMapProjection? by remember {
-        mutableStateOf(null)
-    }
+
     val w3wGoogleCameraState = mapState.cameraState as W3WGoogleCameraState
     var lastProcessedPosition by remember { mutableStateOf(cameraPositionState.position) }
 
@@ -210,11 +206,6 @@ fun ExistingMapWithDrawerScreen(
             },
             content = {
                 //region What3words map components setup
-                //REQUIRED - needed to draw the 3x3m grid on the map
-                MapEffect(Unit) { map ->
-                    mapProjection = W3WGoogleMapProjection(map.projection)
-                }
-
                 //REQUIRED - needed to draw the 3x3m grid on the map
                 W3WGoogleMapDrawer(
                     state = mapState,
