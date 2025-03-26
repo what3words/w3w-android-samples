@@ -1,4 +1,4 @@
-package com.what3words.samples.mapbox.compose
+package com.what3words.samples.mapbox.compose.data
 
 import android.Manifest
 import android.content.BroadcastReceiver
@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class LocationSourceImpl(private val context: Context) : W3WLocationSource {
@@ -67,12 +66,13 @@ class LocationSourceImpl(private val context: Context) : W3WLocationSource {
 
         try {
             return suspendCoroutine { cont ->
-                fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null).addOnCompleteListener { task ->
-                    if (task.isSuccessful && task.result != null) {
-                        _locationStatus.value = LocationStatus.ACTIVE
-                        cont.resume(task.result)
+                fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful && task.result != null) {
+                            _locationStatus.value = LocationStatus.ACTIVE
+                            cont.resume(task.result)
+                        }
                     }
-                }
             }
         } catch (e: Exception) {
             _locationStatus.value = LocationStatus.INACTIVE
