@@ -3,6 +3,7 @@ package com.what3words.samples.multiple
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -17,7 +18,7 @@ import com.what3words.samples.multiple.home.HomeScreen
 class MultiComponentsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enableEdgeToEdge()
         val viewModel: MultiComponentsViewModel by viewModels {
             MultiComponentsViewModelFactory(
                 textDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY),

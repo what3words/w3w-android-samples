@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,6 +25,7 @@ import com.what3words.ocr.components.ui.rememberOcrScanManager
 
 @Composable
 fun OcrView(
+    modifier: Modifier = Modifier,
     w3WImageDataSource: W3WImageDataSource,
     w3WTextDataSource: W3WTextDataSource,
     scanScreenVisible: Boolean, onScanScreenVisibleChange: (Boolean) -> Unit,
@@ -32,7 +34,7 @@ fun OcrView(
 
     AnimatedVisibility(
         visible = scanScreenVisible,
-        modifier = Modifier.zIndex(Float.MAX_VALUE),
+        modifier = modifier.zIndex(Float.MAX_VALUE),
         enter = expandVertically(
             animationSpec = tween(
                 750
@@ -53,6 +55,7 @@ fun OcrView(
                     .includeCoordinates(true)
                     .build(),
             ),
+            isEdgeToEdgeEnabled = true,
             onDismiss = {
                 onScanScreenVisibleChange(false)
             },

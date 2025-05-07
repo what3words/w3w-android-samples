@@ -7,8 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
@@ -35,7 +33,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalTextInputService
 import androidx.compose.ui.unit.dp
@@ -63,10 +60,11 @@ class OcrSampleActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         w3WTextDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
-
+        
         setContent {
             W3WTheme {
                 Scaffold(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
                     topBar = {
                         TopAppBar(
                             colors = TopAppBarDefaults.topAppBarColors(

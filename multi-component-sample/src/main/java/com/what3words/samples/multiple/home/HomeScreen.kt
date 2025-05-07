@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
@@ -150,6 +151,7 @@ fun HomeScreen(
     }
 
     BottomSheetScaffold(
+        modifier = Modifier.fillMaxSize(),
         scaffoldState = bottomSheetScaffoldState,
         sheetContent = {
             when (uiState.markerActionEvent) {
@@ -265,11 +267,9 @@ fun HomeScreen(
             }
         },
         sheetPeekHeight = 0.dp
-    ) {
+    ) { paddingValues ->
         ConstraintLayout(
             modifier = Modifier
-                .fillMaxSize()
-                .statusBarsPadding()
                 .fillMaxSize()
         ) {
             val (w3wTextFieldRef, mapRef, ocrRef, mapTypeRef, addMarkerRef) = createRefs()
@@ -319,6 +319,7 @@ fun HomeScreen(
 
             AutoTextField(
                 modifier = Modifier
+                    .statusBarsPadding()
                     .constrainAs(ref = w3wTextFieldRef) {
                         linkTo(start = parent.start, end = parent.end)
                         top.linkTo(anchor = parent.top)
@@ -364,13 +365,15 @@ fun HomeScreen(
             FloatingActionButton(
                 modifier = Modifier
                     .testTag("ocrButton")
+
                     .constrainAs(ref = ocrRef) {
                         start.linkTo(parent.start)
                         bottom.linkTo(anchor = parent.bottom)
                         width = Dimension.wrapContent
                         height = Dimension.wrapContent
                     }
-                    .padding(bottom = 32.dp, start = 24.dp),
+                    .navigationBarsPadding()
+                    .padding(start = 24.dp),
                 onClick = {
                     scanScreenVisible = true
                 }
