@@ -32,9 +32,3 @@ include ':mapbox-v11-sample'
 include ':autosuggest-sample'
 include ':autosuggest-sample-voice'
 include ':multi-component-sample'
-
-includeBuild("../w3w-android-ocr-components") {
-    dependencySubstitution {
-        substitute(module("com.what3words:w3w-android-ocr-components")).using(project(":lib"))
-    }
-}

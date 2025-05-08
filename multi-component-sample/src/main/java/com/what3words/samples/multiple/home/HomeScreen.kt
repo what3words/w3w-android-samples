@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -280,6 +281,8 @@ fun HomeScreen(
             val (w3wTextFieldRef, mapRef, ocrRef, mapTypeRef, addMarkerRef) = createRefs()
             val navBarBottomPadding =
                 WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+            val statusBarsPadding =
+                WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
 
             OcrView(
                 w3WTextDataSource = textDataSource,
@@ -302,9 +305,10 @@ fun HomeScreen(
                 },
                 layoutConfig = W3WMapDefaults.defaultLayoutConfig(
                     contentPadding = PaddingValues(
-                        top = 70.dp,
-                        start = 24.dp,
-                        bottom = navBarBottomPadding + 12.dp
+                        top = statusBarsPadding + 58.dp,
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = navBarBottomPadding
                     ),
                     buttonsLayoutConfig = defaultButtonsLayoutConfig(
                         buttonPadding = PaddingValues(
@@ -315,10 +319,8 @@ fun HomeScreen(
                 ),
                 locationSource = locationSource,
                 mapConfig = W3WMapDefaults.defaultMapConfig(
-                    buttonConfig = W3WMapDefaults.ButtonConfig(
-                        isRecallFeatureEnabled = true,
-                        isMapSwitchFeatureEnabled = true,
-                        isMyLocationFeatureEnabled = true,
+                    buttonConfig = W3WMapDefaults.defaultButtonConfig(
+                        isRecallFeatureEnabled = true
                     ),
                 ),
                 mapManager = mapManager,
