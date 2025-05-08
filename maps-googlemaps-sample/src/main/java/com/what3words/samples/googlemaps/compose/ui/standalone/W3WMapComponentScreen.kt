@@ -114,7 +114,7 @@ fun W3WMapComponentScreen(
             modifier = Modifier.fillMaxSize(),
             locationSource = locationSource,
             mapConfig = W3WMapDefaults.defaultMapConfig(
-                buttonConfig = W3WMapDefaults.ButtonConfig(
+                buttonConfig = W3WMapDefaults.defaultButtonConfig(
                     isRecallFeatureEnabled = true,
                     isMapSwitchFeatureEnabled = true,
                     isMyLocationFeatureEnabled = true
