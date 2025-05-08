@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -43,6 +46,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -50,6 +54,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.what3words.androidwrapper.What3WordsAndroidWrapper
 import com.what3words.components.compose.maps.W3WMapComponent
 import com.what3words.components.compose.maps.W3WMapDefaults
+import com.what3words.components.compose.maps.W3WMapDefaults.defaultButtonsLayoutConfig
 import com.what3words.components.compose.maps.models.W3WLocationSource
 import com.what3words.components.compose.maps.models.W3WMarkerColor
 import com.what3words.components.compose.maps.models.W3WMarkerWithList
@@ -273,6 +278,8 @@ fun HomeScreen(
                 .fillMaxSize()
         ) {
             val (w3wTextFieldRef, mapRef, ocrRef, mapTypeRef, addMarkerRef) = createRefs()
+            val navBarBottomPadding =
+                WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
 
             OcrView(
                 w3WTextDataSource = textDataSource,
@@ -296,9 +303,14 @@ fun HomeScreen(
                 layoutConfig = W3WMapDefaults.defaultLayoutConfig(
                     contentPadding = PaddingValues(
                         top = 70.dp,
-                        start = 16.dp,
-                        end = 4.dp,
-                        bottom = 4.dp
+                        start = 24.dp,
+                        bottom = navBarBottomPadding + 12.dp
+                    ),
+                    buttonsLayoutConfig = defaultButtonsLayoutConfig(
+                        buttonPadding = PaddingValues(
+                            bottom = navBarBottomPadding + 16.dp,
+                            end = 16.dp
+                        ),
                     )
                 ),
                 locationSource = locationSource,
@@ -306,15 +318,15 @@ fun HomeScreen(
                     buttonConfig = W3WMapDefaults.ButtonConfig(
                         isRecallFeatureEnabled = true,
                         isMapSwitchFeatureEnabled = true,
-                        isMyLocationFeatureEnabled = true
-                    )
+                        isMyLocationFeatureEnabled = true,
+                    ),
                 ),
                 mapManager = mapManager,
                 onSelectedSquareChanged = {
                     onSuggestionChanged(
                         it.toSuggestionWithCoordinates()
                     )
-                }
+                },
             )
 
             AutoTextField(
@@ -365,15 +377,13 @@ fun HomeScreen(
             FloatingActionButton(
                 modifier = Modifier
                     .testTag("ocrButton")
-
                     .constrainAs(ref = ocrRef) {
-                        start.linkTo(parent.start)
-                        bottom.linkTo(anchor = parent.bottom)
+                        start.linkTo(parent.start, 24.dp)
+                        bottom.linkTo(anchor = parent.bottom, 48.dp)
                         width = Dimension.wrapContent
                         height = Dimension.wrapContent
                     }
-                    .navigationBarsPadding()
-                    .padding(start = 24.dp),
+                    .navigationBarsPadding(),
                 onClick = {
                     scanScreenVisible = true
                 }
