@@ -27,14 +27,17 @@ jobs:
       - name: Restore gradle.properties
         env:
           MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+          PROD_API_KEY: ${{ secrets.PROD_API_KEY }}
         shell: bash
         run: |
           mkdir -p ~/.gradle/
           echo "GRADLE_USER_HOME=${HOME}/.gradle" >> $GITHUB_ENV
           echo "MAPBOX_DOWNLOADS_TOKEN=${MAPBOX_DOWNLOADS_TOKEN}">> ~/.gradle/gradle.properties
-          echo "MAPBOX_ACCESS_TOKEN=${MAPBOX_DOWNLOADS_TOKEN}">> ~/.gradle/gradle.properties
-          echo "MAPS_API_KEY=${MAPBOX_DOWNLOADS_TOKEN}">> ~/.gradle/gradle.properties
-          echo "PROD_API_KEY=${MAPBOX_DOWNLOADS_TOKEN}">> ~/.gradle/gradle.properties
+          echo "MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}">> ~/.gradle/gradle.properties
+          echo "MAPS_API_KEY=${MAPS_API_KEY}">> ~/.gradle/gradle.properties
+          echo "PROD_API_KEY=${PROD_API_KEY}">> ~/.gradle/gradle.properties
           cat ~/.gradle/gradle.properties
 
       - name: Set Up Gradle Wrapper
