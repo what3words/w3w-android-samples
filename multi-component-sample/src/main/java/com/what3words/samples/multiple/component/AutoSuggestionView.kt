@@ -38,7 +38,7 @@ fun AutoTextField(
         mutableStateOf(null)
     }
 
-    ConstraintLayout(modifier = modifier.padding(24.dp)) {
+    ConstraintLayout(modifier = modifier.padding(horizontal = 24.dp, vertical = 8.dp)) {
         val (ref) = createRefs()
 
         //  what3words autosuggest text component for compose

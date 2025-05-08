@@ -4,10 +4,20 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.what3words.core.datasource.image.W3WImageDataSource
 import com.what3words.core.datasource.text.W3WTextDataSource
@@ -24,6 +34,7 @@ import com.what3words.ocr.components.ui.rememberOcrScanManager
 
 @Composable
 fun OcrView(
+    modifier: Modifier = Modifier,
     w3WImageDataSource: W3WImageDataSource,
     w3WTextDataSource: W3WTextDataSource,
     scanScreenVisible: Boolean, onScanScreenVisibleChange: (Boolean) -> Unit,
@@ -32,16 +43,14 @@ fun OcrView(
 
     AnimatedVisibility(
         visible = scanScreenVisible,
-        modifier = Modifier.zIndex(Float.MAX_VALUE),
-        enter = expandVertically(
-            animationSpec = tween(
-                750
-            ),
+        modifier = modifier.zIndex(Float.MAX_VALUE),
+        enter = slideInVertically(
+            animationSpec = tween(750),
+            initialOffsetY = { fullHeight -> fullHeight } // Start from below the screen
         ),
-        exit = shrinkVertically(
-            animationSpec = tween(
-                750
-            )
+        exit = slideOutVertically(
+            animationSpec = tween(750),
+            targetOffsetY = { fullHeight -> fullHeight } // Exit towards the bottom
         )
     ) {
         W3WOcrScanner(
@@ -52,6 +61,12 @@ fun OcrView(
                     .focus(W3WCoordinates(51.520847, -0.195521))
                     .includeCoordinates(true)
                     .build(),
+            ),
+            scannerLayoutConfig = W3WOcrScannerDefaults.defaultLayoutConfig(
+                PaddingValues(
+                    top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding(),
+                    bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+                )
             ),
             onDismiss = {
                 onScanScreenVisibleChange(false)

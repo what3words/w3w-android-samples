@@ -21,6 +21,7 @@
             android:name=".OcrSampleActivity"
             android:exported="true"
             android:label="@string/title_activity_w3w_ocr_sample"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Ocrcomponentssample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

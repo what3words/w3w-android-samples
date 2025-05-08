@@ -12,8 +12,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -42,6 +47,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -49,6 +55,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.what3words.androidwrapper.What3WordsAndroidWrapper
 import com.what3words.components.compose.maps.W3WMapComponent
 import com.what3words.components.compose.maps.W3WMapDefaults
+import com.what3words.components.compose.maps.W3WMapDefaults.defaultButtonsLayoutConfig
 import com.what3words.components.compose.maps.models.W3WLocationSource
 import com.what3words.components.compose.maps.models.W3WMarkerColor
 import com.what3words.components.compose.maps.models.W3WMarkerWithList
@@ -150,6 +157,7 @@ fun HomeScreen(
     }
 
     BottomSheetScaffold(
+        modifier = Modifier.fillMaxSize(),
         scaffoldState = bottomSheetScaffoldState,
         sheetContent = {
             when (uiState.markerActionEvent) {
@@ -265,14 +273,16 @@ fun HomeScreen(
             }
         },
         sheetPeekHeight = 0.dp
-    ) {
+    ) { paddingValues ->
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
-                .statusBarsPadding()
-                .fillMaxSize()
         ) {
             val (w3wTextFieldRef, mapRef, ocrRef, mapTypeRef, addMarkerRef) = createRefs()
+            val navBarBottomPadding =
+                WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+            val statusBarsPadding =
+                WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
 
             OcrView(
                 w3WTextDataSource = textDataSource,
@@ -295,30 +305,35 @@ fun HomeScreen(
                 },
                 layoutConfig = W3WMapDefaults.defaultLayoutConfig(
                     contentPadding = PaddingValues(
-                        top = 70.dp,
+                        top = statusBarsPadding + 58.dp,
                         start = 16.dp,
-                        end = 4.dp,
-                        bottom = 4.dp
+                        end = 16.dp,
+                        bottom = navBarBottomPadding
+                    ),
+                    buttonsLayoutConfig = defaultButtonsLayoutConfig(
+                        buttonPadding = PaddingValues(
+                            bottom = navBarBottomPadding + 16.dp,
+                            end = 16.dp
+                        ),
                     )
                 ),
                 locationSource = locationSource,
                 mapConfig = W3WMapDefaults.defaultMapConfig(
-                    buttonConfig = W3WMapDefaults.ButtonConfig(
-                        isRecallFeatureEnabled = true,
-                        isMapSwitchFeatureEnabled = true,
-                        isMyLocationFeatureEnabled = true
-                    )
+                    buttonConfig = W3WMapDefaults.defaultButtonConfig(
+                        isRecallFeatureEnabled = true
+                    ),
                 ),
                 mapManager = mapManager,
                 onSelectedSquareChanged = {
                     onSuggestionChanged(
                         it.toSuggestionWithCoordinates()
                     )
-                }
+                },
             )
 
             AutoTextField(
                 modifier = Modifier
+                    .statusBarsPadding()
                     .constrainAs(ref = w3wTextFieldRef) {
                         linkTo(start = parent.start, end = parent.end)
                         top.linkTo(anchor = parent.top)
@@ -365,12 +380,12 @@ fun HomeScreen(
                 modifier = Modifier
                     .testTag("ocrButton")
                     .constrainAs(ref = ocrRef) {
-                        start.linkTo(parent.start)
-                        bottom.linkTo(anchor = parent.bottom)
+                        start.linkTo(parent.start, 24.dp)
+                        bottom.linkTo(anchor = parent.bottom, 48.dp)
                         width = Dimension.wrapContent
                         height = Dimension.wrapContent
                     }
-                    .padding(bottom = 32.dp, start = 24.dp),
+                    .navigationBarsPadding(),
                 onClick = {
                     scanScreenVisible = true
                 }
