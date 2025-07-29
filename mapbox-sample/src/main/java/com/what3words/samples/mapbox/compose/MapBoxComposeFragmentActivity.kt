@@ -12,11 +12,13 @@ import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.fragment.app.FragmentActivity
 import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
+import com.what3words.androidwrapper.datasource.text.W3WApiTextDataSource
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.models.W3WZoomOption
 import com.what3words.components.maps.views.W3WMap
 import com.what3words.components.maps.views.W3WMapFragment
 import com.what3words.components.maps.views.W3WMapboxMapFragment
+import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.samples.mapbox.BuildConfig
 import com.what3words.samples.mapbox.databinding.ActivityComposeMapFragmentBinding
 
@@ -48,10 +50,7 @@ class MapBoxComposeFragmentActivity : FragmentActivity(), W3WMapFragment.OnMapRe
                             )
                             val mapboxFragment =
                                 view.fragmentContainerView.getFragment<W3WMapboxMapFragment>()
-                            mapboxFragment.apiKey(
-                                BuildConfig.W3W_API_KEY,
-                                this@MapBoxComposeFragmentActivity
-                            )
+                            mapboxFragment.initialize(W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY),this)
                             view
                         },
                         modifier = Modifier.fillMaxSize()
@@ -63,13 +62,13 @@ class MapBoxComposeFragmentActivity : FragmentActivity(), W3WMapFragment.OnMapRe
 
     override fun onMapReady(map: W3WMap) {
         //set language to get all the 3wa in the desired language (default english)
-        map.setLanguage("en")
+        map.setLanguage(W3WRFC5646Language.EN_GB)
 
         //set the callback for when a square is selected
         map.onSquareSelected({ selectedSquare, selectedByTouch, isMarked ->
             Log.i(TAG, "square selected: ${selectedSquare.words}, byTouch: $selectedByTouch, isMarked: $isMarked")
         }, {
-            Log.e(TAG, "error: ${it.key}, ${it.message}")
+            Log.e(TAG, "error: ${it.message}")
         })
 
         //example how to use W3WMap features (check interface for documentation).
@@ -78,17 +77,15 @@ class MapBoxComposeFragmentActivity : FragmentActivity(), W3WMapFragment.OnMapRe
             W3WMarkerColor.BLUE,
             W3WZoomOption.CENTER_AND_ZOOM,
             {
-                Log.i(TAG, "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}")
+                Log.i(TAG, "added ${it.words} at ${it.center?.lat}, ${it.center?.lng}")
                 //select after adding a marker successfully
-                map.selectAtSquare(it, W3WZoomOption.NONE)
+                map.selectAtAddress(it, W3WZoomOption.NONE)
             }, {
-                Toast.makeText(this@MapBoxComposeFragmentActivity, "${it.key}, ${it.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MapBoxComposeFragmentActivity, "${it.message}", Toast.LENGTH_LONG).show()
             }
         )
 
         //if you want to access the mapbox map instance inside W3WMapboxMapFragment do the following
-        (map as? W3WMapboxMapFragment.Map)?.mapBoxMap()?.let {
-            it.loadStyleUri(Style.MAPBOX_STREETS)
-        }
+        (map as? W3WMapboxMapFragment.Map)?.mapBoxMap()?.loadStyleUri(Style.MAPBOX_STREETS)
     }
 }

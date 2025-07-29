@@ -6,6 +6,9 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
 
     <application
         android:allowBackup="true"
@@ -18,6 +21,7 @@
             android:name=".OcrSampleActivity"
             android:exported="true"
             android:label="@string/title_activity_w3w_ocr_sample"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Ocrcomponentssample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

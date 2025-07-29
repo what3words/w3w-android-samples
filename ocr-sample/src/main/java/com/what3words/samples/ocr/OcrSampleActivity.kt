@@ -7,8 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,10 +60,11 @@ class OcrSampleActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         w3WTextDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
-
+        
         setContent {
             W3WTheme {
                 Scaffold(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
                     topBar = {
                         TopAppBar(
                             colors = TopAppBarDefaults.topAppBarColors(
@@ -88,40 +89,6 @@ class OcrSampleActivity : ComponentActivity() {
                     }
 
                     Column(modifier = Modifier.padding(contentPadding)) {
-                        val options = remember {
-                            W3WAutosuggestOptions.Builder().focus(W3WCoordinates(51.2, 1.2)).build()
-                        }
-
-                        AnimatedVisibility(
-                            visible = uiState.isScanning,
-                            modifier = Modifier.zIndex(Float.MAX_VALUE),
-                            enter = expandVertically(
-                                animationSpec = tween(
-                                    750
-                                ),
-                            ),
-                            exit = shrinkVertically(
-                                animationSpec = tween(
-                                    750
-                                )
-                            )
-                        ) {
-                            W3WOcrScanner(
-                                ocrScanManager = rememberOcrScanManager(
-                                    w3wImageDataSource = w3WImageDataSource,
-                                    w3wTextDataSource = w3WTextDataSource,
-                                    options = options,
-                                ),
-                                onDismiss = {
-                                    viewModel.showScanner(false)
-                                },
-                                onSuggestionSelected = viewModel::selectSuggestion,
-                                onError = viewModel::onError,
-                                onSuggestionFound = {
-
-                                }
-                            )
-                        }
                         MLKitLibrariesDropdownMenuBox(uiState)
                         Button(modifier = Modifier.fillMaxWidth(), onClick = {
                             viewModel.showScanner(true)
@@ -148,6 +115,39 @@ class OcrSampleActivity : ComponentActivity() {
                                 )
                             }
                         }
+                    }
+                    val options = remember {
+                        W3WAutosuggestOptions.Builder().focus(W3WCoordinates(51.2, 1.2)).build()
+                    }
+
+                    AnimatedVisibility(
+                        visible = uiState.isScanning,
+                        modifier = Modifier.zIndex(Float.MAX_VALUE),
+                        enter = slideInVertically(
+                            animationSpec = tween(750),
+                            initialOffsetY = { fullHeight -> fullHeight } // Start from below the screen
+                        ),
+                        exit = slideOutVertically(
+                            animationSpec = tween(750),
+                            targetOffsetY = { fullHeight -> fullHeight } // Exit towards the bottom
+                        )
+                    ) {
+                        W3WOcrScanner(
+                            modifier = Modifier.padding(contentPadding),
+                            ocrScanManager = rememberOcrScanManager(
+                                w3wImageDataSource = w3WImageDataSource,
+                                w3wTextDataSource = w3WTextDataSource,
+                                options = options,
+                            ),
+                            onDismiss = {
+                                viewModel.showScanner(false)
+                            },
+                            onSuggestionSelected = viewModel::selectSuggestion,
+                            onError = viewModel::onError,
+                            onSuggestionFound = {
+
+                            }
+                        )
                     }
                 }
             }

@@ -1,15 +1,16 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.what3words.samples.autosuggest"
         minSdk 23
-        targetSdk 34
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -53,9 +54,7 @@ android {
         compose true
         viewBinding true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion "$compose_compiler_version"
-    }
+
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'

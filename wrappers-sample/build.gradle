@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     buildFeatures {
         viewBinding true
@@ -68,5 +68,5 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxandroid:3.0.2"
 
     // W3W API Wrapper Lib
-    implementation "com.what3words:w3w-android-wrapper:4.0.2"
+    implementation "com.what3words:w3w-android-wrapper:4.0.3"
 }
