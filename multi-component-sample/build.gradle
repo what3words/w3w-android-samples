@@ -2,16 +2,16 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
-    id 'jacoco'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.what3words.samples.multiple"
         minSdk 24
-        targetSdk 34
+        targetSdk 35
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [mapsApiKey: findProperty('MAPS_API_KEY') ? findProperty('MAPS_API_KEY') : "YOUR_GOOGLE_MAPS_API_KEY_HERE"]
@@ -38,9 +38,6 @@ android {
     }
 
     buildTypes {
-        debug {
-            testCoverageEnabled = true
-        }
         release {
             minifyEnabled true
             signingConfig signingConfigs.release
@@ -62,23 +59,6 @@ android {
         viewBinding true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
-    }
-
-    testOptions {
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-            }
-        }
-        unitTests.returnDefaultValues = true
-        unitTests.includeAndroidResources = true
-    }
-
-    jacoco {
-        version = "$jacoco_version"
-    }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
@@ -89,16 +69,16 @@ android {
 
 dependencies {
     // W3W API Map Lib
-    implementation "com.what3words:w3w-android-map-components:1.0.7"
+    implementation "com.what3words:w3w-android-map-components-compose:2.0.0"
 
     // W3W Component Lib
     implementation "com.what3words:w3w-android-components:3.2.5"
 
     // W3W OCR Lib
-    implementation "com.what3words:w3w-android-ocr-components:2.0.0"
+    implementation "com.what3words:w3w-android-ocr-components:3.0.0"
 
     // Compose
-    implementation platform("androidx.compose:compose-bom:2024.06.00")
+    implementation platform("androidx.compose:compose-bom:2025.05.00")
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
@@ -107,7 +87,7 @@ dependencies {
     implementation "androidx.activity:activity-compose"
     debugImplementation "androidx.compose.ui:ui-tooling"
     debugImplementation "androidx.compose.ui:ui-test-manifest"
-    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.1.1"
 
     implementation "androidx.core:core-ktx:1.13.1"
     implementation "androidx.appcompat:appcompat:1.7.0"
@@ -118,67 +98,16 @@ dependencies {
     // Google Map
     implementation "com.google.android.gms:play-services-location:21.3.0"
     implementation "com.google.maps.android:android-maps-utils:3.4.0"
-    implementation "com.google.android.gms:play-services-maps:19.0.0"
+    implementation "com.google.android.gms:play-services-maps:19.2.0"
     implementation "com.google.maps.android:maps-compose:6.1.1"
 
     //Map box
-    implementation "com.mapbox.maps:android:10.18.3"
+    implementation "com.mapbox.maps:android:11.8.0"
 
     // mlkit
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition:19.0.0"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-chinese:16.0.0"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-devanagari:16.0.0"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-japanese:16.0.0"
-    implementation "com.google.android.gms:play-services-mlkit-text-recognition-korean:16.0.0"
-
-    //Cucumber
-    androidTestImplementation "io.cucumber:cucumber-android:$cucumber_android_version"
-    androidTestImplementation "io.cucumber:cucumber-picocontainer:$cucumber_picocontainer_version"
-
-    // Testing
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
-    androidTestImplementation "androidx.test:rules:1.6.1"
-    androidTestImplementation "androidx.test.uiautomator:uiautomator:2.3.0"
-    androidTestImplementation "androidx.test:core:1.6.1"
-    androidTestImplementation "com.android.support:support-annotations:28.0.0"
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.6.8"
-
-    implementation 'androidx.test.espresso:espresso-contrib:3.6.1'
-}
-
-task jacocoTestReport(type: JacocoReport, dependsOn: ['createDebugCoverageReport']) {
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports for Debug build"
-
-    reports {
-        xml.required = true
-        html.required = true
-    }
-
-    def fileFilter = ['android/databinding/**/*.class',
-                      '**/*databinding.*',
-                      '**/android/databinding/*',
-                      '**/androidx/databinding/*',
-                      '**/BR.*',
-                      '**/R.class',
-                      '**/R$*.class',
-                      '**/BuildConfig.*',
-                      '**/Manifest*.*',
-                      '**/*Test*.*',
-                      'android/**/*.*',
-                      'androidx/**/*.*',
-                      'autosuggestsample/**/*.*']
-    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-    def mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories.setFrom(files([mainSrc]))
-    classDirectories.setFrom(files([debugTree]))
-    executionData.setFrom(fileTree(dir: "$buildDir", includes: [
-            "jacoco/testDebugUnitTest.exec",
-            "outputs/code-coverage/connected/*coverage.ec"
-    ]))
-
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition:19.0.1"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-chinese:16.0.1"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-devanagari:16.0.1"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-japanese:16.0.1"
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition-korean:16.0.1"
 }

@@ -1,0 +1,107 @@
+name: BuildTest
+
+on:
+    push:
+      branches:
+        - 'task/**'
+        - 'bug/**'
+        - 'fix/**'
+        - 'epic/**'
+    pull_request:
+      branches:
+        - 'staging'
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Restore gradle.properties
+        env:
+          MAPBOX_DOWNLOADS_TOKEN: ${{ secrets.MAPBOX_DOWNLOADS_TOKEN }}
+          MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+          PROD_API_KEY: ${{ secrets.PROD_API_KEY }}
+        shell: bash
+        run: |
+          mkdir -p ~/.gradle/
+          echo "GRADLE_USER_HOME=${HOME}/.gradle" >> $GITHUB_ENV
+          echo "MAPBOX_DOWNLOADS_TOKEN=${MAPBOX_DOWNLOADS_TOKEN}">> ~/.gradle/gradle.properties
+          echo "MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}">> ~/.gradle/gradle.properties
+          echo "MAPS_API_KEY=${MAPS_API_KEY}">> ~/.gradle/gradle.properties
+          echo "PROD_API_KEY=${PROD_API_KEY}">> ~/.gradle/gradle.properties
+          cat ~/.gradle/gradle.properties
+
+      - name: Set Up Gradle Wrapper
+        run: ./gradlew wrapper
+
+      - name: Assemble wrappers-sample
+        run: ./gradlew wrappers-sample:assembleRelease
+
+      - name: Assemble ocr-sample
+        run: ./gradlew ocr-sample:assembleRelease
+
+      - name: Assemble autosuggest-sample
+        run: ./gradlew autosuggest-sample:assembleRelease
+
+      - name: Assemble autosuggest-sample-voice
+        run: ./gradlew autosuggest-sample-voice:assembleRelease
+
+      - name: Assemble multi-component-sample
+        run: ./gradlew multi-component-sample:assembleRelease
+
+      - name: Assemble maps-googlemaps-sample
+        run: ./gradlew maps-googlemaps-sample:assembleRelease
+
+      - name: Assemble mapbox-sample
+        run: ./gradlew mapbox-sample:assembleRelease
+
+      - name: Upload wrappers-sample APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: wrappers-sample-release
+          path: wrappers-sample/build/outputs/apk/release
+
+      - name: Upload ocr-sample APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ocr-sample-release
+          path: ocr-sample/build/outputs/apk/release
+
+      - name: Upload autosuggest-sample APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: autosuggest-sample-release
+          path: autosuggest-sample/build/outputs/apk/release
+
+      - name: Upload autosuggest-sample-voice APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: autosuggest-sample-voice-release
+          path: autosuggest-sample-voice/build/outputs/apk/release
+
+      - name: Upload multi-component-sample APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: multi-component-sample-release
+          path: multi-component-sample/build/outputs/apk/release
+
+      - name: Upload maps-googlemaps-sample APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: maps-googlemaps-sample-release
+          path: maps-googlemaps-sample/build/outputs/apk/release
+
+      - name: Upload mapbox-sample APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: mapbox-sample-release
+          path: mapbox-sample/build/outputs/apk/release

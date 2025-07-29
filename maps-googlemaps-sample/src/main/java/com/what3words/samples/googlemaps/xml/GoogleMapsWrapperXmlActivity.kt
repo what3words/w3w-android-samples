@@ -10,9 +10,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.what3words.androidwrapper.What3WordsV3
+import com.what3words.androidwrapper.datasource.text.W3WApiTextDataSource
 import com.what3words.components.maps.models.W3WMarkerColor
 import com.what3words.components.maps.wrappers.W3WGoogleMapsWrapper
+import com.what3words.core.types.geometry.W3WCoordinates
+import com.what3words.core.types.language.W3WRFC5646Language
 import com.what3words.samples.googlemaps.BuildConfig
 import com.what3words.samples.googlemaps.R
 import com.what3words.samples.googlemaps.databinding.ActivityMapWrapperBinding
@@ -35,12 +37,12 @@ class GoogleMapsWrapperXmlActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         // grid and zoomed in pins will not show over buildings so we disable them, but this is optional depending on your use case
         map.isBuildingsEnabled = false
-        val wrapper = What3WordsV3(BuildConfig.W3W_API_KEY, this)
+        val textDataSource = W3WApiTextDataSource.create(this, BuildConfig.W3W_API_KEY)
         this.w3wMapsWrapper = W3WGoogleMapsWrapper(
             this,
             map,
-            wrapper,
-        ).setLanguage("en")
+            textDataSource,
+        ).setLanguage(W3WRFC5646Language.EN_GB)
 
         w3wMapsWrapper.addMarkerAtWords(
             "filled.count.soap",
@@ -48,17 +50,17 @@ class GoogleMapsWrapperXmlActivity : AppCompatActivity(), OnMapReadyCallback {
             {
                 Log.i(
                     TAG,
-                    "added ${it.words} at ${it.coordinates.lat}, ${it.coordinates.lng}"
+                    "added ${it.words} at ${it.center?.lat}, ${it.center?.lng}"
                 )
                 val cameraPosition = CameraPosition.Builder()
-                    .target(LatLng(it.coordinates.lat, it.coordinates.lng))
+                    .target(LatLng(it.center?.lat ?: 0.0, it.center?.lng ?: 0.0))
                     .zoom(19f)
                     .build()
                 map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
             }, {
                 Toast.makeText(
                     this@GoogleMapsWrapperXmlActivity,
-                    "${it.key}, ${it.message}",
+                    "${it.message}",
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -88,25 +90,24 @@ class GoogleMapsWrapperXmlActivity : AppCompatActivity(), OnMapReadyCallback {
 
             //example of how to select a 3x3m w3w square using lat/lng
             this.w3wMapsWrapper.selectAtCoordinates(
-                latLng.latitude,
-                latLng.longitude,
+                W3WCoordinates(latLng.latitude, latLng.longitude),
                 onSuccess = {
                     Log.i(TAG, "selected square: ${it.words}, byTouch: true, isMarked: false")
                 },
                 onError = {
-                    Log.e(TAG, "error: ${it.key}, ${it.message}")
+                    Log.e(TAG, "error: ${it.message}")
                 }
             )
         }
 
         //if there was a marker clicked then it will be handled here and you can optionally select the marked square
         w3wMapsWrapper.onMarkerClicked { clickedMarker ->
-            this.w3wMapsWrapper.selectAtSuggestionWithCoordinates(
+            this.w3wMapsWrapper.selectAtAddress(
                 clickedMarker, onSuccess = {
                     Log.i(TAG, "selected square: ${clickedMarker.words}, byTouch: true, isMarked: true")
                 },
                 onError = {
-                    Log.e(TAG, "error: ${it.key}, ${it.message}")
+                    Log.e(TAG, "error: ${it.message}")
                 }
             )
         }
